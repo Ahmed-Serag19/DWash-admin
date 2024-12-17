@@ -4,11 +4,11 @@ import Homepage from "@/pages/Homepage/Homepage";
 import Login from "@/pages/Login/Login";
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/homepage",
     element: <MainLayout />,
     children: [
       {
-        path: "/",
+        path: "/homepage",
         element: <Homepage />,
       },
     ],
