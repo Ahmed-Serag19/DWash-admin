@@ -4,7 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { toast } from "react-toastify";
+import { endpoints } from "@/constants/endPoints";
+import LoginPageImage from "@/assets/images/login-page-image.jpg";
 type LoginFormData = {
   username: string;
   password: string;
@@ -18,16 +20,55 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>(); // Type the form data
+  } = useForm<LoginFormData>();
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<LoginFormData> = (data) => {
-    const language = i18n.language === "ar" ? "AR" : "EN";
-    const formData = { ...data, local: language };
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+    try {
+      data.local = i18n.language === "ar" ? "AR" : "EN";
 
-    console.log(formData);
-    navigate("/homepage");
+      const response = await fetch(endpoints.Login, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password,
+          local: data.local,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(t(result.messageEn), {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          className: "bg-blue-950",
+        });
+
+        sessionStorage.setItem("userInfo", JSON.stringify(result.content));
+
+        navigate("/home");
+      } else {
+        toast.error(t(result.messageEn), {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          className: "bg-red-500",
+        });
+      }
+    } catch (error) {
+      toast.error(t("networkError"), {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        className: "bg-red-500",
+      });
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -35,8 +76,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-stone-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-14 relative">
+    <div className="flex justify-around items-center min-h-screen w-full bg-stone-50 gap-5 py-4 relative sm:ps-2 sm:py-0">
+      <div className="sm:max-w-xl sm:min-w-lg w-11/12 bg-white p-8 rounded-lg shadow-lg  space-y-14 sm:w-1/2">
         <h2 className="text-2xl font-semibold text-blue-950 mb-6">
           {t("login")}
         </h2>
@@ -85,9 +126,9 @@ const Login = () => {
               />
               <button type="button" onClick={togglePasswordVisibility}>
                 {passwordVisible ? (
-                  <FaEyeSlash className="text-blue-950" />
+                  <FaEyeSlash className="text-blue-950 hover:text-blue-700 text-lg transition duration-300" />
                 ) : (
-                  <FaEye className="text-blue-950" />
+                  <FaEye className="text-blue-950 hover:text-blue-700 text-lg transition duration-300" />
                 )}
               </button>
             </div>
@@ -109,7 +150,18 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <div className="absolute bottom-10 right-10">
+      <div className="h-screen w-6/12 hidden sm:block">
+        <img
+          src={LoginPageImage}
+          alt="login page image"
+          className="w-full h-full object-center object-cover "
+        />
+      </div>
+      <div
+        className={`absolute ${
+          i18n.language === "ar" ? "bottom-10 right-10" : "left-10 bottom-10"
+        }`}
+      >
         <LanguageSwitcher />
       </div>
     </div>

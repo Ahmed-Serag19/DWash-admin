@@ -1,5 +1,11 @@
+import HomepageLinks from "@/components/HomepageLinks";
+
 const Homepage = () => {
-  return <div>Homepage</div>;
+  return (
+    <div>
+      <HomepageLinks />
+    </div>
+  );
 };
 
 export default Homepage;
