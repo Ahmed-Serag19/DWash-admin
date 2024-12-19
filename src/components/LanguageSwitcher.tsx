@@ -17,7 +17,7 @@ const LanguageSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="p-1 text-white bg-blue-950 rounded-full">
+        <button className="p-0.5 text-white hover:text-blue-950 hover:bg-stone-100 transition duration-300 bg-blue-950 rounded-full">
           <FaGlobe size={20} /> {/* Globe icon */}
         </button>
       </DropdownMenuTrigger>
