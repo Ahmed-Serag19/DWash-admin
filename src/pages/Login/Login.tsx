@@ -7,6 +7,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { endpoints } from "@/constants/endPoints";
 import LoginPageImage from "@/assets/images/login-page-image.jpg";
+import { normalizeErrorMessage } from "@/utils/errorHandler";
+
 type LoginFormData = {
   username: string;
   password: string;
@@ -41,20 +43,30 @@ const Login = () => {
       });
 
       const result = await response.json();
-
+      console.log(result);
       if (result.success) {
-        toast.success(t(result.messageEn), {
+        // Success message
+        const successMessage =
+          i18n.language === "en" ? result.messageEn : result.messageAr;
+        toast.success(successMessage, {
           position: "top-right",
           autoClose: 3000,
           theme: "colored",
           className: "bg-blue-950",
         });
 
-        sessionStorage.setItem("userInfo", JSON.stringify(result.content));
-
-        navigate("/home");
+        sessionStorage.setItem(
+          "accessToken",
+          JSON.stringify(result.content.token)
+        );
+        navigate("/");
       } else {
-        toast.error(t(result.messageEn), {
+        // Error message
+        const errorMessage = normalizeErrorMessage(
+          result.messageEn,
+          result.messageAr
+        );
+        toast.error(errorMessage, {
           position: "top-right",
           autoClose: 3000,
           theme: "colored",
@@ -62,6 +74,7 @@ const Login = () => {
         });
       }
     } catch (error) {
+      // Network error
       toast.error(t("networkError"), {
         position: "top-right",
         autoClose: 3000,
@@ -94,6 +107,7 @@ const Login = () => {
               <FaUser className="text-gray-600  mr-2" />
               <input
                 id="username"
+                autoComplete="username"
                 type="text"
                 placeholder={t("usernamePlaceholder")}
                 {...register("username", { required: "Username is required" })}
@@ -119,6 +133,7 @@ const Login = () => {
               <FaLock className="text-gray-600  mr-2" />
               <input
                 id="password"
+                autoComplete="current-password"
                 type={passwordVisible ? "text" : "password"}
                 placeholder={t("passwordPlaceholder")}
                 {...register("password", { required: "Password is required" })}
