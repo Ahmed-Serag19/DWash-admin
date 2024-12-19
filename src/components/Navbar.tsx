@@ -87,66 +87,14 @@ const Navbar = () => {
             {t("navbar.clientOrders")}
           </NavLink>
         </div>
-        <div className="flex items-center">
-          <LanguageSwitcher />
-        </div>
-        <div className="flex items-center gap-1">
-          <FaUserCircle className="w-9 h-9 rounded-full  cursor-pointer transition duration-300 hover:bg-stone-300 p-0.5" />
-          <span className="font-semibold">{t("navbar.admin")}</span>
-        </div>
-        <button
-          onClick={handleOpenModal}
-          className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors"
-        >
-          <FaSignOutAlt /> <span>{t("navbar.logout")}</span>
-        </button>
-      </div>
-      <div className="md:hidden block">
         <DropdownMenu>
           <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors">
             <div className="flex items-center gap-1">
-              <FaUserCircle className="w-9 h-9 rounded-full  p-0.5" />
+              <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
               <span className="font-semibold">{t("navbar.admin")}</span>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg space-y-3 p-2 mt-2">
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger className={dropDownClassName}>
-                Add new
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
-                  <DropdownMenuItem className={dropDownClassName}>
-                    Service Provider
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className={dropDownClassName}>
-                    Coupon
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger className={dropDownClassName}>
-                Service Providers
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
-                  <DropdownMenuItem className={dropDownClassName}>
-                    Show Service Providers
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className={dropDownClassName}>
-                    Service Requests
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className={dropDownClassName}>
-                    Personal Profile Requests
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-
-            <DropdownMenuItem className={dropDownClassName}>
-              Clients Orders
-            </DropdownMenuItem>
+          <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg px-0.5">
             <DropdownMenuItem className={dropDownClassName}>
               <button
                 onClick={handleOpenModal}
@@ -157,6 +105,76 @@ const Navbar = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <div className="flex items-center">
+          <LanguageSwitcher />
+        </div>
+      </div>
+      <div className="md:hidden flex gap-2 ">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors">
+            <div className="flex items-center gap-1">
+              <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
+              <span className="font-semibold">{t("navbar.admin")}</span>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg space-y-3 p-2 mt-2">
+            {/* Add New Submenu */}
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className={dropDownClassName}>
+                {t("navbar.addNew")}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
+                  <DropdownMenuItem className={dropDownClassName}>
+                    {t("navbar.serviceProvider")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className={dropDownClassName}>
+                    {t("navbar.discount")}
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+
+            {/* Service Providers Submenu */}
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className={dropDownClassName}>
+                {t("navbar.serviceProviders")}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
+                  <DropdownMenuItem className={dropDownClassName}>
+                    {t("navbar.showServiceProviders")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className={dropDownClassName}>
+                    {t("navbar.serviceRequests")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className={dropDownClassName}>
+                    {t("navbar.personalProfileRequest")}
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+
+            {/* Clients Orders */}
+            <DropdownMenuItem className={dropDownClassName}>
+              {t("navbar.clientOrders")}
+            </DropdownMenuItem>
+
+            {/* Logout */}
+            <DropdownMenuItem className={dropDownClassName}>
+              <button
+                onClick={handleOpenModal}
+                className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors"
+              >
+                <FaSignOutAlt /> <span>{t("navbar.logout")}</span>
+              </button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <div className="flex items-center">
+          <LanguageSwitcher />
+        </div>
       </div>
       {/* Modal for Logout Confirmation */}
       {isModalOpen && (
