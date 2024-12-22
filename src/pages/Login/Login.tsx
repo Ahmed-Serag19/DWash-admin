@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { endpoints } from "@/constants/endPoints";
 import LoginPageImage from "@/assets/images/login-page-image.jpg";
 import { normalizeErrorMessage } from "@/utils/errorHandler";
+import axios from "axios";
 
 type LoginFormData = {
   username: string;
@@ -28,24 +29,21 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
+      // Set language locale
       data.local = i18n.language === "ar" ? "AR" : "EN";
 
-      const response = await fetch(endpoints.Login, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: data.username,
-          password: data.password,
-          local: data.local,
-        }),
+      // Make the login request using Axios
+      const response = await axios.post(endpoints.Login, {
+        username: data.username,
+        password: data.password,
+        local: data.local,
       });
 
-      const result = await response.json();
+      const result = response.data;
       console.log(result);
+
       if (result.success) {
-        // Success message
+        // Display success message
         const successMessage =
           i18n.language === "en" ? result.messageEn : result.messageAr;
         toast.success(successMessage, {
@@ -55,13 +53,13 @@ const Login = () => {
           className: "bg-blue-950",
         });
 
-        sessionStorage.setItem(
-          "accessToken",
-          JSON.stringify(result.content.token)
-        );
+        // Save access token directly (not stringified)
+        sessionStorage.setItem("accessToken", result.content.token);
+
+        // Navigate to the home page
         navigate("/");
       } else {
-        // Error message
+        // Display error message
         const errorMessage = normalizeErrorMessage(
           result.messageEn,
           result.messageAr
@@ -73,8 +71,9 @@ const Login = () => {
           className: "bg-red-500",
         });
       }
-    } catch (error) {
-      // Network error
+    } catch (error: any) {
+      // Handle network or server errors
+      console.error("Login error:", error);
       toast.error(t("networkError"), {
         position: "top-right",
         autoClose: 3000,
