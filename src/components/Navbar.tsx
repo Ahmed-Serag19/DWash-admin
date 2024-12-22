@@ -98,7 +98,7 @@ const Navbar = () => {
           </NavLink>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className="text-blue-950 outline rounded-md px-1 py-0.5 bg-stone-200 hover:bg-stone-100 font-semibold hover:text-blue-600 transition-colors">
+          <DropdownMenuTrigger className="text-blue-950 outline-1 outline-offset-1 outline hover:outline-slate-400 rounded-md px-1 py-0.5 bg-stone-200 hover:bg-stone-100 font-semibold hover:text-blue-600 transition-colors">
             <div className="flex items-center gap-1">
               <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
               <span className="font-semibold">{t("navbar.admin")}</span>

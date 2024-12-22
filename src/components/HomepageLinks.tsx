@@ -9,13 +9,20 @@ import { RiUserSettingsFill } from "react-icons/ri";
 
 export default function HomepageLinks() {
   const { i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
+  // Use conditional array based on language
+  const projects = isArabic ? projectsAr : projectsEn;
+
   return (
-    <div className="mx-auto ">
+    <div className="mx-auto">
       <HoverEffect items={projects} />
     </div>
   );
 }
-export const projects = [
+
+// English projects array
+export const projectsEn = [
   {
     title: <IoIosPersonAdd />,
     description: "Add a new Service Provider",
@@ -38,12 +45,46 @@ export const projects = [
   },
   {
     title: <MdChecklist />,
-    description: "Service Providers Requests: Services",
+    description: "Service Providers Requests:  Service",
     link: "https://amazon.com",
   },
   {
     title: <RiUserSettingsFill />,
-    description: "Service Providers Requests: Personal Profile",
+    description: "Service Providers Requests:  Profile",
+    link: "https://microsoft.com",
+  },
+];
+
+// Arabic projects array
+export const projectsAr = [
+  {
+    title: <IoIosPersonAdd />,
+    description: "إضافة مقدم خدمة جديد",
+    link: "/login",
+  },
+  {
+    title: <IoIosPeople />,
+    description: "مقدمي الخدمات",
+    link: "https://netflix.com",
+  },
+  {
+    title: <RiDiscountPercentFill />,
+    description: "إضافة خصم جديد",
+    link: "https://google.com",
+  },
+  {
+    title: <MdChecklistRtl />,
+    description: "طلبات العملاء",
+    link: "https://meta.com",
+  },
+  {
+    title: <MdChecklist />,
+    description: "طلبات مقدمي الخدمات: خدمة جديدة",
+    link: "https://amazon.com",
+  },
+  {
+    title: <RiUserSettingsFill />,
+    description: "طلبات مقدمي الخدمات: الملف الشخصي",
     link: "https://microsoft.com",
   },
 ];
