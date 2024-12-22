@@ -1,6 +1,4 @@
 export const en = {
-  welcome: "Welcome",
-  goodbye: "Goodbye",
   username: "Username",
   password: "Password",
   login: "Login",

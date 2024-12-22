@@ -9,7 +9,7 @@ const MainLayout = () => {
       <Navbar />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-5xl p-5 w-full flex items-center justify-center">
+      <main className="mx-auto max-w-6xl p-5 w-full flex items-center justify-center">
         <Outlet />
       </main>
 
