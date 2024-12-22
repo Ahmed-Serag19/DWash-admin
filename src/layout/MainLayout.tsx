@@ -4,13 +4,16 @@ import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <div className="grid min-h-screen  grid-rows-[auto_1fr_auto]">
+    <div className="grid h-screen grid-rows-[auto_1fr_auto]">
+      {/* Navbar */}
       <Navbar />
-      <div>
-        <main className="mx-auto max-w-5xl p-5">
-          <Outlet />
-        </main>
-      </div>
+
+      {/* Main Content */}
+      <main className="mx-auto max-w-5xl p-5 w-full">
+        <Outlet />
+      </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );

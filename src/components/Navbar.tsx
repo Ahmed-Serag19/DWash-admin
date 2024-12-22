@@ -15,6 +15,9 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import NavbarLogo from "@/assets/images/navbar-logo.png";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -48,9 +51,15 @@ const Navbar = () => {
         <div className="flex gap-5 ">
           {/* Add New Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors">
+            <DropdownMenuTrigger
+              className={
+                "text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors  flex justify-between items-center gap-3"
+              }
+            >
               {t("navbar.addNew")}
+              <MdKeyboardArrowDown />
             </DropdownMenuTrigger>
+
             <DropdownMenuContent className="bg-white text-black rounded-xl shadow-lg space-y-3 p-2 mt-4 ">
               <DropdownMenuItem className={dropDownClassName}>
                 {t("navbar.serviceProvider")}
@@ -63,8 +72,9 @@ const Navbar = () => {
 
           {/* Service Providers Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors">
+            <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors flex justify-between items-center gap-3">
               {t("navbar.serviceProviders")}
+              <MdKeyboardArrowDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white text-black rounded-lg shadow-lg p-2 mt-4">
               <DropdownMenuItem className={dropDownClassName}>
@@ -88,7 +98,7 @@ const Navbar = () => {
           </NavLink>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors">
+          <DropdownMenuTrigger className="text-blue-950 outline rounded-md px-1 py-0.5 bg-stone-200 hover:bg-stone-100 font-semibold hover:text-blue-600 transition-colors">
             <div className="flex items-center gap-1">
               <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
               <span className="font-semibold">{t("navbar.admin")}</span>
@@ -110,18 +120,23 @@ const Navbar = () => {
           <LanguageSwitcher />
         </div>
       </div>
-      <div className="md:hidden flex gap-2 ">
+      <div className="md:hidden flex gap-5 ">
         <DropdownMenu>
-          <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors">
+          <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors flex justify-between items-center gap-3">
             <div className="flex items-center gap-1">
               <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
               <span className="font-semibold">{t("navbar.admin")}</span>
             </div>
+            <MdKeyboardArrowDown />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg space-y-3 p-2 mt-2">
             {/* Add New Submenu */}
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger className={dropDownClassName}>
+              <DropdownMenuSubTrigger
+                className={`${dropDownClassName} flex  gap-2 items-center`}
+              >
+                <MdKeyboardArrowLeft />
+
                 {t("navbar.addNew")}
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
@@ -138,7 +153,10 @@ const Navbar = () => {
 
             {/* Service Providers Submenu */}
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger className={dropDownClassName}>
+              <DropdownMenuSubTrigger
+                className={`${dropDownClassName} flex  gap-2 items-center`}
+              >
+                <MdKeyboardArrowLeft />
                 {t("navbar.serviceProviders")}
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
