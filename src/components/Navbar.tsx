@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import {
   DropdownMenu,
@@ -53,7 +53,7 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger
               className={
-                "text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors  flex justify-between items-center gap-3"
+                "text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors  flex justify-between items-center gap-1"
               }
             >
               {t("navbar.addNew")}
@@ -72,14 +72,16 @@ const Navbar = () => {
 
           {/* Service Providers Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors flex justify-between items-center gap-3">
+            <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors flex justify-between items-center gap-1">
               {t("navbar.serviceProviders")}
               <MdKeyboardArrowDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white text-black rounded-lg shadow-lg p-2 mt-4">
-              <DropdownMenuItem className={dropDownClassName}>
-                {t("navbar.showServiceProviders")}
-              </DropdownMenuItem>
+              <Link to="/service-providers">
+                <DropdownMenuItem className={dropDownClassName}>
+                  {t("navbar.showServiceProviders")}
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem className={dropDownClassName}>
                 {t("navbar.serviceRequests")}
               </DropdownMenuItem>

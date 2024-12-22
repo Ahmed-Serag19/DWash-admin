@@ -31,7 +31,7 @@ export const projectsEn = [
   {
     title: <IoIosPeople />,
     description: "Service Providers",
-    link: "https://netflix.com",
+    link: "/service-providers",
   },
   {
     title: <RiDiscountPercentFill />,
@@ -65,7 +65,7 @@ export const projectsAr = [
   {
     title: <IoIosPeople />,
     description: "مقدمي الخدمات",
-    link: "https://netflix.com",
+    link: "/service-providers",
   },
   {
     title: <RiDiscountPercentFill />,
