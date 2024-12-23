@@ -19,4 +19,12 @@ export const ar = {
     confirm: "نعم، تسجيل الخروج",
     cancel: "إلغاء",
   },
+  id: "رقم الهوية",
+  type: "النوع",
+  createdOn: "تاريخ الإنشاء",
+  deductionPercentage: "نسبة الخصم",
+  nA: "غير متوفر",
+  deactivate: "إلغاء التفعيل",
+  edit: "تعديل",
+  mobile: "الهاتف المحمول",
 };

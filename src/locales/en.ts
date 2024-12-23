@@ -19,4 +19,12 @@ export const en = {
     confirm: "Yes, Logout",
     cancel: "Cancel",
   },
+  mobile: "Mobile",
+  id: "National Id",
+  type: "Type",
+  createdOn: "Created On",
+  deductionPercentage: "Deduction Percentage",
+  nA: "N/A",
+  deactivate: "Deactivate",
+  edit: "Edit",
 };

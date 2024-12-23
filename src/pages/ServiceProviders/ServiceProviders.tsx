@@ -11,6 +11,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FaUserCircle } from "react-icons/fa";
 
 interface UserDto {
   id: number;
@@ -34,7 +35,7 @@ interface FreelancerData {
 }
 
 const ServiceProviders: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeUsers, setActiveUsers] = useState<FreelancerData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -105,39 +106,82 @@ const ServiceProviders: React.FC = () => {
             className="transition-all duration-300 p-5 min-h-[400px]"
           >
             {isLoading ? (
-              <p>Loading active users...</p>
+              <div className="flex justify-center items-center">
+                <span className="loader"></span>
+              </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {activeUsers.map((user) => (
-                  <Card key={user.brandId} className="w-full">
-                    <CardHeader>
-                      <CardTitle>{user.userDto.nameEn}</CardTitle>
-                      <CardDescription>{user.userDto.email}</CardDescription>
+                  <Card
+                    key={user.brandId}
+                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                    className="w-full border border-gray-200 shadow-sm rounded-lg"
+                  >
+                    <CardHeader className="flex items-center space-x-4">
+                      {/* Dummy User Image */}
+                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold">
+                        <span className="w-full h-full text-5xl text-blue-900">
+                          <FaUserCircle />
+                        </span>
+                      </div>
+
+                      {/* User Details */}
+                      <div>
+                        <CardTitle className="text-lg font-semibold text-blue-950">
+                          {user.userDto.nameEn}
+                        </CardTitle>
+                        <CardDescription className="text-sm text-gray-600">
+                          {user.userDto.email}
+                        </CardDescription>
+                      </div>
                     </CardHeader>
-                    <CardContent>
-                      <p>
-                        <strong>Mobile:</strong> {user.userDto.mobile}
-                      </p>
-                      <p>
-                        <strong>ID:</strong> {user.userDto.identificationNumber}
-                      </p>
-                      <p>
-                        <strong>Type:</strong> {user.userDto.userType}
-                      </p>
-                      <p>
-                        <strong>Agreement Accepted:</strong>{" "}
-                        {user.userDto.agreementAccept ? "Yes" : "No"}
-                      </p>
-                      <p>
-                        <strong>Created On:</strong> {user.userDto.createdOn}
-                      </p>
-                      <p>
-                        <strong>Deduction Percentage:</strong>{" "}
-                        {user.brandWalletDto.deductionPrs ?? "N/A"}%
-                      </p>
+                    <CardContent
+                      className={`space-y-2 text-gray-700 flex flex-col ${
+                        i18n.language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      <dl className="space-y-2">
+                        <div>
+                          <dt className="font-semibold text-blue-900">
+                            {t("mobile")}:
+                          </dt>
+                          <dd>{user.userDto.mobile}</dd>
+                        </div>
+                        <div>
+                          <dt className="font-semibold text-blue-900">
+                            {t("id")}:
+                          </dt>
+                          <dd>{user.userDto.identificationNumber}</dd>
+                        </div>
+                        <div>
+                          <dt className="font-semibold text-blue-900">
+                            {t("createdOn")}:
+                          </dt>
+                          <dd>{user.userDto.createdOn}</dd>
+                        </div>
+                        <div>
+                          <dt className="font-semibold text-blue-900">
+                            {t("deductionPercentage")}:
+                          </dt>
+                          <dd>
+                            {user.brandWalletDto.deductionPrs ?? t("n/a")}%
+                          </dd>
+                        </div>
+                      </dl>
                     </CardContent>
-                    <CardFooter>
-                      <Button variant="outline">View Details</Button>
+                    <CardFooter className="flex justify-center gap-3">
+                      <Button
+                        variant="outline"
+                        className="text-blue-600 border-blue-600 hover:bg-blue-100"
+                      >
+                        {t("edit")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="text-red-600 border-red-600 hover:bg-red-100"
+                      >
+                        {t("deactivate")}
+                      </Button>
                     </CardFooter>
                   </Card>
                 ))}
