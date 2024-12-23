@@ -63,7 +63,6 @@ const ServiceProviders: React.FC = () => {
           }
         );
 
-        // Axios automatically parses JSON
         const data = response.data;
         if (data.success) {
           setActiveUsers(data.content.data);
@@ -118,7 +117,6 @@ const ServiceProviders: React.FC = () => {
                     className="w-full border border-gray-200 shadow-sm rounded-lg"
                   >
                     <CardHeader className="flex items-center space-x-4">
-                      {/* Dummy User Image */}
                       <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold">
                         <span className="w-full h-full text-5xl text-blue-900">
                           <FaUserCircle />

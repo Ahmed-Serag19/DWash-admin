@@ -107,11 +107,11 @@ const Navbar = () => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg px-0.5">
-            <DropdownMenuItem className={dropDownClassName}>
-              <button
-                onClick={handleOpenModal}
-                className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors"
-              >
+            <DropdownMenuItem
+              onClick={handleOpenModal}
+              className={`${dropDownClassName} rounded- mt-2`}
+            >
+              <button className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors">
                 <FaSignOutAlt /> <span>{t("navbar.logout")}</span>
               </button>
             </DropdownMenuItem>
@@ -182,11 +182,11 @@ const Navbar = () => {
             </DropdownMenuItem>
 
             {/* Logout */}
-            <DropdownMenuItem className={dropDownClassName}>
-              <button
-                onClick={handleOpenModal}
-                className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors"
-              >
+            <DropdownMenuItem
+              onClick={handleOpenModal}
+              className={`${dropDownClassName} rounded-none`}
+            >
+              <button className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors">
                 <FaSignOutAlt /> <span>{t("navbar.logout")}</span>
               </button>
             </DropdownMenuItem>

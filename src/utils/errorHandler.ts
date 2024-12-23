@@ -18,8 +18,9 @@ export const normalizeErrorMessage = (
   const language = i18n.language as keyof typeof customErrorMessages;
 
   if (language === "en" || language === "ar") {
-    const normalizedKey =
-      messageEn.toLowerCase() as keyof (typeof customErrorMessages)["en"];
+    const normalizedKey = messageEn
+      .trim()
+      .toLowerCase() as keyof (typeof customErrorMessages)["en"];
     const customMessage = customErrorMessages[language][normalizedKey];
     if (customMessage) {
       return customMessage;

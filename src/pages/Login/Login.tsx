@@ -29,10 +29,8 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
-      // Set language locale
       data.local = i18n.language === "ar" ? "AR" : "EN";
 
-      // Make the login request using Axios
       const response = await axios.post(endpoints.Login, {
         username: data.username,
         password: data.password,
@@ -43,7 +41,6 @@ const Login = () => {
       console.log(result);
 
       if (result.success) {
-        // Display success message
         const successMessage =
           i18n.language === "en" ? result.messageEn : result.messageAr;
         toast.success(successMessage, {
@@ -53,13 +50,9 @@ const Login = () => {
           className: "bg-blue-950",
         });
 
-        // Save access token directly (not stringified)
         sessionStorage.setItem("accessToken", result.content.token);
-
-        // Navigate to the home page
         navigate("/");
       } else {
-        // Display error message
         const errorMessage = normalizeErrorMessage(
           result.messageEn,
           result.messageAr
@@ -71,15 +64,27 @@ const Login = () => {
           className: "bg-red-500",
         });
       }
-    } catch (error: any) {
-      // Handle network or server errors
-      console.error("Login error:", error);
-      toast.error(t("networkError"), {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "colored",
-        className: "bg-red-500",
-      });
+    } catch (error: string) {
+      if (error.response) {
+        // Handle API error responses
+        const { messageEn, messageAr } = error.response.data || {};
+        const errorMessage = normalizeErrorMessage(messageEn, messageAr);
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          className: "bg-red-500",
+        });
+      } else {
+        // Handle network or unexpected errors
+        console.error("Login error:", error);
+        toast.error(t("networkError"), {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          className: "bg-red-500",
+        });
+      }
     }
   };
 
