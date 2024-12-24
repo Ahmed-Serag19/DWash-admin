@@ -5,7 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { endpoints } from "@/constants/endPoints";
-
+import { IdentificationType, FormData } from "@/interfaces/interfaces";
+import { toast } from "react-toastify";
 const ServiceProviderForm: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [identificationTypes, setIdentificationTypes] = useState<
@@ -14,7 +15,7 @@ const ServiceProviderForm: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const initialData: FormData | undefined = location.state?.data;
-
+  console.log(identificationTypes);
   const {
     control,
     register,
@@ -25,11 +26,12 @@ const ServiceProviderForm: React.FC = () => {
     defaultValues: initialData || {
       nameAr: "",
       nameEn: "",
-      identificationTypeId: undefined,
+      identificationTypeId: "1",
       identificationNumber: "",
       mobileNumber: "",
       email: "",
       deductionPrs: 0,
+      identityId: 0,
     },
   });
 
@@ -62,11 +64,18 @@ const ServiceProviderForm: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const url = data.id
-        ? endpoints.editServiceProvider(data.id) // Edit if id is present
-        : endpoints.addServiceProvider; // Add if no id
+      const formattedData = {
+        ...data,
+        identityId: Number(data.identityId),
+      };
 
-      const response = await axios.post(url, data, {
+      console.log("Formatted Payload:", formattedData);
+
+      const url = data.id
+        ? endpoints.editServiceProvider(data.id)
+        : endpoints.addServiceProvider;
+
+      const response = await axios.post(url, formattedData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
           "Content-Type": "application/json",
@@ -74,14 +83,16 @@ const ServiceProviderForm: React.FC = () => {
       });
 
       if (response.data.success) {
-        alert(initialData ? t("editSuccessMessage") : t("addSuccessMessage"));
-        navigate("/service-providers"); // Navigate back to list
+        toast(data.id ? t("editSuccessMessage") : t("addSuccessMessage"), {
+          type: "success",
+        });
+        navigate("/service-providers");
       } else {
-        alert(t("formErrorMessage"));
+        toast(t("formErrorMessage"), { type: "error" });
       }
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert(t("formErrorMessage"));
+      toast(t("formErrorMessage"), { type: "error" });
     }
   };
 
@@ -141,26 +152,29 @@ const ServiceProviderForm: React.FC = () => {
       {/* Identification Type */}
       <div>
         <label
-          htmlFor="identificationTypeId"
+          htmlFor="identityId"
           className="block font-medium pb-2 pt-1 text-blue-900"
         >
           {t("identificationType")}
         </label>
         <Controller
-          name="identificationTypeId"
+          name="identityId"
           control={control}
+          defaultValue={initialData?.identityId || undefined}
           rules={{ required: t("errorRequired") as string }}
           render={({ field }) => (
             <select
               {...field}
-              id="identificationTypeId"
-              className={`border rounded-md p-2 w-full ${
-                errors.identificationTypeId
-                  ? "border-red-500"
-                  : "border-gray-300"
+              onChange={(e) => {
+                const value = parseInt(e.target.value, 10); // Parse the value as a number
+                field.onChange(value); // Update field value explicitly
+              }}
+              id="identityId"
+              className={`border rounded-md p-2 w-full  ${
+                errors.identityId ? "border-red-500" : "border-gray-300"
               }`}
             >
-              <option value="">{t("selectOption")}</option>
+              <option value="0">{t("selectOption")}</option>
               {identificationTypes.map((type) => (
                 <option key={type.id} value={type.id}>
                   {i18n.language === "ar"
@@ -171,9 +185,9 @@ const ServiceProviderForm: React.FC = () => {
             </select>
           )}
         />
-        {errors.identificationTypeId && (
+        {errors.identityId && (
           <p className="text-red-500 text-sm mt-1">
-            {errors.identificationTypeId.message}
+            {errors.identityId.message}
           </p>
         )}
       </div>

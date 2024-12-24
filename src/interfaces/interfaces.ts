@@ -32,3 +32,20 @@ export interface ModalProps {
   onConfirm: () => void;
   onCancel: () => void;
 }
+export interface IdentificationType {
+  id: number;
+  identityTyNameEn: string;
+  identityTyNameAr: string;
+}
+
+export interface FormData {
+  id?: number;
+  nameAr: string;
+  nameEn: string;
+  identificationTypeId: string;
+  identificationNumber: string;
+  mobileNumber: string;
+  email: string;
+  deductionPrs: number;
+  identityId: number;
+}

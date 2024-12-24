@@ -61,9 +61,11 @@ const Navbar = () => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="bg-white text-black rounded-xl shadow-lg space-y-3 p-2 mt-4 ">
-              <DropdownMenuItem className={dropDownClassName}>
-                {t("serviceProvider")}
-              </DropdownMenuItem>
+              <Link to="add-service-provider">
+                <DropdownMenuItem className={dropDownClassName}>
+                  {t("serviceProvider")}
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem className={dropDownClassName}>
                 {t("discount")}
               </DropdownMenuItem>
