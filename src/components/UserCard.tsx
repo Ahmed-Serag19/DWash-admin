@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "./Modal";
+import CardModal from "./CardModal";
 import {
   Card,
   CardHeader,
@@ -45,7 +45,7 @@ const UserCard: React.FC<UserCardProps> = ({
 
   return (
     <>
-      <Modal
+      <CardModal
         isOpen={isModalOpen}
         titleKey={
           modalAction === "activate"
@@ -91,6 +91,14 @@ const UserCard: React.FC<UserCardProps> = ({
             <div>
               <dt className="font-semibold text-blue-900">{t("mobile")}:</dt>
               <dd>{user.userDto.mobile}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-blue-900">{t("idType")}:</dt>
+              <dd>
+                {i18n.language === "ar"
+                  ? user.userDto.identityTyNameAr
+                  : user.userDto.identityTyNameEn}
+              </dd>
             </div>
             <div>
               <dt className="font-semibold text-blue-900">{t("id")}:</dt>

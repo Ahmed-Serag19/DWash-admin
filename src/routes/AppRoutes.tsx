@@ -3,6 +3,7 @@ import MainLayout from "@/layout/MainLayout";
 import Homepage from "@/pages/Homepage/Homepage";
 import Login from "@/pages/Login/Login";
 import ServiceProviders from "@/pages/ServiceProviders/ServiceProviders";
+import ServiceProviderForm from "@/pages/ServiceProviderForm/ServiceProviderForm";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/service-providers",
         element: <ServiceProviders />,
+      },
+      {
+        path: "/add-service-provider",
+        element: <ServiceProviderForm />,
       },
     ],
   },

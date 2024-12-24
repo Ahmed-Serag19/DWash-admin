@@ -7,6 +7,8 @@ interface UserDto {
   userType: string;
   agreementAccept: number;
   createdOn: string;
+  identityTyNameAr: string;
+  identityTyNameEn: string;
 }
 
 interface BrandWalletDto {

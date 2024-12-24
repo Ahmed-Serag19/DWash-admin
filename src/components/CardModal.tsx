@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
 import { ModalProps } from "@/interfaces/interfaces";
 
-const Modal: React.FC<ModalProps> = ({
+const CardModal: React.FC<ModalProps> = ({
   isOpen,
   titleKey,
   descriptionKey,
@@ -40,4 +40,4 @@ const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export default Modal;
+export default CardModal;
