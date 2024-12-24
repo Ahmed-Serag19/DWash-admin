@@ -47,14 +47,16 @@ const UserCard: React.FC<UserCardProps> = ({
     <>
       <Modal
         isOpen={isModalOpen}
-        title={t(
-          modalAction === "activate" ? "Activate User" : "Deactivate User"
-        )}
-        description={t(
+        titleKey={
           modalAction === "activate"
-            ? "Are you sure you want to activate this user ?"
-            : "Are you sure you want to deactivate this user ?"
-        )}
+            ? "activateUserTitle"
+            : "deactivateUserTitle"
+        }
+        descriptionKey={
+          modalAction === "activate"
+            ? "activateUserDescription"
+            : "deactivateUserDescription"
+        }
         onConfirm={handleModalConfirm}
         onCancel={handleModalCancel}
       />

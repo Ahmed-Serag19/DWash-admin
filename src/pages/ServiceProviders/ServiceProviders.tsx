@@ -175,7 +175,7 @@ const ServiceProviders: React.FC = () => {
     <main className="flex flex-col items-center justify-start min-h-[calc(100vh-210px)]">
       <div className="pt-10 mb-5">
         <h1 className="text-3xl text-blue-900 font-bold">
-          {t("navbar.serviceProviders")}
+          {t("serviceProviders")}
         </h1>
       </div>
       <div className="w-full flex justify-center md:min-w-96 min-w-60">

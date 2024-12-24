@@ -56,16 +56,16 @@ const Navbar = () => {
                 "text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors  flex justify-between items-center gap-1"
               }
             >
-              {t("navbar.addNew")}
+              {t("addNew")}
               <MdKeyboardArrowDown />
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="bg-white text-black rounded-xl shadow-lg space-y-3 p-2 mt-4 ">
               <DropdownMenuItem className={dropDownClassName}>
-                {t("navbar.serviceProvider")}
+                {t("serviceProvider")}
               </DropdownMenuItem>
               <DropdownMenuItem className={dropDownClassName}>
-                {t("navbar.discount")}
+                {t("discount")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -73,20 +73,20 @@ const Navbar = () => {
           {/* Service Providers Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors flex justify-between items-center gap-1">
-              {t("navbar.serviceProviders")}
+              {t("serviceProviders")}
               <MdKeyboardArrowDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white text-black rounded-lg shadow-lg p-2 mt-4">
               <Link to="/service-providers">
                 <DropdownMenuItem className={dropDownClassName}>
-                  {t("navbar.showServiceProviders")}
+                  {t("showServiceProviders")}
                 </DropdownMenuItem>
               </Link>
               <DropdownMenuItem className={dropDownClassName}>
-                {t("navbar.serviceRequests")}
+                {t("serviceRequests")}
               </DropdownMenuItem>
               <DropdownMenuItem className={dropDownClassName}>
-                {t("navbar.personalProfileRequest")}
+                {t("personalProfileRequest")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -96,14 +96,14 @@ const Navbar = () => {
             to="/clients-orders"
             className="text-blue-950 outline-none font-semibold cursor-pointer hover:text-blue-600 transition-colors"
           >
-            {t("navbar.clientOrders")}
+            {t("clientOrders")}
           </NavLink>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger className="text-blue-950 outline-1 outline-offset-1 outline hover:outline-slate-400 rounded-md px-1 py-0.5 bg-stone-200 hover:bg-stone-100 font-semibold hover:text-blue-600 transition-colors">
             <div className="flex items-center gap-1">
               <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
-              <span className="font-semibold">{t("navbar.admin")}</span>
+              <span className="font-semibold">{t("admin")}</span>
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg px-0.5">
@@ -112,7 +112,7 @@ const Navbar = () => {
               className={`${dropDownClassName} rounded- mt-2`}
             >
               <button className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors">
-                <FaSignOutAlt /> <span>{t("navbar.logout")}</span>
+                <FaSignOutAlt /> <span>{t("logout")}</span>
               </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -127,7 +127,7 @@ const Navbar = () => {
           <DropdownMenuTrigger className="text-blue-950 outline-none font-semibold hover:text-blue-600 transition-colors flex justify-between items-center gap-3">
             <div className="flex items-center gap-1">
               <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
-              <span className="font-semibold">{t("navbar.admin")}</span>
+              <span className="font-semibold">{t("admin")}</span>
             </div>
             <MdKeyboardArrowDown />
           </DropdownMenuTrigger>
@@ -139,15 +139,15 @@ const Navbar = () => {
               >
                 <MdKeyboardArrowLeft />
 
-                {t("navbar.addNew")}
+                {t("addNew")}
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
                   <DropdownMenuItem className={dropDownClassName}>
-                    {t("navbar.serviceProvider")}
+                    {t("serviceProvider")}
                   </DropdownMenuItem>
                   <DropdownMenuItem className={dropDownClassName}>
-                    {t("navbar.discount")}
+                    {t("discount")}
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
@@ -159,18 +159,18 @@ const Navbar = () => {
                 className={`${dropDownClassName} flex  gap-2 items-center`}
               >
                 <MdKeyboardArrowLeft />
-                {t("navbar.serviceProviders")}
+                {t("serviceProviders")}
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
                   <DropdownMenuItem className={dropDownClassName}>
-                    {t("navbar.showServiceProviders")}
+                    {t("showServiceProviders")}
                   </DropdownMenuItem>
                   <DropdownMenuItem className={dropDownClassName}>
-                    {t("navbar.serviceRequests")}
+                    {t("serviceRequests")}
                   </DropdownMenuItem>
                   <DropdownMenuItem className={dropDownClassName}>
-                    {t("navbar.personalProfileRequest")}
+                    {t("personalProfileRequest")}
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
@@ -178,7 +178,7 @@ const Navbar = () => {
 
             {/* Clients Orders */}
             <DropdownMenuItem className={dropDownClassName}>
-              {t("navbar.clientOrders")}
+              {t("clientOrders")}
             </DropdownMenuItem>
 
             {/* Logout */}
@@ -187,7 +187,7 @@ const Navbar = () => {
               className={`${dropDownClassName} rounded-none`}
             >
               <button className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors">
-                <FaSignOutAlt /> <span>{t("navbar.logout")}</span>
+                <FaSignOutAlt /> <span>{t("logout")}</span>
               </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -201,20 +201,20 @@ const Navbar = () => {
         <div className="fixed inset-0 z-50 bg-gray-500  bg-opacity-80 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-lg text-blue-950 font-semibold">
-              {t("navbar.logoutConfirmation")}
+              {t("logoutConfirmation")}
             </h3>
             <div className="flex  gap-5 justify-center mt-4">
               <button
                 onClick={handleLogout}
                 className="px-6 py-2 bg-blue-950 text-stone-50 rounded-md hover:bg-blue-800 transition-colors"
               >
-                {t("navbar.confirm")}
+                {t("confirm")}
               </button>
               <button
                 onClick={handleCloseModal}
                 className="px-6 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition-colors"
               >
-                {t("navbar.cancel")}
+                {t("cancel")}
               </button>
             </div>
           </div>

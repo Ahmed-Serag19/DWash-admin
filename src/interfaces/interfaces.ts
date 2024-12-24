@@ -23,3 +23,10 @@ export interface UserCardProps {
   onActivate: (userId: number) => void;
   onDeactivate: (userId: number) => void;
 }
+export interface ModalProps {
+  isOpen: boolean;
+  titleKey: string; // Key for the title
+  descriptionKey: string; // Key for the description
+  onConfirm: () => void;
+  onCancel: () => void;
+}

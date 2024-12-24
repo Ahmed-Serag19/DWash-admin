@@ -4,6 +4,7 @@ export const ar = {
   login: "تسجيل الدخول",
   usernamePlaceholder: "أدخل اسم المستخدم",
   passwordPlaceholder: "أدخل كلمة المرور",
+
   addNew: "إضافة ",
   serviceProvider: "مزود خدمة",
   discount: "خصم",
@@ -17,6 +18,8 @@ export const ar = {
   logoutConfirmation: "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   confirm: "نعم، تسجيل الخروج",
   cancel: "إلغاء",
+
+  mobile: "الهاتف المحمول",
   id: "رقم الهوية",
   type: "النوع",
   createdOn: "تاريخ الإنشاء",
@@ -24,6 +27,12 @@ export const ar = {
   nA: "غير متوفر",
   deactivate: "إلغاء التفعيل",
   edit: "تعديل",
-  mobile: "الهاتف المحمول",
   activate: "تفعيل",
+
+  activateUserTitle: "تفعيل المستخدم",
+  deactivateUserTitle: "إلغاء تفعيل المستخدم",
+  activateUserDescription: "هل أنت متأكد أنك تريد تفعيل هذا المستخدم؟",
+  deactivateUserDescription: "هل أنت متأكد أنك تريد إلغاء تفعيل هذا المستخدم؟",
+  confirmButton: "تأكيد",
+  cancelButton: "إلغاء",
 };
