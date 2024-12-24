@@ -106,8 +106,8 @@ const ServiceProviders: React.FC = () => {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center">
-      <div className="py-10">
+    <main className="flex flex-col items-center justify-start min-h-[calc(100vh-210px)]">
+      <div className="pt-10 mb-5">
         <h1 className="text-3xl text-blue-900 font-bold">
           {t("navbar.serviceProviders")}
         </h1>
@@ -134,7 +134,7 @@ const ServiceProviders: React.FC = () => {
             className="transition-all duration-300 p-5 min-h-[400px]"
           >
             {isLoading ? (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center ">
                 <span className="loader"></span>
               </div>
             ) : (
