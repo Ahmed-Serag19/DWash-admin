@@ -27,4 +27,5 @@ export const ar = {
   deactivate: "إلغاء التفعيل",
   edit: "تعديل",
   mobile: "الهاتف المحمول",
+  activate: "تفعيل",
 };

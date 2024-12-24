@@ -27,4 +27,5 @@ export const en = {
   nA: "N/A",
   deactivate: "Deactivate",
   edit: "Edit",
+  activate: "Activate",
 };
