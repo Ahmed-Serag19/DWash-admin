@@ -5,27 +5,7 @@ import { useTranslation } from "react-i18next";
 import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import UserCard from "@/components/UserCard";
-
-interface UserDto {
-  id: number;
-  nameEn: string;
-  email: string;
-  mobile: string;
-  identificationNumber: string;
-  userType: string;
-  agreementAccept: number;
-  createdOn: string;
-}
-
-interface BrandWalletDto {
-  deductionPrs: number | null;
-}
-
-interface FreelancerData {
-  brandId: number;
-  userDto: UserDto;
-  brandWalletDto: BrandWalletDto;
-}
+import { FreelancerData } from "@/interfaces/interfaces";
 
 const ServiceProviders: React.FC = () => {
   const { t } = useTranslation();
@@ -33,6 +13,15 @@ const ServiceProviders: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [inactiveUsers, setInactiveUsers] = useState<FreelancerData[]>([]);
   const token = sessionStorage.getItem("accessToken");
+  const [activeTab, setActiveTab] = useState<"active" | "inactive">("active");
+
+  useEffect(() => {
+    if (activeTab === "active") {
+      handleActiveUsersCall();
+    } else if (activeTab === "inactive") {
+      handleInactiveUsersCall();
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     handleActiveUsersCall();
@@ -127,20 +116,15 @@ const ServiceProviders: React.FC = () => {
         <Tabs
           defaultValue="active"
           className="w-full max-w-6xl md:min-w-96 min-w-60 flex flex-col items-center"
+          onValueChange={(value) =>
+            setActiveTab(value as "active" | "inactive")
+          }
         >
           <TabsList className="md:min-w-[400px] flex mb-5 text-blue-900">
-            <TabsTrigger
-              value="active"
-              className="w-1/2"
-              onClick={handleActiveUsersCall}
-            >
+            <TabsTrigger value="active" className="w-1/2">
               Active
             </TabsTrigger>
-            <TabsTrigger
-              onClick={handleInactiveUsersCall}
-              value="inactive"
-              className="w-1/2"
-            >
+            <TabsTrigger value="inactive" className="w-1/2">
               Inactive
             </TabsTrigger>
           </TabsList>

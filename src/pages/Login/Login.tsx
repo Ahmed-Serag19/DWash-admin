@@ -64,8 +64,8 @@ const Login = () => {
           className: "bg-red-500",
         });
       }
-    } catch (error: string) {
-      if (error.response) {
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
         // Handle API error responses
         const { messageEn, messageAr } = error.response.data || {};
         const errorMessage = normalizeErrorMessage(messageEn, messageAr);
