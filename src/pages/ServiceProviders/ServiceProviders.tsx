@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FaUserCircle } from "react-icons/fa";
+import { endpoints } from "@/constants/endPoints";
 
 interface UserDto {
   id: number;
@@ -51,17 +52,12 @@ const ServiceProviders: React.FC = () => {
       }
 
       try {
-        console.log("Access Token:", sessionStorage.getItem("accessToken"));
-
-        const response = await axios.get(
-          "http://164.90.156.55:9090/api/admin/getFreelancers?page=0&size=15&type=0",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.get(endpoints.activeServiceProviders, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
         const data = response.data;
         if (data.success) {
@@ -116,15 +112,15 @@ const ServiceProviders: React.FC = () => {
                     dir={i18n.language === "ar" ? "rtl" : "ltr"}
                     className="w-full border border-gray-200 shadow-sm rounded-lg"
                   >
-                    <CardHeader className="flex items-center space-x-4">
-                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold">
+                    <CardHeader className="flex items-center space-x-4  border-b border-solid border-stone-300">
+                      <div className="w-12 h-12  rounded-full bg-gray-300 flex items-center justify-center text-white font-bold">
                         <span className="w-full h-full text-5xl text-blue-900">
                           <FaUserCircle />
                         </span>
                       </div>
 
                       {/* User Details */}
-                      <div>
+                      <div className="py-1 text-center">
                         <CardTitle className="text-lg font-semibold text-blue-950">
                           {user.userDto.nameEn}
                         </CardTitle>
@@ -134,7 +130,7 @@ const ServiceProviders: React.FC = () => {
                       </div>
                     </CardHeader>
                     <CardContent
-                      className={`space-y-2 text-gray-700 flex flex-col ${
+                      className={`space-y-2 text-gray-700 flex flex-col mt-5 ${
                         i18n.language === "ar" ? "text-right" : "text-left"
                       }`}
                     >
