@@ -28,4 +28,12 @@ export const en = {
   deactivate: "Deactivate",
   edit: "Edit",
   activate: "Activate",
+  modal: {
+    activateUserTitle: "Activate User",
+    deactivateUserTitle: "Deactivate User",
+    activateUserDescription: "Are you sure you want to activate this user?",
+    deactivateUserDescription: "Are you sure you want to deactivate this user?",
+    cancelButton: "Cancel",
+    confirmButton: "Confirm",
+  },
 };

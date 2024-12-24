@@ -15,6 +15,72 @@ const ServiceProviders: React.FC = () => {
   const token = sessionStorage.getItem("accessToken");
   const [activeTab, setActiveTab] = useState<"active" | "inactive">("active");
 
+  const handleUserActivation = async (userId: number) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      if (!token) {
+        toast.error(t("unauthorizedError"));
+        return;
+      }
+
+      const response = await axios.put(
+        endpoints.activateServiceProvider(userId),
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        toast.success(t("Activation Success"));
+        // Refresh both active and inactive lists
+        await handleInactiveUsersCall();
+        await handleActiveUsersCall();
+      } else {
+        toast.error(response.data.messageEn || t("unknownError"));
+      }
+    } catch (error) {
+      console.error("Activation error:", error);
+      toast.error(t("Activation Failed"));
+    }
+  };
+
+  const handleUserDeactivation = async (userId: number) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      if (!token) {
+        toast.error(t("unauthorizedError"));
+        return;
+      }
+
+      const response = await axios.put(
+        endpoints.deactivateServiceProvider(userId),
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        toast.success(t("Deactivation Success"));
+        // Refresh both active and inactive lists
+        await handleInactiveUsersCall();
+        await handleActiveUsersCall();
+      } else {
+        toast.error(response.data.messageEn || t("unknownError"));
+      }
+    } catch (error) {
+      console.error("Deactivation error:", error);
+      toast.error(t("Deactivation Failed"));
+    }
+  };
+
   useEffect(() => {
     if (activeTab === "active") {
       handleActiveUsersCall();
@@ -144,9 +210,8 @@ const ServiceProviders: React.FC = () => {
                     key={user.brandId}
                     user={user}
                     isInactive={false}
-                    onDeactivate={() =>
-                      console.log(`Deactivating ${user.userDto.nameEn}`)
-                    }
+                    onDeactivate={handleUserDeactivation}
+                    onActivate={handleUserActivation}
                   />
                 ))}
               </div>
@@ -168,9 +233,8 @@ const ServiceProviders: React.FC = () => {
                     key={user.brandId}
                     user={user}
                     isInactive={true}
-                    onActivate={() =>
-                      console.log(`Activating ${user.userDto.nameEn}`)
-                    }
+                    onDeactivate={handleUserDeactivation}
+                    onActivate={handleUserActivation}
                   />
                 ))}
               </div>

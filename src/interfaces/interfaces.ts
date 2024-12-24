@@ -20,6 +20,6 @@ export interface FreelancerData {
 export interface UserCardProps {
   user: FreelancerData;
   isInactive: boolean;
-  onActivate?: () => void;
-  onDeactivate?: () => void;
+  onActivate: (userId: number) => void;
+  onDeactivate: (userId: number) => void;
 }

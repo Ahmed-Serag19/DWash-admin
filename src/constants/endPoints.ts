@@ -5,4 +5,8 @@ export const endpoints = {
   changePassword: `${API_BASE_URL}/auth/changePassword`,
   activeServiceProviders: `${API_BASE_URL}/admin/getFreelancers?page=0&size=15&type=0`,
   inactiveServiceProviders: `${API_BASE_URL}/admin/getFreelancers?page=0&size=3&type=1`,
+  activateServiceProvider: (id: number) =>
+    `${API_BASE_URL}/admin/activateFreelancer?userId=${id}`,
+  deactivateServiceProvider: (id: number) =>
+    `${API_BASE_URL}/admin/deactivateFreelancer?userId=${id}`,
 };
