@@ -7,26 +7,12 @@ import { MdChecklist } from "react-icons/md";
 import { MdChecklistRtl } from "react-icons/md";
 import { RiUserSettingsFill } from "react-icons/ri";
 
-export default function HomepageLinks() {
-  const { i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
-
-  // Use conditional array based on language
-  const projects = isArabic ? projectsAr : projectsEn;
-
-  return (
-    <div className="mx-auto">
-      <HoverEffect items={projects} />
-    </div>
-  );
-}
-
 // English projects array
-export const projectsEn = [
+const projectsEn = [
   {
     title: <IoIosPersonAdd />,
     description: "Add a new Service Provider",
-    link: "/login",
+    link: "/service-provider-form",
   },
   {
     title: <IoIosPeople />,
@@ -56,11 +42,11 @@ export const projectsEn = [
 ];
 
 // Arabic projects array
-export const projectsAr = [
+const projectsAr = [
   {
     title: <IoIosPersonAdd />,
     description: "إضافة مقدم خدمة جديد",
-    link: "/login",
+    link: "/service-provider-form",
   },
   {
     title: <IoIosPeople />,
@@ -88,3 +74,16 @@ export const projectsAr = [
     link: "https://microsoft.com",
   },
 ];
+export default function HomepageLinks() {
+  const { i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
+  // Use conditional array based on language
+  const projects = isArabic ? projectsAr : projectsEn;
+
+  return (
+    <div className="mx-auto">
+      <HoverEffect items={projects} />
+    </div>
+  );
+}

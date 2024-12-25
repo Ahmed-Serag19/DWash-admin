@@ -33,7 +33,7 @@ const Navbar = () => {
     navigate("/login");
   };
   const dropDownClassName =
-    "outline-none cursor-pointer rounded-xl transition font-semibold duration-300 hover:bg-slate-200 w-full px-3 my-3 py-2 ";
+    "outline-none cursor-pointer rounded-md transition font-semibold duration-300 hover:bg-slate-100 w-full px-3 my-3 py-2 hover:text-blue-800 ";
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -41,9 +41,9 @@ const Navbar = () => {
     <div className="bg-stone-50 text-blue-950 shadow-lg px-6 py-4 flex justify-around items-center max-md:justify-between z-40">
       <NavLink
         to="/"
-        className="hover:bg-stone-100 transition duration-300 rounded-2xl p-2"
+        className="hover:bg-stone-300 transition duration-300 rounded-2xl p-2"
       >
-        <img src={NavbarLogo} alt="Dwash logo icon" className="w-32 " />
+        <img src={NavbarLogo} alt="Dwash logo icon" className="w-32" />
       </NavLink>
 
       {/* Right section: Profile and Logout */}
@@ -61,7 +61,7 @@ const Navbar = () => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="bg-white text-black rounded-xl shadow-lg space-y-3 p-2 mt-4 ">
-              <Link to="add-service-provider">
+              <Link to="/service-provider-form">
                 <DropdownMenuItem className={dropDownClassName}>
                   {t("serviceProvider")}
                 </DropdownMenuItem>

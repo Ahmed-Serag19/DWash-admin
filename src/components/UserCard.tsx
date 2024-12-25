@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { FaUserCircle } from "react-icons/fa";
 import { Button } from "./ui/button";
 import { UserCardProps } from "@/interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
 
 const UserCard: React.FC<UserCardProps> = ({
   user,
@@ -24,6 +25,7 @@ const UserCard: React.FC<UserCardProps> = ({
   const [modalAction, setModalAction] = useState<"activate" | "deactivate">(
     "activate"
   );
+  const navigate = useNavigate();
 
   const handleModalOpen = (action: "activate" | "deactivate") => {
     setModalAction(action);
@@ -60,14 +62,13 @@ const UserCard: React.FC<UserCardProps> = ({
         onConfirm={handleModalConfirm}
         onCancel={handleModalCancel}
       />
-
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        className="w-full border border-gray-200 shadow-sm rounded-lg"
+        className="w-full border border-gray-200 shadow-sm rounded-lg min-w-[270px]"
       >
         <CardHeader className="flex items-center space-x-4 border-b border-solid border-stone-300">
           <div
-            className={`w-12 h-12 rounded-full flex items-center justify-center bg-white  font-bold ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center bg-white  font-bold ${
               isInactive ? " text-red-600" : "text-blue-950"
             }`}
           >
@@ -137,9 +138,15 @@ const UserCard: React.FC<UserCardProps> = ({
           <Button
             variant="outline"
             className="text-blue-600 border-blue-600 hover:bg-blue-100"
+            onClick={() =>
+              navigate("/service-provider-form", {
+                state: { data: user }, // Pass the user's data
+              })
+            }
           >
             {t("edit")}
           </Button>
+          ;
         </CardFooter>
       </Card>
     </>

@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <ServiceProviders />,
       },
       {
-        path: "/add-service-provider",
+        path: "/service-provider-form",
         element: <ServiceProviderForm />,
       },
     ],

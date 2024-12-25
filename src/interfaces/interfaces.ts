@@ -1,6 +1,7 @@
 interface UserDto {
   id: number;
   nameEn: string;
+  nameAr: string;
   email: string;
   mobile: string;
   identificationNumber: string;
@@ -9,6 +10,8 @@ interface UserDto {
   createdOn: string;
   identityTyNameAr: string;
   identityTyNameEn: string;
+  identificationTypeId: string;
+  identityId: number;
 }
 
 interface BrandWalletDto {
@@ -18,6 +21,7 @@ export interface FreelancerData {
   brandId: number;
   userDto: UserDto;
   brandWalletDto: BrandWalletDto;
+  identityId: number;
 }
 export interface UserCardProps {
   user: FreelancerData;
