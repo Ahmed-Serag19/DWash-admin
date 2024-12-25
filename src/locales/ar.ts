@@ -57,4 +57,5 @@ export const ar = {
   invalidMobile: "يرجى إدخال رقم هاتف صالح",
   positiveDeduction: "يجب أن تكون نسبة الخصم عددًا موجبًا",
   addServiceProvider: "اضافة مقدم خدمة",
+  editServiceProvider: "تعديل مقدم خدمة",
 };

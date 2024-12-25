@@ -5,7 +5,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { endpoints } from "@/constants/endPoints";
-import { IdentificationType, FormData } from "@/interfaces/interfaces";
+import {
+  IdentificationType,
+  FormData,
+  FreelancerData,
+} from "@/interfaces/interfaces";
 import { toast } from "react-toastify";
 
 const ServiceProviderForm: React.FC = () => {
@@ -15,8 +19,8 @@ const ServiceProviderForm: React.FC = () => {
   >([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const initialData: any = location.state?.data;
-  console.log(identificationTypes);
+  const initialData: FreelancerData | undefined = location.state?.data;
+
   const {
     control,
     register,
@@ -47,13 +51,12 @@ const ServiceProviderForm: React.FC = () => {
         mobileNumber: initialData.userDto?.mobile || "",
         email: initialData.userDto?.email || "",
         deductionPrs: initialData.brandWalletDto?.deductionPrs || 0,
-        identityId: initialData.userDto?.identityId || 0,
+        identityId: 0, // Default value, adjusted later
       });
     }
   }, [initialData, reset]);
 
   useEffect(() => {
-    // Fetch identification types
     const fetchIdentificationTypes = async () => {
       const token = sessionStorage.getItem("accessToken");
       try {
@@ -65,7 +68,6 @@ const ServiceProviderForm: React.FC = () => {
         });
         setIdentificationTypes(response.data.content);
 
-        // Automatically set the identification type based on initial data
         if (initialData && initialData.userDto?.identityTyNameEn) {
           const matchedType = response.data.content.find(
             (type: IdentificationType) =>
@@ -83,12 +85,6 @@ const ServiceProviderForm: React.FC = () => {
     fetchIdentificationTypes();
   }, [initialData, setValue]);
 
-  useEffect(() => {
-    if (initialData) {
-      reset(initialData);
-    }
-  }, [initialData, reset]);
-
   const onSubmit = async (data: FormData) => {
     try {
       const formattedData = {
@@ -96,18 +92,26 @@ const ServiceProviderForm: React.FC = () => {
         identityId: Number(data.identityId),
       };
 
-      console.log("Formatted Payload:", formattedData);
-
       const url = initialData?.userDto?.id
         ? endpoints.editServiceProvider(initialData.userDto.id)
         : endpoints.addServiceProvider;
+      let response;
 
-      const response = await axios.post(url, formattedData, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-          "Content-Type": "application/json",
-        },
-      });
+      if (initialData) {
+        response = await axios.put(url, formattedData, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
+        });
+      } else {
+        response = await axios.post(url, formattedData, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
+        });
+      }
 
       if (response.data.success) {
         toast(initialData ? t("editSuccessMessage") : t("addSuccessMessage"), {
@@ -122,10 +126,11 @@ const ServiceProviderForm: React.FC = () => {
       toast(t("formErrorMessage"), { type: "error" });
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-10/12 mx-auto bg-white p-6 rounded-lg shadow-lg flex flex-col gap-10 "
+      className="w-10/12 mx-auto bg-white p-6 rounded-lg shadow-lg flex flex-col gap-10"
     >
       <h2 className="text-xl font-semibold text-blue-900 text-center">
         {initialData ? t("editServiceProvider") : t("addServiceProvider")}
@@ -196,10 +201,7 @@ const ServiceProviderForm: React.FC = () => {
               render={({ field }) => (
                 <select
                   {...field}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value, 10);
-                    field.onChange(value);
-                  }}
+                  onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                   id="identityId"
                   className={`border rounded-md p-2 w-full ${
                     errors.identityId ? "border-red-500" : "border-gray-300"
@@ -340,7 +342,7 @@ const ServiceProviderForm: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end ">
+      <div className="flex justify-end">
         <Button
           type="submit"
           className="bg-blue-600 text-white px-6 py-2 transition duration-500 font-semibold text-md"

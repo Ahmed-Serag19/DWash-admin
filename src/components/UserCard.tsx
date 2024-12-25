@@ -62,14 +62,13 @@ const UserCard: React.FC<UserCardProps> = ({
         onConfirm={handleModalConfirm}
         onCancel={handleModalCancel}
       />
-
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        className="w-full border border-gray-200 shadow-sm rounded-lg"
+        className="w-full border border-gray-200 shadow-sm rounded-lg min-w-[270px]"
       >
         <CardHeader className="flex items-center space-x-4 border-b border-solid border-stone-300">
           <div
-            className={`w-12 h-12 rounded-full flex items-center justify-center bg-white  font-bold ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center bg-white  font-bold ${
               isInactive ? " text-red-600" : "text-blue-950"
             }`}
           >
