@@ -56,4 +56,19 @@ export const en = {
   invalidEmail: "Please enter a valid email",
   invalidMobile: "Please enter a valid mobile number",
   positiveDeduction: "Deduction percentage must be a positive number",
+  addServiceProvider: "Add Service Provider",
+  editServiceProvider: "Edit Service Provider",
+  errorRequired: "This field is required.",
+  errorNumbersOnly: "Please enter numbers only.",
+  errorPhoneNumber: "Please enter a valid 10-digit phone number.",
+  errorEmail: "Please enter a valid email address.",
+  errorMinValue: "The value must be at least 0.",
+  errorMaxValue: "The value must not exceed 100.",
+  addSuccessMessage: "Service Provider added successfully!",
+  editSuccessMessage: "Service Provider updated successfully!",
+  formErrorMessage: "There was an error submitting the form.",
+  errorInvalidNameAr:
+    "The Arabic name must contain at least 7 Arabic letters and can include spaces.",
+  errorInvalidNameEn:
+    "The English name must contain at least 7 English letters and can include spaces.",
 };

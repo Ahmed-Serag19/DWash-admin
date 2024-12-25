@@ -117,6 +117,10 @@ const ServiceProviderForm: React.FC = () => {
           id="nameAr"
           {...register("nameAr", {
             required: t("errorRequired") as string,
+            pattern: {
+              value: /^[\u0600-\u06FF\s]{7,}$/,
+              message: t("errorInvalidNameAr"),
+            },
           })}
           className={`border rounded-md p-2 w-full ${
             errors.nameAr ? "border-red-500" : "border-gray-300"
@@ -139,6 +143,10 @@ const ServiceProviderForm: React.FC = () => {
           id="nameEn"
           {...register("nameEn", {
             required: t("errorRequired") as string,
+            pattern: {
+              value: /^[A-Za-z\s]{7,}$/,
+              message: t("errorInvalidNameEn"),
+            },
           })}
           className={`border rounded-md p-2 w-full ${
             errors.nameEn ? "border-red-500" : "border-gray-300"
@@ -148,7 +156,6 @@ const ServiceProviderForm: React.FC = () => {
           <p className="text-red-500 text-sm mt-1">{errors.nameEn.message}</p>
         )}
       </div>
-
       {/* Identification Type */}
       <div>
         <label

@@ -56,4 +56,19 @@ export const ar = {
   invalidEmail: "يرجى إدخال بريد إلكتروني صالح",
   invalidMobile: "يرجى إدخال رقم هاتف صالح",
   positiveDeduction: "يجب أن تكون نسبة الخصم عددًا موجبًا",
+  addServiceProvider: "إضافة مزود خدمة",
+  editServiceProvider: "تعديل مزود خدمة",
+  errorRequired: "هذا الحقل مطلوب.",
+  errorNumbersOnly: "يرجى إدخال أرقام فقط.",
+  errorPhoneNumber: "يرجى إدخال رقم هاتف صحيح مكون من 10 أرقام.",
+  errorEmail: "يرجى إدخال بريد إلكتروني صحيح.",
+  errorMinValue: "يجب أن تكون القيمة على الأقل 0.",
+  errorMaxValue: "يجب ألا تزيد القيمة عن 100.",
+  addSuccessMessage: "تمت إضافة مزود الخدمة بنجاح!",
+  editSuccessMessage: "تم تعديل مزود الخدمة بنجاح!",
+  formErrorMessage: "حدث خطأ أثناء إرسال النموذج.",
+  errorInvalidNameAr:
+    "يجب أن يحتوي الاسم بالعربية على 7 أحرف عربية على الأقل ويمكن أن يتضمن مسافات.",
+  errorInvalidNameEn:
+    "يجب أن يحتوي الاسم بالإنجليزية على 7 أحرف إنجليزية على الأقل ويمكن أن يتضمن مسافات.",
 };
