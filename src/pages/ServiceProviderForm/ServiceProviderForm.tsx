@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { endpoints } from "@/constants/endPoints";
 import { IdentificationType, FormData } from "@/interfaces/interfaces";
 import { toast } from "react-toastify";
+
 const ServiceProviderForm: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [identificationTypes, setIdentificationTypes] = useState<
@@ -14,7 +15,7 @@ const ServiceProviderForm: React.FC = () => {
   >([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const initialData: FormData | undefined = location.state?.data;
+  const initialData: any = location.state?.data;
   console.log(identificationTypes);
   const {
     control,
@@ -22,8 +23,9 @@ const ServiceProviderForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FormData>({
-    defaultValues: initialData || {
+    defaultValues: {
       nameAr: "",
       nameEn: "",
       identificationTypeId: "1",
@@ -34,6 +36,21 @@ const ServiceProviderForm: React.FC = () => {
       identityId: 0,
     },
   });
+
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        nameAr: initialData.userDto?.nameAr || "",
+        nameEn: initialData.userDto?.nameEn || "",
+        identificationTypeId: initialData.userDto?.identificationTypeId || "1",
+        identificationNumber: initialData.userDto?.identificationNumber || "",
+        mobileNumber: initialData.userDto?.mobile || "",
+        email: initialData.userDto?.email || "",
+        deductionPrs: initialData.brandWalletDto?.deductionPrs || 0,
+        identityId: initialData.userDto?.identityId || 0,
+      });
+    }
+  }, [initialData, reset]);
 
   useEffect(() => {
     // Fetch identification types
@@ -47,16 +64,26 @@ const ServiceProviderForm: React.FC = () => {
           },
         });
         setIdentificationTypes(response.data.content);
+
+        // Automatically set the identification type based on initial data
+        if (initialData && initialData.userDto?.identityTyNameEn) {
+          const matchedType = response.data.content.find(
+            (type: IdentificationType) =>
+              type.identityTyNameEn === initialData.userDto.identityTyNameEn
+          );
+          if (matchedType) {
+            setValue("identityId", matchedType.id);
+          }
+        }
       } catch (error) {
         console.error("Failed to fetch identification types", error);
       }
     };
 
     fetchIdentificationTypes();
-  }, []);
+  }, [initialData, setValue]);
 
   useEffect(() => {
-    // Reset the form whenever initialData changes
     if (initialData) {
       reset(initialData);
     }
@@ -71,8 +98,8 @@ const ServiceProviderForm: React.FC = () => {
 
       console.log("Formatted Payload:", formattedData);
 
-      const url = data.id
-        ? endpoints.editServiceProvider(data.id)
+      const url = initialData?.userDto?.id
+        ? endpoints.editServiceProvider(initialData.userDto.id)
         : endpoints.addServiceProvider;
 
       const response = await axios.post(url, formattedData, {
@@ -83,7 +110,7 @@ const ServiceProviderForm: React.FC = () => {
       });
 
       if (response.data.success) {
-        toast(data.id ? t("editSuccessMessage") : t("addSuccessMessage"), {
+        toast(initialData ? t("editSuccessMessage") : t("addSuccessMessage"), {
           type: "success",
         });
         navigate("/service-providers");
@@ -95,7 +122,6 @@ const ServiceProviderForm: React.FC = () => {
       toast(t("formErrorMessage"), { type: "error" });
     }
   };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -171,11 +197,11 @@ const ServiceProviderForm: React.FC = () => {
                 <select
                   {...field}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value, 10); // Parse the value as a number
-                    field.onChange(value); // Update field value explicitly
+                    const value = parseInt(e.target.value, 10);
+                    field.onChange(value);
                   }}
                   id="identityId"
-                  className={`border rounded-md p-2 w-full  ${
+                  className={`border rounded-md p-2 w-full ${
                     errors.identityId ? "border-red-500" : "border-gray-300"
                   }`}
                 >
