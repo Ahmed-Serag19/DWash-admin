@@ -56,4 +56,5 @@ export const en = {
   invalidEmail: "Please enter a valid email",
   invalidMobile: "Please enter a valid mobile number",
   positiveDeduction: "Deduction percentage must be a positive number",
+  addServiceProvider: "Add Service Provider",
 };

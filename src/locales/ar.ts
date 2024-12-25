@@ -56,4 +56,5 @@ export const ar = {
   invalidEmail: "يرجى إدخال بريد إلكتروني صالح",
   invalidMobile: "يرجى إدخال رقم هاتف صالح",
   positiveDeduction: "يجب أن تكون نسبة الخصم عددًا موجبًا",
+  addServiceProvider: "اضافة مقدم خدمة",
 };
