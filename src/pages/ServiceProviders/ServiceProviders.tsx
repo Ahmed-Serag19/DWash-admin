@@ -36,9 +36,7 @@ const ServiceProviders: React.FC = () => {
 
       if (response.data.success) {
         toast.success(t("Activation Success"));
-        // Refresh both active and inactive lists
         await handleInactiveUsersCall();
-        await handleActiveUsersCall();
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
@@ -69,8 +67,6 @@ const ServiceProviders: React.FC = () => {
 
       if (response.data.success) {
         toast.success(t("Deactivation Success"));
-        // Refresh both active and inactive lists
-        await handleInactiveUsersCall();
         await handleActiveUsersCall();
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
@@ -88,10 +84,6 @@ const ServiceProviders: React.FC = () => {
       handleInactiveUsersCall();
     }
   }, [activeTab]);
-
-  useEffect(() => {
-    handleActiveUsersCall();
-  }, []);
 
   const handleActiveUsersCall = async () => {
     setIsLoading(true);
@@ -204,7 +196,7 @@ const ServiceProviders: React.FC = () => {
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-5">
                 {activeUsers.map((user) => (
                   <UserCard
                     key={user.brandId}
@@ -227,7 +219,7 @@ const ServiceProviders: React.FC = () => {
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-5">
                 {inactiveUsers.map((user) => (
                   <UserCard
                     key={user.brandId}

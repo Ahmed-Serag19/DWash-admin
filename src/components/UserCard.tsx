@@ -64,7 +64,7 @@ const UserCard: React.FC<UserCardProps> = ({
       />
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        className="w-full border border-gray-200 shadow-sm rounded-lg min-w-[270px]"
+        className="w-full border border-gray-200 shadow-md rounded-lg min-w-[280px]"
       >
         <CardHeader className="flex items-center space-x-4 border-b border-solid border-stone-300">
           <div
@@ -74,7 +74,10 @@ const UserCard: React.FC<UserCardProps> = ({
           >
             <FaUserCircle className="w-full h-full text-5xl" />
           </div>
-          <div className="py-1 text-center">
+          <div className="py-1 flex flex-col items-center justify-center">
+            <CardTitle className="text-lg font-semibold text-blue-950">
+              {user.userDto.nameAr}
+            </CardTitle>
             <CardTitle className="text-lg font-semibold text-blue-950">
               {user.userDto.nameEn}
             </CardTitle>
@@ -146,7 +149,6 @@ const UserCard: React.FC<UserCardProps> = ({
           >
             {t("edit")}
           </Button>
-          ;
         </CardFooter>
       </Card>
     </>
