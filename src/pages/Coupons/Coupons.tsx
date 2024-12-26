@@ -114,7 +114,9 @@ const Coupons: React.FC = () => {
     fetchDiscounts();
   }, []);
 
-  return (
+  return isLoading ? (
+    <div className="loader"></div>
+  ) : (
     <div className="flex flex-col items-center p-6 gap-5">
       <div className="flex justify-center items-center gap-5 flex-col  max-w-6xl mb-5">
         <div>
