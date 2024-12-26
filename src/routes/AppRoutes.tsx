@@ -4,6 +4,7 @@ import Homepage from "@/pages/Homepage/Homepage";
 import Login from "@/pages/Login/Login";
 import ServiceProviders from "@/pages/ServiceProviders/ServiceProviders";
 import ServiceProviderForm from "@/pages/ServiceProviderForm/ServiceProviderForm";
+import Coupons from "@/pages/Coupons/Coupons";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/service-provider-form",
         element: <ServiceProviderForm />,
+      },
+      {
+        path: "/coupons",
+        element: <Coupons />,
       },
     ],
   },

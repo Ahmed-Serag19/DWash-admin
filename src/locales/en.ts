@@ -7,7 +7,7 @@ export const en = {
 
   addNew: "Add New",
   serviceProvider: "Service Provider",
-  discount: "Discount",
+  coupon: "Coupon",
   serviceProviders: "Service Providers",
   showServiceProviders: "Show Service Providers",
   serviceRequests: "Service Requests",
@@ -71,4 +71,23 @@ export const en = {
     "The Arabic name must contain at least 7 Arabic letters and can include spaces.",
   errorInvalidNameEn:
     "The English name must contain at least 7 English letters and can include spaces.",
+
+  manageCoupons: "Manage Coupons",
+  couponCode: "Coupon Code",
+  couponType: "Coupon Type",
+  amount: "Amount",
+  percentage: "Percentage",
+  couponAmount: "Coupon Amount",
+  startDate: "Start Date",
+  endDate: "End Date",
+  brandMail: "Brand Email",
+  addCoupon: "Add Coupon",
+  delete: "Delete",
+  for: "For",
+  everyone: "Everyone",
+  couponAdded: "Coupon added successfully.",
+  couponDeleted: "Coupon deleted successfully.",
+  errorAddingCoupon: "Failed to add coupon.",
+  errorDeletingCoupon: "Failed to delete coupon.",
+  errorFetchingData: "Failed to fetch coupon.",
 };

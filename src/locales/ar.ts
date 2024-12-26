@@ -7,7 +7,7 @@ export const ar = {
 
   addNew: "إضافة ",
   serviceProvider: "مزود خدمة",
-  discount: "خصم",
+  coupon: "خصم",
   serviceProviders: "مزودو الخدمة",
   showServiceProviders: "عرض مزودي الخدمة",
   serviceRequests: "طلبات الخدمة",
@@ -71,4 +71,24 @@ export const ar = {
     "يجب أن يحتوي الاسم بالعربية على 7 أحرف عربية على الأقل ويمكن أن يتضمن مسافات.",
   errorInvalidNameEn:
     "يجب أن يحتوي الاسم بالإنجليزية على 7 أحرف إنجليزية على الأقل ويمكن أن يتضمن مسافات.",
+
+  manageCoupons: "إدارة الخصومات",
+  couponCode: "رمز الخصم",
+  couponType: "نوع الخصم",
+  amount: "مبلغ",
+  percentage: "النسبة المئوية",
+  couponAmount: "قيمة الخصم",
+  startDate: "تاريخ البدء",
+  endDate: "تاريخ الانتهاء",
+  brandMail: "بريد العلامة التجارية",
+  addCoupon: "إضافة خصم",
+  delete: "حذف",
+
+  for: "لـ",
+  everyone: "الجميع",
+  couponAdded: "تمت إضافة الخصم بنجاح.",
+  couponDeleted: "تم حذف الخصم بنجاح.",
+  errorAddingCoupon: "فشل في إضافة الخصم.",
+  errorDeletingCoupon: "فشل في حذف الخصم.",
+  errorFetchingData: "فشل في جلب الخصومات.",
 };

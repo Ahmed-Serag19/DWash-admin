@@ -53,3 +53,31 @@ export interface FormData {
   deductionPrs: number;
   identityId: number;
 }
+
+export interface Discount {
+  discountId: number;
+  discountCode: string;
+  status: number;
+  discountType: "AMOUNT" | "PERCENTAGE";
+  discountAmount: number;
+  startDate: string;
+  endDate: string;
+  createdOn: string;
+  freelancer: string | null;
+}
+
+export interface DiscountFormInputs {
+  discountCode: string;
+  discountType: "AMOUNT" | "PERCENTAGE";
+  discountAmount: number;
+  startDate: string;
+  endDate: string;
+  brandMail: string;
+}
+
+export interface CouponModalProps {
+  isOpen: boolean;
+  title: string;
+  children: React.ReactNode;
+  onClose: () => void;
+}

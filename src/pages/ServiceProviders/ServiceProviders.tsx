@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { useTranslation } from "react-i18next";
 import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
@@ -10,19 +18,58 @@ import { FreelancerData } from "@/interfaces/interfaces";
 const ServiceProviders: React.FC = () => {
   const { t } = useTranslation();
   const [activeUsers, setActiveUsers] = useState<FreelancerData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [inactiveUsers, setInactiveUsers] = useState<FreelancerData[]>([]);
-  const token = sessionStorage.getItem("accessToken");
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"active" | "inactive">("active");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const token = sessionStorage.getItem("accessToken");
+
+  const pageSize = 6; // Default page size for active users
+
+  const fetchUsers = async (
+    type: "active" | "inactive",
+    page: number,
+    size: number = pageSize
+  ) => {
+    setIsLoading(true);
+    try {
+      const pageSizeToUse = type === "inactive" ? 3 : size; // Use 3 for inactive users
+      const url =
+        type === "active"
+          ? endpoints.activeServiceProviders(page - 1, pageSizeToUse)
+          : endpoints.inactiveServiceProviders(page - 1, pageSizeToUse);
+
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.data.success) {
+        const users = response.data.content.data;
+        const pages = Math.ceil(
+          response.data.content.totalElements / pageSizeToUse
+        );
+        if (type === "active") {
+          setActiveUsers(users);
+        } else {
+          setInactiveUsers(users);
+        }
+        setTotalPages(pages);
+      } else {
+        toast.error(response.data.messageEn || t("errorFetchingData"));
+      }
+    } catch (error) {
+      toast.error(t("errorFetchingData"));
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleUserActivation = async (userId: number) => {
     try {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        toast.error(t("unauthorizedError"));
-        return;
-      }
-
       const response = await axios.put(
         endpoints.activateServiceProvider(userId),
         null,
@@ -33,27 +80,19 @@ const ServiceProviders: React.FC = () => {
           },
         }
       );
-
       if (response.data.success) {
         toast.success(t("Activation Success"));
-        await handleInactiveUsersCall();
+        fetchUsers("inactive", currentPage, 3); // Pass size explicitly for inactive users
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
     } catch (error) {
-      console.error("Activation error:", error);
       toast.error(t("Activation Failed"));
     }
   };
 
   const handleUserDeactivation = async (userId: number) => {
     try {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        toast.error(t("unauthorizedError"));
-        return;
-      }
-
       const response = await axios.put(
         endpoints.deactivateServiceProvider(userId),
         null,
@@ -64,104 +103,20 @@ const ServiceProviders: React.FC = () => {
           },
         }
       );
-
       if (response.data.success) {
         toast.success(t("Deactivation Success"));
-        await handleActiveUsersCall();
+        fetchUsers("active", currentPage, pageSize); // Pass size explicitly for active users
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
     } catch (error) {
-      console.error("Deactivation error:", error);
       toast.error(t("Deactivation Failed"));
     }
   };
 
   useEffect(() => {
-    if (activeTab === "active") {
-      handleActiveUsersCall();
-    } else if (activeTab === "inactive") {
-      handleInactiveUsersCall();
-    }
-  }, [activeTab]);
-
-  const handleActiveUsersCall = async () => {
-    setIsLoading(true);
-
-    if (!token) {
-      console.error("No access token found in session storage.");
-      setIsLoading(false);
-      return;
-    }
-    try {
-      const response = await axios.get(endpoints.activeServiceProviders, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = response.data;
-      if (data.success) {
-        setActiveUsers(data.content.data);
-      } else {
-        toast.error(data.messageEn);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const messageEn = error.response?.data?.messageEn;
-        if (messageEn === "unauthorized request") {
-          toast.error("Unauthorized Request");
-        } else {
-          toast.error(messageEn || "An error occurred.");
-        }
-      } else {
-        console.error("Unexpected error:", error);
-        toast.error("Network error occurred.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInactiveUsersCall = async () => {
-    setIsLoading(true);
-
-    if (!token) {
-      console.error("No access token found in session storage.");
-      setIsLoading(false);
-      return;
-    }
-    try {
-      const response = await axios.get(endpoints.inactiveServiceProviders, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response);
-      const data = response.data;
-      if (data.success) {
-        setInactiveUsers(data.content.data);
-      } else {
-        toast.error(data.messageEn);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const messageEn = error.response?.data?.messageEn;
-        if (messageEn === "unauthorized request") {
-          toast.error("Unauthorized Request");
-        } else {
-          toast.error(messageEn || "An error occurred.");
-        }
-      } else {
-        console.error("Unexpected error:", error);
-        toast.error("Network error occurred.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    fetchUsers(activeTab, currentPage, activeTab === "inactive" ? 3 : pageSize);
+  }, [activeTab, currentPage]);
 
   return (
     <main className="flex flex-col items-center justify-start min-h-[calc(100vh-210px)]">
@@ -174,9 +129,10 @@ const ServiceProviders: React.FC = () => {
         <Tabs
           defaultValue="active"
           className="w-full max-w-6xl md:min-w-96 min-w-60 flex flex-col items-center"
-          onValueChange={(value) =>
-            setActiveTab(value as "active" | "inactive")
-          }
+          onValueChange={(value) => {
+            setActiveTab(value as "active" | "inactive");
+            setCurrentPage(1);
+          }}
         >
           <TabsList className="md:min-w-[400px] flex mb-5 text-blue-900">
             <TabsTrigger value="active" className="w-1/2">
@@ -192,21 +148,56 @@ const ServiceProviders: React.FC = () => {
             className="transition-all duration-300 p-5 min-h-[400px]"
           >
             {isLoading ? (
-              <div className="flex justify-center items-center ">
+              <div className="flex justify-center items-center">
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-5">
-                {activeUsers.map((user) => (
-                  <UserCard
-                    key={user.brandId}
-                    user={user}
-                    isInactive={false}
-                    onDeactivate={handleUserDeactivation}
-                    onActivate={handleUserActivation}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {activeUsers.map((user) => (
+                    <UserCard
+                      key={user.brandId}
+                      user={user}
+                      isInactive={false}
+                      onDeactivate={handleUserDeactivation}
+                      onActivate={handleUserActivation}
+                    />
+                  ))}
+                </div>
+                <Pagination className="py-5">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        onClick={() =>
+                          setCurrentPage((prev) => Math.max(prev - 1, 1))
+                        }
+                      />
+                    </PaginationItem>
+                    {[...Array(totalPages)].map((_, index) => (
+                      <PaginationItem key={index}>
+                        <PaginationLink
+                          href="#"
+                          isActive={currentPage === index + 1}
+                          onClick={() => setCurrentPage(index + 1)}
+                        >
+                          {index + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        onClick={() =>
+                          setCurrentPage((prev) =>
+                            Math.min(prev + 1, totalPages)
+                          )
+                        }
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </>
             )}
           </TabsContent>
 
@@ -219,17 +210,52 @@ const ServiceProviders: React.FC = () => {
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-5">
-                {inactiveUsers.map((user) => (
-                  <UserCard
-                    key={user.brandId}
-                    user={user}
-                    isInactive={true}
-                    onDeactivate={handleUserDeactivation}
-                    onActivate={handleUserActivation}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {inactiveUsers.map((user) => (
+                    <UserCard
+                      key={user.brandId}
+                      user={user}
+                      isInactive={true}
+                      onDeactivate={handleUserDeactivation}
+                      onActivate={handleUserActivation}
+                    />
+                  ))}
+                </div>
+                <Pagination className="py-5">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        onClick={() =>
+                          setCurrentPage((prev) => Math.max(prev - 1, 1))
+                        }
+                      />
+                    </PaginationItem>
+                    {[...Array(totalPages)].map((_, index) => (
+                      <PaginationItem key={index}>
+                        <PaginationLink
+                          href="#"
+                          isActive={currentPage === index + 1}
+                          onClick={() => setCurrentPage(index + 1)}
+                        >
+                          {index + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        onClick={() =>
+                          setCurrentPage((prev) =>
+                            Math.min(prev + 1, totalPages)
+                          )
+                        }
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </>
             )}
           </TabsContent>
         </Tabs>
