@@ -81,3 +81,8 @@ export interface CouponModalProps {
   children: React.ReactNode;
   onClose: () => void;
 }
+
+export interface CouponCardProps {
+  discount: Discount;
+  handleOpenDeleteModal: () => void;
+}

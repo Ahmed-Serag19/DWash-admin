@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import { Discount, DiscountFormInputs } from "@/interfaces/interfaces";
 import CouponModal from "@/components/CouponModal";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+
 import CardModal from "@/components/CardModal";
+import CouponCard from "@/components/CouponCard";
 
 const Coupons: React.FC = () => {
   const { t } = useTranslation();
@@ -27,11 +21,17 @@ const Coupons: React.FC = () => {
   const [applyTo, setApplyTo] = useState("everyone");
   const [brandMail, setBrandMail] = useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedDiscountId, setSelectedDiscountId] = useState<number | null>(
+    null
+  );
 
-  const handleOpenDeleteModal = () => {
+  const handleOpenDeleteModal = (discountId: number) => {
+    setSelectedDiscountId(discountId);
     setIsDeleteModalOpen(true);
   };
+
   const handleCloseDeleteModal = () => {
+    setSelectedDiscountId(null);
     setIsDeleteModalOpen(false);
   };
 
@@ -74,9 +74,9 @@ const Coupons: React.FC = () => {
 
       if (response.data.success) {
         toast.success(t("discountAdded"));
-        fetchDiscounts(); // Refresh discounts list
-        reset(); // Reset the form
-        setisAddModalOpen(false); // Close modal
+        fetchDiscounts();
+        reset();
+        setisAddModalOpen(false);
       } else {
         toast.error(t("errorAddingDiscount"));
       }
@@ -85,10 +85,11 @@ const Coupons: React.FC = () => {
     }
   };
 
-  const handleDeleteDiscount = async (discountId: number) => {
+  const handleDeleteDiscount = async () => {
+    if (selectedDiscountId === null) return;
     try {
       const response = await axios.delete(
-        endpoints.deleteDiscount(discountId),
+        endpoints.deleteDiscount(selectedDiscountId),
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -99,12 +100,13 @@ const Coupons: React.FC = () => {
       if (response.data.success) {
         toast.success(t("discountDeleted"));
         fetchDiscounts();
-        handleCloseDeleteModal();
       } else {
         toast.error(t("errorDeletingDiscount"));
       }
     } catch (error) {
       toast.error(t("errorDeletingDiscount"));
+    } finally {
+      handleCloseDeleteModal();
     }
   };
 
@@ -133,56 +135,22 @@ const Coupons: React.FC = () => {
       {/* Discount Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl">
         {discounts.map((discount) => (
-          <>
-            <Card key={discount.discountId} className="shadow-md min-w-[270px]">
-              <CardHeader>
-                <CardTitle className="text-blue-900 text-lg font-bold text-center">
-                  {discount.discountCode}
-                </CardTitle>
-                <CardDescription className="text-blue-950 text-md font-semibold min-h-[50px]">
-                  {t("for")} {discount.freelancer || t("everyone")}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="font-medium">{t("added")} : </span>
-                  <span>{discount.createdOn.split("T")[0]}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">{t("amount")} : </span>
-                  <span>
-                    {discount.discountAmount}{" "}
-                    {discount.discountType === "AMOUNT" ? "SAR" : "%"}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">{t("startDate")} : </span>
-                  <span>{discount.startDate.split("T")[0]}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">{t("endDate")} : </span>
-                  <span>{discount.endDate.split("T")[0]}</span>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  className="w-full bg-red-600 text-white"
-                  onClick={handleOpenDeleteModal}
-                >
-                  {t("delete")}
-                </Button>
-              </CardFooter>
-            </Card>
-            <CardModal
-              isOpen={isDeleteModalOpen}
-              titleKey={t("deleteCoupon")}
-              onCancel={handleCloseDeleteModal}
-              onConfirm={() => handleDeleteDiscount(discount.discountId)}
-              descriptionKey={t("deleteCouponDesc")}
-            />
-          </>
+          <CouponCard
+            key={discount.discountId}
+            discount={discount}
+            handleOpenDeleteModal={() =>
+              handleOpenDeleteModal(discount.discountId)
+            }
+          />
         ))}
       </div>
+      <CardModal
+        isOpen={isDeleteModalOpen}
+        titleKey={t("deleteCoupon")}
+        onCancel={handleCloseDeleteModal}
+        onConfirm={handleDeleteDiscount}
+        descriptionKey={t("deleteCouponDesc")}
+      />
 
       {/* Add Discount Modal */}
       {isAddModalOpen && (
@@ -306,7 +274,7 @@ const Coupons: React.FC = () => {
                     checked={applyTo === "everyone"}
                     onChange={() => {
                       setApplyTo("everyone");
-                      setBrandMail(""); // Clear brandMail input
+                      setBrandMail("");
                     }}
                     className="cursor-pointer"
                   />
@@ -342,7 +310,7 @@ const Coupons: React.FC = () => {
                   value={brandMail}
                   onChange={(e) => setBrandMail(e.target.value)}
                   className="w-full border rounded-md p-2 mt-2"
-                  disabled={applyTo === "everyone"} // Disable input for "For Everyone"
+                  disabled={applyTo === "everyone"}
                   placeholder={t("serviceProviderEmail")}
                 />
               </div>
