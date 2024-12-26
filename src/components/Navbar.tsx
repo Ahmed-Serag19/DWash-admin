@@ -66,9 +66,11 @@ const Navbar = () => {
                   {t("serviceProvider")}
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem className={dropDownClassName}>
-                {t("coupon")}
-              </DropdownMenuItem>
+              <Link to="coupons">
+                <DropdownMenuItem className={dropDownClassName}>
+                  {t("discount")}
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -148,9 +150,11 @@ const Navbar = () => {
                   <DropdownMenuItem className={dropDownClassName}>
                     {t("serviceProvider")}
                   </DropdownMenuItem>
-                  <DropdownMenuItem className={dropDownClassName}>
-                    {t("coupon")}
-                  </DropdownMenuItem>
+                  <Link to="coupons">
+                    <DropdownMenuItem className={dropDownClassName}>
+                      {t("discount")}
+                    </DropdownMenuItem>
+                  </Link>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>

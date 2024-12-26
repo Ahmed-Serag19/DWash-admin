@@ -15,15 +15,26 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
+import CardModal from "@/components/CardModal";
 
 const Coupons: React.FC = () => {
   const { t } = useTranslation();
   const [discounts, setDiscounts] = useState<Discount[]>([]);
-  const { register, handleSubmit, control, reset } =
-    useForm<DiscountFormInputs>();
+  const { register, handleSubmit, reset } = useForm<DiscountFormInputs>();
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [discountTypePreview, setDiscountTypePreview] = useState("");
+  const [isAddModalOpen, setisAddModalOpen] = useState(false);
+  const [discountType, setDiscountType] = useState("AMOUNT");
+  const [applyTo, setApplyTo] = useState("everyone");
+  const [brandMail, setBrandMail] = useState("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleOpenDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
   const fetchDiscounts = async () => {
     setIsLoading(true);
     try {
@@ -47,17 +58,25 @@ const Coupons: React.FC = () => {
 
   const handleAddDiscount = async (data: DiscountFormInputs) => {
     try {
-      const response = await axios.post(endpoints.addDiscount, data, {
+      const payload = {
+        ...data,
+        brandMail: applyTo === "everyone" ? null : brandMail,
+      };
+
+      console.log("Payload sent to API:", payload);
+
+      const response = await axios.post(endpoints.addDiscount, payload, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
           "Content-Type": "application/json",
         },
       });
+
       if (response.data.success) {
         toast.success(t("discountAdded"));
-        fetchDiscounts();
-        reset();
-        setIsModalOpen(false);
+        fetchDiscounts(); // Refresh discounts list
+        reset(); // Reset the form
+        setisAddModalOpen(false); // Close modal
       } else {
         toast.error(t("errorAddingDiscount"));
       }
@@ -80,6 +99,7 @@ const Coupons: React.FC = () => {
       if (response.data.success) {
         toast.success(t("discountDeleted"));
         fetchDiscounts();
+        handleCloseDeleteModal();
       } else {
         toast.error(t("errorDeletingDiscount"));
       }
@@ -98,7 +118,7 @@ const Coupons: React.FC = () => {
         <div>
           <Button
             className="bg-blue-600 text-white px-4 py-2"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setisAddModalOpen(true)}
           >
             {t("addDiscount")}
           </Button>
@@ -111,53 +131,71 @@ const Coupons: React.FC = () => {
       </div>
 
       {/* Discount Cards */}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 min-h-[500px] lg:grid-cols-3 gap-6 w-full max-w-6xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl">
         {discounts.map((discount) => (
-          <div
-            key={discount.discountId}
-            className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
-          >
-            <h3 className="text-lg font-bold text-blue-900">
-              {discount.discountCode}
-            </h3>
-            <p>
-              {t("type")}: {discount.discountType}
-            </p>
-            <p>
-              {t("amount")}: {discount.discountAmount}{" "}
-              {discount.discountType === "AMOUNT" ? "SAR" : "%"}
-            </p>
-            <p>
-              {t("startDate")}: {discount.startDate.split("T")[0]}
-            </p>
-            <p>
-              {t("endDate")}: {discount.endDate.split("T")[0]}
-            </p>
-            <p>
-              {t("for")}: {discount.freelancer || t("everyone")}
-            </p>
-            <Button
-              className="mt-4 bg-red-600 text-white py-1"
-              onClick={() => handleDeleteDiscount(discount.discountId)}
-            >
-              {t("delete")}
-            </Button>
-          </div>
+          <>
+            <Card key={discount.discountId} className="shadow-md min-w-[270px]">
+              <CardHeader>
+                <CardTitle className="text-blue-900 text-lg font-bold text-center">
+                  {discount.discountCode}
+                </CardTitle>
+                <CardDescription className="text-blue-950 text-md font-semibold min-h-[50px]">
+                  {t("for")} {discount.freelancer || t("everyone")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="font-medium">{t("added")} : </span>
+                  <span>{discount.createdOn.split("T")[0]}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">{t("amount")} : </span>
+                  <span>
+                    {discount.discountAmount}{" "}
+                    {discount.discountType === "AMOUNT" ? "SAR" : "%"}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">{t("startDate")} : </span>
+                  <span>{discount.startDate.split("T")[0]}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">{t("endDate")} : </span>
+                  <span>{discount.endDate.split("T")[0]}</span>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  className="w-full bg-red-600 text-white"
+                  onClick={handleOpenDeleteModal}
+                >
+                  {t("delete")}
+                </Button>
+              </CardFooter>
+            </Card>
+            <CardModal
+              isOpen={isDeleteModalOpen}
+              titleKey={t("deleteCoupon")}
+              onCancel={handleCloseDeleteModal}
+              onConfirm={() => handleDeleteDiscount(discount.discountId)}
+              descriptionKey={t("deleteCouponDesc")}
+            />
+          </>
         ))}
       </div>
 
       {/* Add Discount Modal */}
-      {isModalOpen && (
+      {isAddModalOpen && (
         <CouponModal
-          isOpen={isModalOpen}
+          isOpen={isAddModalOpen}
           title={t("addDiscount")}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setisAddModalOpen(false)}
         >
           <form
             onSubmit={handleSubmit(handleAddDiscount)}
             className="space-y-4"
           >
+            {/* Discount Code */}
             <div>
               <label
                 htmlFor="discountCode"
@@ -174,6 +212,7 @@ const Coupons: React.FC = () => {
               />
             </div>
 
+            {/* Discount Type */}
             <div>
               <label
                 htmlFor="discountType"
@@ -181,19 +220,19 @@ const Coupons: React.FC = () => {
               >
                 {t("discountType")}
               </label>
-              <Controller
-                name="discountType"
-                control={control}
-                defaultValue="AMOUNT"
-                render={({ field }) => (
-                  <select {...field} className="w-full border rounded-md p-2">
-                    <option value="AMOUNT">{t("amount")}</option>
-                    <option value="PERCENTAGE">{t("percentage")}</option>
-                  </select>
-                )}
-              />
+              <select
+                {...register("discountType", {
+                  required: t("errorRequired") as string,
+                  onChange: (e) => setDiscountType(e.target.value),
+                })}
+                className="w-full border rounded-md p-2"
+              >
+                <option value="AMOUNT">{t("amount")}</option>
+                <option value="PERCENTAGE">{t("percentage")}</option>
+              </select>
             </div>
 
+            {/* Discount Amount */}
             <div>
               <label
                 htmlFor="discountAmount"
@@ -211,13 +250,12 @@ const Coupons: React.FC = () => {
                   className="w-full border rounded-md p-2"
                 />
                 <span className="ml-2">
-                  {control._defaultValues.discountType === "PERCENTAGE"
-                    ? "%"
-                    : "SAR"}
+                  {discountType === "PERCENTAGE" ? "%" : "SAR"}
                 </span>
               </div>
             </div>
 
+            {/* Start Date */}
             <div>
               <label
                 htmlFor="startDate"
@@ -235,6 +273,7 @@ const Coupons: React.FC = () => {
               />
             </div>
 
+            {/* End Date */}
             <div>
               <label
                 htmlFor="endDate"
@@ -252,20 +291,64 @@ const Coupons: React.FC = () => {
               />
             </div>
 
+            {/* BrandMail with Radio Buttons */}
             <div>
-              <label
-                htmlFor="brandMail"
-                className="block text-blue-900 font-medium pt-1 pb-3"
-              >
-                {t("brandMail")}
+              <label className="block text-blue-900 font-medium pt-1 pb-3">
+                {t("applyTo")}
               </label>
-              <input
-                id="brandMail"
-                {...register("brandMail")}
-                className="w-full border rounded-md p-2"
-              />
+              <div className="space-y-2">
+                {/* For Everyone */}
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="radio"
+                    id="forEveryone"
+                    value="everyone"
+                    checked={applyTo === "everyone"}
+                    onChange={() => {
+                      setApplyTo("everyone");
+                      setBrandMail(""); // Clear brandMail input
+                    }}
+                    className="cursor-pointer"
+                  />
+                  <label
+                    htmlFor="forEveryone"
+                    className="text-blue-900 cursor-pointer"
+                  >
+                    {t("forEveryone")}
+                  </label>
+                </div>
+
+                {/* For a Service Provider */}
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="radio"
+                    id="forServiceProvider"
+                    value="serviceProvider"
+                    checked={applyTo === "serviceProvider"}
+                    onChange={() => setApplyTo("serviceProvider")}
+                    className="cursor-pointer"
+                  />
+                  <label
+                    htmlFor="forServiceProvider"
+                    className="text-blue-900 cursor-pointer"
+                  >
+                    {t("forServiceProvider")}
+                  </label>
+                </div>
+
+                {/* BrandMail Input */}
+                <input
+                  id="brandMail"
+                  value={brandMail}
+                  onChange={(e) => setBrandMail(e.target.value)}
+                  className="w-full border rounded-md p-2 mt-2"
+                  disabled={applyTo === "everyone"} // Disable input for "For Everyone"
+                  placeholder={t("serviceProviderEmail")}
+                />
+              </div>
             </div>
 
+            {/* Submit Button */}
             <Button
               type="submit"
               className="w-full bg-blue-600 text-white py-2"

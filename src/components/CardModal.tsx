@@ -10,7 +10,7 @@ const CardModal: React.FC<ModalProps> = ({
   onConfirm,
   onCancel,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (!isOpen) return null;
 
@@ -19,22 +19,41 @@ const CardModal: React.FC<ModalProps> = ({
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
         <h2 className="text-lg font-bold text-blue-950 mb-3">{t(titleKey)}</h2>
         <p className="text-gray-700 mb-5">{t(descriptionKey)}</p>
-        <div className="flex justify-end gap-3">
-          <Button variant="outline" onClick={onCancel}>
-            {t("cancelButton")}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={onConfirm}
-            className={`${
-              titleKey === "activateUserTitle"
-                ? "text-green-500"
-                : "text-red-500"
-            }`}
-          >
-            {t("confirmButton")}
-          </Button>
-        </div>
+        {i18n.language === "en" ? (
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={onCancel}>
+              {t("cancelButton")}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={onConfirm}
+              className={`${
+                titleKey === "activateUserTitle"
+                  ? "text-green-500"
+                  : "text-red-500"
+              }`}
+            >
+              {t("confirmButton")}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex justify-start gap-3">
+            <Button
+              variant="outline"
+              onClick={onConfirm}
+              className={`${
+                titleKey === "activateUserTitle"
+                  ? "text-green-500"
+                  : "text-red-500"
+              }`}
+            >
+              {t("confirmButton")}
+            </Button>
+            <Button variant="outline" onClick={onCancel}>
+              {t("cancelButton")}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
