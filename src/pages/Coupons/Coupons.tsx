@@ -14,7 +14,12 @@ import CouponCard from "@/components/CouponCard";
 const Coupons: React.FC = () => {
   const { t } = useTranslation();
   const [discounts, setDiscounts] = useState<Discount[]>([]);
-  const { register, handleSubmit, reset } = useForm<DiscountFormInputs>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<DiscountFormInputs>();
   const [isLoading, setIsLoading] = useState(false);
   const [isAddModalOpen, setisAddModalOpen] = useState(false);
   const [discountType, setDiscountType] = useState("AMOUNT");
@@ -213,9 +218,13 @@ const Coupons: React.FC = () => {
               <div className="flex items-center">
                 <input
                   id="discountAmount"
-                  type="number"
+                  type="text"
                   {...register("discountAmount", {
                     required: t("errorRequired") as string,
+                    validate: (value) =>
+                      discountType === "PERCENTAGE"
+                        ? value <= 100 || t("errorMaxPercentage")
+                        : true,
                   })}
                   className="w-full border rounded-md p-2"
                 />
@@ -223,6 +232,11 @@ const Coupons: React.FC = () => {
                   {discountType === "PERCENTAGE" ? "%" : "SAR"}
                 </span>
               </div>
+              {errors.discountAmount && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.discountAmount.message}
+                </p>
+              )}
             </div>
 
             {/* Start Date */}

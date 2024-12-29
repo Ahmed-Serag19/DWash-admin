@@ -89,7 +89,7 @@ export const en = {
   discountDeleted: "Discount deleted successfully.",
   errorAddingDiscount: "Failed to add discount.",
   errorDeletingDiscount: "Failed to delete discount.",
-  errorFetchingData: "Failed to fetch discounts.",
+  errorFetchingData: "Failed to fetch data.",
   added: "Created Date",
   applyTo: "Apply Discount",
   forEveryone: "For All Service Providers",
@@ -97,4 +97,5 @@ export const en = {
   serviceProviderEmail: "Email",
   deleteCoupon: "Deleting Discount ?",
   deleteCouponDesc: "Are you sure you want to delete ?",
+  errorMaxPercentage: "Percentage cannot exceed 100%",
 };

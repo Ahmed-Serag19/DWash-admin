@@ -34,7 +34,7 @@ const ServiceProviders: React.FC = () => {
   ) => {
     setIsLoading(true);
     try {
-      const pageSizeToUse = type === "inactive" ? 3 : size; // Use 3 for inactive users
+      const pageSizeToUse = type === "inactive" ? 3 : size;
       const url =
         type === "active"
           ? endpoints.activeServiceProviders(page - 1, pageSizeToUse)

@@ -56,7 +56,7 @@ const projectsAr = [
   {
     title: <RiDiscountPercentFill />,
     description: "إضافة خصم جديد",
-    link: "https://google.com",
+    link: "/coupons",
   },
   {
     title: <MdChecklistRtl />,

@@ -147,10 +147,12 @@ const Navbar = () => {
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
-                  <DropdownMenuItem className={dropDownClassName}>
-                    {t("serviceProvider")}
-                  </DropdownMenuItem>
-                  <Link to="coupons">
+                  <Link to="/service-provider-form">
+                    <DropdownMenuItem className={dropDownClassName}>
+                      {t("serviceProvider")}
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to="/coupons">
                     <DropdownMenuItem className={dropDownClassName}>
                       {t("discount")}
                     </DropdownMenuItem>
@@ -169,9 +171,11 @@ const Navbar = () => {
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className="z-50 me-2 bg-stone-50 px-2 py-1 shadow-lg">
-                  <DropdownMenuItem className={dropDownClassName}>
-                    {t("showServiceProviders")}
-                  </DropdownMenuItem>
+                  <Link to="/service-providers">
+                    <DropdownMenuItem className={dropDownClassName}>
+                      {t("showServiceProviders")}
+                    </DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem className={dropDownClassName}>
                     {t("serviceRequests")}
                   </DropdownMenuItem>

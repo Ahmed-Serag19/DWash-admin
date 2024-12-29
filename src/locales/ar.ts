@@ -90,7 +90,7 @@ export const ar = {
   discountDeleted: "تم حذف الخصم بنجاح.",
   errorAddingDiscount: "فشل في إضافة الخصم.",
   errorDeletingDiscount: "فشل في حذف الخصم.",
-  errorFetchingData: "فشل في جلب الخصومات.",
+  errorFetchingData: "فشل في احضار الداتا .",
   added: "تاريخ الاضافة",
   applyTo: "تحديد الخصم ل",
   forEveryone: "الكل",
@@ -98,4 +98,5 @@ export const ar = {
   serviceProviderEmail: "بريده الالكتروني",
   deleteCoupon: " حذف الخصم ؟",
   deleteCouponDesc: "هل انت متأكد انك تريد حذف الخصم ؟",
+  errorMaxPercentage: "لا يمكن أن تتجاوز النسبة 100%",
 };
