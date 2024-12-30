@@ -103,7 +103,8 @@ export const ar = {
   invoiceId: "رقم الفاتورة",
   clientName: "اسم العميل",
   totalAmount: "المبلغ الإجمالي",
-  reservationDate: "تاريخ انشاء الفاتورة",
+  creationDate: "تاريخ انشاء الفاتورة",
+  reservationDate: "تاريخ الخدمة",
   orderNumber: "رقم الطلب",
   showDetails: "عرض التفاصيل",
   cancelOrder: "إلغاء الطلب",
@@ -112,4 +113,6 @@ export const ar = {
   errorFetchingOrders: "فشل في جلب الطلبات.",
   orderDeletedSuccess: "تم حذف الطلب بنجاح!",
   errorDeletingOrder: "فشل في حذف الطلب.",
+  from: "من الساعة",
+  to: "الى",
 };
