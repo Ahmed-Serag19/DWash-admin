@@ -1,11 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { HoverEffect } from "./ui/card-hover-effect";
-import { IoIosPersonAdd } from "react-icons/io";
-import { IoIosPeople } from "react-icons/io";
-import { RiDiscountPercentFill } from "react-icons/ri";
-import { MdChecklist } from "react-icons/md";
-import { MdChecklistRtl } from "react-icons/md";
-import { RiUserSettingsFill } from "react-icons/ri";
+import { IoIosPersonAdd, IoIosPeople } from "react-icons/io";
+import { RiDiscountPercentFill, RiUserSettingsFill } from "react-icons/ri";
+import { MdChecklist, MdChecklistRtl } from "react-icons/md";
 
 // English projects array
 const projectsEn = [
