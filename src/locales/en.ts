@@ -109,4 +109,6 @@ export const en = {
   cancelOrderFeatureComingSoon: "Cancel order feature coming soon!",
   showDetailsFeatureComingSoon: "Show details feature coming soon!",
   errorFetchingOrders: "Failed to fetch orders.",
+  orderDeletedSuccess: "Order deleted successfully!",
+  errorDeletingOrder: "Failed to delete order.",
 };
