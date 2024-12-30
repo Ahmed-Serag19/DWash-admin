@@ -9,6 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 import { CouponCardProps } from "@/interfaces/interfaces";
+import i18n from "@/i18n";
 
 const CouponCard: React.FC<CouponCardProps> = ({
   discount,
@@ -17,25 +18,32 @@ const CouponCard: React.FC<CouponCardProps> = ({
   const { t } = useTranslation();
   return (
     <Card key={discount.discountId} className="shadow-md min-w-[270px]">
-      <CardHeader>
-        <CardTitle className="text-blue-900 text-lg font-bold text-center">
+      <CardHeader className="bg-blue-100 rounded-md">
+        <CardTitle className="text-blue-900 text-xl font-bold text-center">
           {discount.discountCode}
         </CardTitle>
-        <CardDescription className="text-blue-950 text-md font-semibold min-h-[50px]">
+        <CardDescription className="text-stone-700 text-center text-md font-semibold min-h-[50px]">
           {t("for")} {discount.freelancer || t("everyone")}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-2 mt-5 mb-2">
         <div className="flex justify-between">
           <span className="font-medium">{t("added")} : </span>
           <span>{discount.createdOn.split("T")[0]}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-medium">{t("amount")} : </span>
-          <span>
-            {discount.discountAmount}{" "}
-            {discount.discountType === "AMOUNT" ? "SAR" : "%"}
-          </span>
+          {i18n.language === "en" ? (
+            <span>
+              {discount.discountAmount}{" "}
+              {discount.discountType === "AMOUNT" ? "SAR" : "%"}
+            </span>
+          ) : (
+            <span className="space-x-1">
+              <span>{discount.discountAmount}</span>
+              <span>{discount.discountType === "AMOUNT" ? "SAR" : "%"}</span>
+            </span>
+          )}
         </div>
         <div className="flex justify-between">
           <span className="font-medium">{t("startDate")} : </span>

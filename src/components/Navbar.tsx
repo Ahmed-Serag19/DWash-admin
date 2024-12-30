@@ -187,9 +187,11 @@ const Navbar = () => {
             </DropdownMenuSub>
 
             {/* Clients Orders */}
-            <DropdownMenuItem className={dropDownClassName}>
-              {t("clientOrders")}
-            </DropdownMenuItem>
+            <Link to="/clients-orders">
+              <DropdownMenuItem className={dropDownClassName}>
+                {t("clientOrders")}
+              </DropdownMenuItem>
+            </Link>
 
             {/* Logout */}
             <DropdownMenuItem

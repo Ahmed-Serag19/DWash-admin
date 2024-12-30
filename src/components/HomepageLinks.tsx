@@ -61,7 +61,7 @@ const projectsAr = [
   {
     title: <MdChecklistRtl />,
     description: "طلبات العملاء",
-    link: "https://meta.com",
+    link: "/clients-orders",
   },
   {
     title: <MdChecklist />,

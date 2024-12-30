@@ -7,12 +7,11 @@ import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import { Discount, DiscountFormInputs } from "@/interfaces/interfaces";
 import CouponModal from "@/components/CouponModal";
-
 import CardModal from "@/components/CardModal";
 import CouponCard from "@/components/CouponCard";
 
 const Coupons: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [discounts, setDiscounts] = useState<Discount[]>([]);
   const {
     register,
@@ -82,11 +81,17 @@ const Coupons: React.FC = () => {
         fetchDiscounts();
         reset();
         setisAddModalOpen(false);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage =
+          i18n.language === "ar"
+            ? error.response.data?.messageAr || t("errorAddingDiscount")
+            : error.response.data?.messageEn || t("errorAddingDiscount");
+        toast.error(errorMessage);
       } else {
         toast.error(t("errorAddingDiscount"));
       }
-    } catch (error) {
-      toast.error(t("errorAddingDiscount"));
     }
   };
 

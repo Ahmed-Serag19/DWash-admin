@@ -239,7 +239,7 @@ const ServiceProviderForm: React.FC = () => {
               {...register("identificationNumber", {
                 required: t("errorRequired") as string,
                 pattern: {
-                  value: /^\d+$/,
+                  value: /[0-9]{10}/,
                   message: t("errorNumbersOnly"),
                 },
               })}

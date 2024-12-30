@@ -98,4 +98,15 @@ export const en = {
   deleteCoupon: "Deleting Discount ?",
   deleteCouponDesc: "Are you sure you want to delete ?",
   errorMaxPercentage: "Percentage cannot exceed 100%",
+
+  invoiceId: "Invoice ID",
+  clientName: "Client Name",
+  totalAmount: "Total Amount",
+  reservationDate: "Reservation Date",
+  orderNumber: "Order Number",
+  showDetails: "Show Details",
+  cancelOrder: "Cancel Order",
+  cancelOrderFeatureComingSoon: "Cancel order feature coming soon!",
+  showDetailsFeatureComingSoon: "Show details feature coming soon!",
+  errorFetchingOrders: "Failed to fetch orders.",
 };

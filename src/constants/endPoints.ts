@@ -21,4 +21,6 @@ export const endpoints = {
   getDiscounts: `${API_BASE_URL}/request/admin/getDiscount`,
   deleteDiscount: (id: number) =>
     `${API_BASE_URL}/request/admin/deleteDiscount?discountId=${id}`,
+
+  getOrders: `${API_BASE_URL}/request/admin/getPendingOrders?page=0&size=8`,
 };

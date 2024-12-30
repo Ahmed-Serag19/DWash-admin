@@ -86,3 +86,35 @@ export interface CouponCardProps {
   discount: Discount;
   handleOpenDeleteModal: () => void;
 }
+
+export interface Order {
+  invoiceId: number;
+  brandId: number;
+  userPhoneNumber: string;
+  latitude: number | string | null;
+  longitude: number | string | null;
+  brandNameAr: string;
+  brandNameEn: string;
+  userNameAr: string;
+  userNameEn: string;
+  totalAmount: number;
+  reservationDate: string;
+  status: string;
+  discountAmount: number;
+  dueAmount: number;
+  reviewed: boolean;
+  fromTime: string;
+  timeTo: string;
+  request: {
+    id: number;
+    requestCodeId: number;
+    createdOn: string;
+    waitingProcessId: number;
+    status: number;
+    statusName: string;
+    requestTypeNameAr: string;
+    requestTypeNameEn: string;
+    cancellation: boolean;
+  };
+  itemDto: {};
+}

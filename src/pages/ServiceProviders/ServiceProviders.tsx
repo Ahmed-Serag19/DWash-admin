@@ -82,7 +82,7 @@ const ServiceProviders: React.FC = () => {
       );
       if (response.data.success) {
         toast.success(t("Activation Success"));
-        fetchUsers("inactive", currentPage, 3); // Pass size explicitly for inactive users
+        fetchUsers("inactive", currentPage, 3);
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
