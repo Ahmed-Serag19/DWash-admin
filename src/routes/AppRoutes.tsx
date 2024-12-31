@@ -6,6 +6,7 @@ import ServiceProviders from "@/pages/ServiceProviders/ServiceProviders";
 import ServiceProviderForm from "@/pages/ServiceProviderForm/ServiceProviderForm";
 import Coupons from "@/pages/Coupons/Coupons";
 import ClientsOrders from "@/pages/ClientsOrders/ClientsOrders";
+import ServiceRequests from "@/pages/ServiceRequests/ServiceRequests";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/clients-orders",
         element: <ClientsOrders />,
+      },
+      {
+        path: "/service-requests",
+        element: <ServiceRequests />,
       },
     ],
   },

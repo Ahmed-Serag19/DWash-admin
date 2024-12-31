@@ -115,4 +115,15 @@ export const ar = {
   errorDeletingOrder: "فشل في حذف الطلب.",
   from: "من الساعة",
   to: "الى",
+
+  unknown: "غير معروف",
+  unknownService: "خدمة غير معروفة",
+  unknownPrice: "السعر غير معروف",
+  unknownDate: "تاريخ غير معروف",
+  price: "السعر",
+  user: "المستخدم",
+  accept: "قبول",
+  reject: "رفض",
+  details: "التفاصيل",
+  requestDate: "تاريخ الطلب",
 };

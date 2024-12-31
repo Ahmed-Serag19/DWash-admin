@@ -114,4 +114,5 @@ export const en = {
   errorDeletingOrder: "Failed to delete order.",
   from: "From",
   to: "To",
+  requestDate: "Request Date",
 };

@@ -1,3 +1,5 @@
+import { Key } from "react";
+
 interface UserDto {
   id: number;
   nameEn: string;
@@ -117,4 +119,29 @@ export interface Order {
     cancellation: boolean;
   };
   itemDto: {};
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  nameAr: string;
+  nameEn: string;
+  mobile: string;
+}
+
+export interface Request {
+  id: number;
+  user: User;
+  requestId: number;
+  statusName: string;
+}
+
+export interface ServiceRequest {
+  id: Key | null | undefined;
+  serviceTempId: number;
+  servicesNameAr: string;
+  servicesNameEn: string;
+  servicesPrice: number;
+  request: Request;
 }
