@@ -138,6 +138,10 @@ export interface Request {
 }
 
 export interface ServiceRequest {
+  createdOn: any;
+  user: any;
+  servicesDescriptionsAr: string;
+  servicesDescriptionsEn: string;
   id: Key | null | undefined;
   serviceTempId: number;
   servicesNameAr: string;

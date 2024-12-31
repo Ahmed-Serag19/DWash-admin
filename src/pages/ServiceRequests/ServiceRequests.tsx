@@ -163,7 +163,7 @@ const ServiceRequests: React.FC = () => {
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid min-w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {openedRequests.map((request) => (
                   <WaitingServiceCard
                     key={request.id}

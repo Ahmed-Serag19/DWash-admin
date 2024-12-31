@@ -126,4 +126,9 @@ export const ar = {
   reject: "رفض",
   details: "التفاصيل",
   requestDate: "تاريخ الطلب",
+  unknownStatus: "الحالة غير معروفة",
+  serviceName: "اسم الخدمة",
+  description: "الوصف",
+  close: "إغلاق",
+  status: "الحالة",
 };
