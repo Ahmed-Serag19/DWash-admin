@@ -31,6 +31,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
   const { t, i18n } = useTranslation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [confirmationAction, setConfirmationAction] = useState<
     "accept" | "reject" | null
@@ -66,10 +67,6 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
     setConfirmationAction(action);
     setIsConfirmationOpen(true);
   };
-
-  function toggleModal(): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
@@ -124,7 +121,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
 
       <ServiceModal
         isOpen={isModalOpen}
-        onClose={toggleModal}
+        onClose={toggleDetailsModal}
         title={t("details")}
       >
         <div className="flex flex-col gap-4 py-3 px-4">
