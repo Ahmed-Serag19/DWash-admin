@@ -7,7 +7,6 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useTranslation } from "react-i18next";
 import { endpoints } from "@/constants/endPoints";
@@ -224,14 +223,6 @@ const ServiceProviders: React.FC = () => {
                 </div>
                 <Pagination className="py-5">
                   <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        href="#"
-                        onClick={() =>
-                          setCurrentPage((prev) => Math.max(prev - 1, 1))
-                        }
-                      />
-                    </PaginationItem>
                     {[...Array(totalPages)].map((_, index) => (
                       <PaginationItem key={index}>
                         <PaginationLink

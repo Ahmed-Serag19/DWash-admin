@@ -26,7 +26,6 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 
 const ClientsOrders = () => {
@@ -183,13 +182,7 @@ const ClientsOrders = () => {
           <Pagination className="pt-16 pb-1" dir="ltr">
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                />
-              </PaginationItem>
+             
               {[...Array(totalPages)].map((_, index) => (
                 <PaginationItem key={index}>
                   <PaginationLink
