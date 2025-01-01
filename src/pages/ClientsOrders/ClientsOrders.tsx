@@ -53,8 +53,10 @@ const ClientsOrders = () => {
       } else {
         toast.error(t("errorFetchingOrders"));
       }
-    } catch (error) {
-      toast.error(t("errorFetchingOrders"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("errorFetchingOrders"));
+      }
     } finally {
       setIsLoading(false);
     }
