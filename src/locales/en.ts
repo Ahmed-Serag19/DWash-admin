@@ -132,4 +132,9 @@ export const en = {
   requestType: "Request Type",
   accepted: "Accepted",
   rejected: "Rejected",
+  logoutSuccess: "You have been logged out successfully.",
+  confirmAcceptTitle: "Confirm Acceptance",
+  confirmAcceptDescription: "Are you sure you want to accept this service?",
+  confirmRejectTitle: "Confirm Rejection",
+  confirmRejectDescription: "Are you sure you want to reject this service?",
 };

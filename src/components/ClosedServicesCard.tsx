@@ -34,7 +34,7 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
         key={service.request.id}
-        className="shadow-md md:min-w-[330px]"
+        className="shadow-md  md:min-w-[330px]"
       >
         <CardHeader className="bg-blue-100 rounded-md ">
           <CardTitle className="text-blue-900 text-xl font-bold text-center py-2 min-h-[90px]">

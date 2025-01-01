@@ -134,4 +134,9 @@ export const ar = {
   requestType: "نوع الطلب",
   accepted: "مقبول",
   rejected: "مرفوض",
+  logoutSuccess: "تم تسجيل الخروج بنجاح.",
+  confirmAcceptTitle: "تأكيد القبول",
+  confirmAcceptDescription: "هل أنت متأكد أنك تريد قبول هذه الخدمة؟",
+  confirmRejectTitle: "تأكيد الرفض",
+  confirmRejectDescription: "هل أنت متأكد أنك تريد رفض هذه الخدمة؟",
 };

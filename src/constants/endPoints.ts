@@ -30,7 +30,7 @@ export const endpoints = {
   getClosedServices: (page: number, size: number) =>
     `${API_BASE_URL}/request/admin/getClosedServiceRequest?page=${page}&size=${size}`,
   acceptRequest: (id: number) =>
-    `${API_BASE_URL}/request/admin/acceptRequest?orderId=${id}`,
+    `${API_BASE_URL}/request/admin/acceptRequest?requestId=${id}`,
   rejectRequest: (id: number) =>
-    `${API_BASE_URL}/request/admin/rejectRequest?orderId=${id}`,
+    `${API_BASE_URL}/request/admin/rejectRequest?requestId=${id}`,
 };

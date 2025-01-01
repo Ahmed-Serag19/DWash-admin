@@ -24,7 +24,7 @@ const Navbar = () => {
   const { t } = useTranslation();
   const handleLogout = () => {
     sessionStorage.removeItem("userInfo");
-    toast.success("You have logged out successfully", {
+    toast.success(t("logoutSuccess"), {
       position: "top-right",
       autoClose: 3000,
       theme: "colored",

@@ -170,39 +170,33 @@ const ServiceProviders: React.FC = () => {
                     />
                   ))}
                 </div>
-                <Pagination className="py-5">
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        href="#"
-                        onClick={() =>
-                          setCurrentPage((prev) => Math.max(prev - 1, 1))
-                        }
-                      />
-                    </PaginationItem>
-                    {[...Array(totalPages)].map((_, index) => (
-                      <PaginationItem key={index}>
-                        <PaginationLink
+                <div className="overflow-x-auto">
+                  <Pagination className="py-5 ">
+                    <PaginationContent>
+                      {[...Array(totalPages)].map((_, index) => (
+                        <PaginationItem key={index}>
+                          <PaginationLink
+                            href="#"
+                            isActive={currentPage === index + 1}
+                            onClick={() => setCurrentPage(index + 1)}
+                          >
+                            {index + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      <PaginationItem>
+                        <PaginationNext
                           href="#"
-                          isActive={currentPage === index + 1}
-                          onClick={() => setCurrentPage(index + 1)}
-                        >
-                          {index + 1}
-                        </PaginationLink>
+                          onClick={() =>
+                            setCurrentPage((prev) =>
+                              Math.min(prev + 1, totalPages)
+                            )
+                          }
+                        />
                       </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                      <PaginationNext
-                        href="#"
-                        onClick={() =>
-                          setCurrentPage((prev) =>
-                            Math.min(prev + 1, totalPages)
-                          )
-                        }
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
               </>
             )}
           </TabsContent>

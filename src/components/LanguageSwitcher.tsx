@@ -27,7 +27,7 @@ const LanguageSwitcher = () => {
           <FaGlobe size={20} /> {/* Globe icon */}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[24px]">
+      <DropdownMenuContent align="end" className="md:min-w-[24px] min-w-[20px]">
         <DropdownMenuItem
           className="cursor-pointer hover:bg-stone-100"
           onClick={() => changeLanguage("en")}

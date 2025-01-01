@@ -24,16 +24,16 @@ const projectsEn = [
   {
     title: <MdChecklistRtl />,
     description: "Clients Orders",
-    link: "https://meta.com",
+    link: "/service-requests",
   },
   {
     title: <MdChecklist />,
-    description: "Service Providers Requests:  Service",
+    description: "Add a new Service requests",
     link: "https://amazon.com",
   },
   {
     title: <RiUserSettingsFill />,
-    description: "Service Providers Requests:  Profile",
+    description: "Edit Profiles Requests",
     link: "https://microsoft.com",
   },
 ];
@@ -62,12 +62,12 @@ const projectsAr = [
   },
   {
     title: <MdChecklist />,
-    description: "طلبات مقدمي الخدمات: خدمة جديدة",
-    link: "https://amazon.com",
+    description: "طلبات اضافة خدمة جديدة",
+    link: "/service-requests",
   },
   {
     title: <RiUserSettingsFill />,
-    description: "طلبات مقدمي الخدمات: الملف الشخصي",
+    description: "طلبات تعديل الملف الشخصي",
     link: "https://microsoft.com",
   },
 ];

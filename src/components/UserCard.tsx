@@ -64,9 +64,9 @@ const UserCard: React.FC<UserCardProps> = ({
       />
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        className="w-full border border-gray-200 shadow-md rounded-lg min-w-[280px]"
+        className="w-full  mx-auto border border-gray-200 shadow-md rounded-lg sm:min-w-[280px] min-w-[200px]"
       >
-        <CardHeader className="flex items-center space-x-4 border-b border-solid border-stone-300">
+        <CardHeader className="flex items-center gap-4 border-b border-solid border-stone-300">
           <div
             className={`w-10 h-10 rounded-full flex items-center justify-center bg-white  font-bold ${
               isInactive ? " text-red-600" : "text-blue-950"
@@ -143,7 +143,7 @@ const UserCard: React.FC<UserCardProps> = ({
             className="text-blue-600 border-blue-600 hover:bg-blue-100"
             onClick={() =>
               navigate("/service-provider-form", {
-                state: { data: user }, // Pass the user's data
+                state: { data: user },
               })
             }
           >

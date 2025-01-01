@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import ServiceModal from "@/components/ServiceModal";
+import CardModal from "@/components/CardModal";
 import { useTranslation } from "react-i18next";
 import { ServiceRequest } from "@/interfaces/interfaces";
 
@@ -28,8 +29,13 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
   onReject,
 }) => {
   const { t, i18n } = useTranslation();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(request);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [confirmationAction, setConfirmationAction] = useState<
+    "accept" | "reject" | null
+  >(null);
+
   const userName =
     i18n.language === "ar"
       ? request.request.user.nameAr || t("unknown")
@@ -44,14 +50,33 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
     ? `${request.servicesPrice} SAR`
     : t("unknownPrice");
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleDetailsModal = () => setIsModalOpen(!isModalOpen);
+
+  const handleConfirm = async () => {
+    if (confirmationAction === "accept") {
+      await onAccept(request.request.requestId);
+    } else if (confirmationAction === "reject") {
+      await onReject(request.request.requestId);
+    }
+    setIsConfirmationOpen(false);
+    setConfirmationAction(null);
+  };
+
+  const openConfirmationModal = (action: "accept" | "reject") => {
+    setConfirmationAction(action);
+    setIsConfirmationOpen(true);
+  };
+
+  function toggleModal(): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <>
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
         key={request.request.requestId}
-        className="shadow-md md:min-w-[330px]"
+        className="shadow-md md:min-w-[330px] "
       >
         <CardHeader className="bg-blue-100 rounded-md">
           <CardTitle className="text-blue-900 text-xl font-bold text-center py-2">
@@ -78,19 +103,19 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
         <CardFooter className="flex items-center justify-center gap-2">
           <Button
             className="bg-green-600 text-white hover:bg-green-500 transition duration-300"
-            onClick={() => onAccept(request.request.requestId)}
+            onClick={() => openConfirmationModal("accept")}
           >
             {t("accept")}
           </Button>
           <Button
             className="bg-red-600 text-white hover:bg-red-500 transition duration-300"
-            onClick={() => onReject(request.request.requestId)}
+            onClick={() => openConfirmationModal("reject")}
           >
             {t("reject")}
           </Button>
           <Button
             className="bg-blue-600 text-white hover:bg-blue-500 transition duration-300"
-            onClick={toggleModal}
+            onClick={toggleDetailsModal}
           >
             {t("details")}
           </Button>
@@ -147,6 +172,22 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
           </div>
         </div>
       </ServiceModal>
+
+      <CardModal
+        isOpen={isConfirmationOpen}
+        titleKey={
+          confirmationAction === "accept"
+            ? "confirmAcceptTitle"
+            : "confirmRejectTitle"
+        }
+        descriptionKey={
+          confirmationAction === "accept"
+            ? "confirmAcceptDescription"
+            : "confirmRejectDescription"
+        }
+        onConfirm={handleConfirm}
+        onCancel={() => setIsConfirmationOpen(false)}
+      />
     </>
   );
 };

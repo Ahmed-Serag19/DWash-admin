@@ -7,7 +7,7 @@ export const HoverEffect = ({
   className,
 }: {
   items: {
-    title: any;
+    title: React.ReactNode;
     description: string;
     link: string;
   }[];
@@ -26,7 +26,7 @@ export const HoverEffect = ({
         <Link
           to={item?.link}
           key={item?.link}
-          className="relative group  block p-2 h-full w-full"
+          className="relative group  block p-2  h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -69,7 +69,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-stone-100 border border-transparent dark:border-white/[0.2] group-hover:border-slate-200 relative z-20",
+        "rounded-2xl w-9/12 h-[90%] lg:h-full lg:w-full p-4 overflow-hidden mx-auto bg-stone-100 border border-transparent dark:border-white/[0.2] group-hover:border-slate-200 relative z-20",
         className
       )}
     >
@@ -89,7 +89,7 @@ export const CardTitle = ({
   return (
     <h4
       className={cn(
-        "text-zinc-100 font-bold text-6xl flex items-center justify-center tracking-wide mt-4",
+        "text-zinc-100 font-bold text-4xl lg:text-6xl flex items-center justify-center tracking-wide mt-4",
         className
       )}
     >
@@ -107,7 +107,7 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "mt-8 text-zinc-400 tracking-wide text-center leading-relaxed text-2xl font-semibold",
+        "mt-4 lg:mt-8 text-zinc-400 tracking-wide text-xl text-center leading-relaxed lg:text-2xl font-semibold",
         className
       )}
     >

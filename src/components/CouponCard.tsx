@@ -17,7 +17,10 @@ const CouponCard: React.FC<CouponCardProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <Card key={discount.discountId} className="shadow-md min-w-[270px]">
+    <Card
+      key={discount.discountId}
+      className="shadow-md md:min-w-[270px] min-w-[250px]"
+    >
       <CardHeader className="bg-blue-100 rounded-md">
         <CardTitle className="text-blue-900 text-xl font-bold text-center">
           {discount.discountCode}

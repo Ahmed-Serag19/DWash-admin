@@ -11,9 +11,8 @@ const CardModal: React.FC<ModalProps> = ({
   onCancel,
 }) => {
   const { t, i18n } = useTranslation();
-
+  const greenButton = titleKey === "activateUserTitle" || "confirmAcceptTitle";
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
@@ -27,11 +26,7 @@ const CardModal: React.FC<ModalProps> = ({
             <Button
               variant="outline"
               onClick={onConfirm}
-              className={`${
-                titleKey === "activateUserTitle"
-                  ? "text-green-500"
-                  : "text-red-500"
-              }`}
+              className={`${greenButton ? "text-green-500" : "text-red-500"}`}
             >
               {t("confirmButton")}
             </Button>
@@ -41,11 +36,7 @@ const CardModal: React.FC<ModalProps> = ({
             <Button
               variant="outline"
               onClick={onConfirm}
-              className={`${
-                titleKey === "activateUserTitle"
-                  ? "text-green-500"
-                  : "text-red-500"
-              }`}
+              className={`${greenButton ? "text-green-500" : "text-red-500"}`}
             >
               {t("confirmButton")}
             </Button>
