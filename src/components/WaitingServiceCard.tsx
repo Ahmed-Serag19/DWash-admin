@@ -72,7 +72,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
           </div>
           <div className="flex justify-between min-h-[50px]">
             <span className="font-medium">{t("email")}:</span>
-            <span>{request.user.email}</span>
+            <span>{request.request.user.email}</span>
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-center gap-2">

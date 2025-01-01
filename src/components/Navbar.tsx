@@ -86,9 +86,12 @@ const Navbar = () => {
                   {t("showServiceProviders")}
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem className={dropDownClassName}>
-                {t("serviceRequests")}
-              </DropdownMenuItem>
+              <Link to="/service-requests">
+                <DropdownMenuItem className={dropDownClassName}>
+                  {t("serviceRequests")}
+                </DropdownMenuItem>
+              </Link>
+
               <DropdownMenuItem className={dropDownClassName}>
                 {t("personalProfileRequest")}
               </DropdownMenuItem>

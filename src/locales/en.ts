@@ -129,4 +129,7 @@ export const en = {
   price: "Price",
   accept: "Accept",
   reject: "Reject",
+  requestType: "Request Type",
+  accepted: "Accepted",
+  rejected: "Rejected",
 };

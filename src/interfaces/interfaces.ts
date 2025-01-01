@@ -118,7 +118,7 @@ export interface Order {
     requestTypeNameEn: string;
     cancellation: boolean;
   };
-  itemDto: {};
+  itemDto: Record<string, unknown>;
 }
 
 export interface User {
@@ -138,8 +138,8 @@ export interface Request {
 }
 
 export interface ServiceRequest {
-  createdOn: any;
-  user: any;
+  createdOn: string;
+  user: string;
   servicesDescriptionsAr: string;
   servicesDescriptionsEn: string;
   id: Key | null | undefined;
@@ -148,4 +148,42 @@ export interface ServiceRequest {
   servicesNameEn: string;
   servicesPrice: number;
   request: Request;
+}
+
+interface RequestDetails {
+  id: number;
+  requestCodeId: number;
+  createdOn: string;
+  waitingProcessId: number;
+  status: number;
+  statusName: string;
+  requestTypeNameAr: string;
+  requestTypeNameEn: string;
+  cancellation: boolean;
+}
+
+export interface ClosedService {
+  serviceId: number;
+  brandId: number;
+  brandNameAr: string;
+  brandNameEn: string;
+  servicesNameAr: string;
+  servicesNameEn: string;
+  servicesDescriptionsAr: string;
+  servicesDescriptionsEn: string;
+  servicesPrice: number | null;
+  servicesTypeId: number;
+  serviceTypeNameAr: string;
+  serviceTypeNameEn: string;
+  identificationTypeId: string;
+  servicesStatus: number | null;
+  createdOn: string | null;
+  lastUpdatedOn: string | null;
+  request: RequestDetails;
+  serviceImages: { url: string; description: string }[] | null;
+  extraServices: { id: number; name: string; price: number }[] | null;
+}
+
+export interface ClosedServiceCardProps {
+  service: ClosedService;
 }

@@ -14,11 +14,13 @@ import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import WaitingServiceCard from "@/components/WaitingServiceCard";
 import { ServiceRequest } from "@/interfaces/interfaces";
+import ClosedServiceCard from "@/components/ClosedServicesCard";
+import { ClosedService } from "@/interfaces/interfaces";
 
 const ServiceRequests: React.FC = () => {
   const { t } = useTranslation();
   const [openedRequests, setOpenedRequests] = useState<ServiceRequest[]>([]);
-  const [closedRequests, setClosedRequests] = useState<ServiceRequest[]>([]);
+  const [closedRequests, setClosedRequests] = useState<ClosedService[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"opened" | "closed">("opened");
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,8 +45,10 @@ const ServiceRequests: React.FC = () => {
       } else {
         toast.error(response.data?.messageEn || t("errorFetchingData"));
       }
-    } catch (error) {
-      toast.error(t("errorFetchingData"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("errorFetchingData"));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -73,8 +77,10 @@ const ServiceRequests: React.FC = () => {
       } else {
         toast.error(response.data?.messageEn || t("errorFetchingData"));
       }
-    } catch (error) {
-      toast.error(t("errorFetchingData"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("errorFetchingData"));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -94,8 +100,10 @@ const ServiceRequests: React.FC = () => {
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
-    } catch (error) {
-      toast.error(t("acceptFailed"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("acceptFailed"));
+      }
     }
   };
 
@@ -113,8 +121,10 @@ const ServiceRequests: React.FC = () => {
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
-    } catch (error) {
-      toast.error(t("rejectFailed"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("rejectFailed"));
+      }
     }
   };
 
@@ -188,12 +198,9 @@ const ServiceRequests: React.FC = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {closedRequests.map((request) => (
-                  <WaitingServiceCard
+                  <ClosedServiceCard
                     key={request.request.id}
-                    request={request}
-                    onAccept={handleAcceptRequest}
-                    onReject={handleRejectRequest}
-                    onViewDetails={handleViewDetails}
+                    service={request}
                   />
                 ))}
               </div>

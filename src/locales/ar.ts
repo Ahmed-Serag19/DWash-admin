@@ -131,4 +131,7 @@ export const ar = {
   description: "الوصف",
   close: "إغلاق",
   status: "الحالة",
+  requestType: "نوع الطلب",
+  accepted: "مقبول",
+  rejected: "مرفوض",
 };

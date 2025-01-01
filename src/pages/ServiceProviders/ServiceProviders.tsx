@@ -61,8 +61,10 @@ const ServiceProviders: React.FC = () => {
       } else {
         toast.error(response.data.messageEn || t("errorFetchingData"));
       }
-    } catch (error) {
-      toast.error(t("errorFetchingData"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("errorFetchingData"));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -86,8 +88,10 @@ const ServiceProviders: React.FC = () => {
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
-    } catch (error) {
-      toast.error(t("Activation Failed"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("Activation Failed"));
+      }
     }
   };
 
@@ -109,8 +113,10 @@ const ServiceProviders: React.FC = () => {
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
-    } catch (error) {
-      toast.error(t("Deactivation Failed"));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(t("Deactivation Failed"));
+      }
     }
   };
 
