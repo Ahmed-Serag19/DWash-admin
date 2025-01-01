@@ -131,6 +131,7 @@ export interface User {
 }
 
 export interface Request {
+  createdOn: any;
   id: number;
   user: User;
   requestId: number;
@@ -138,6 +139,7 @@ export interface Request {
 }
 
 export interface ServiceRequest {
+  serviceImages: boolean;
   createdOn: string;
   user: string;
   servicesDescriptionsAr: string;

@@ -18,7 +18,7 @@ const ServiceModal: React.FC<ModalProps> = ({
   const { i18n } = useTranslation();
   if (!isOpen) return null;
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
       <div className="bg-white relative rounded-lg shadow-lg max-w-lg w-full">
         <div className="p-4 border-b">
           <h2 className="text-lg font-bold">{title}</h2>

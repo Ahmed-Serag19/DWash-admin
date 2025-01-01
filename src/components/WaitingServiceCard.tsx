@@ -118,7 +118,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
         </CardFooter>
       </Card>
 
-      <ServiceModal
+      {/* <ServiceModal
         isOpen={isModalOpen}
         onClose={toggleDetailsModal}
         title={t("details")}
@@ -166,6 +166,109 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
               {request.request.statusName || t("unknownStatus")}
             </span>
           </div>
+        </div>
+      </ServiceModal> */}
+      <ServiceModal
+        isOpen={isModalOpen}
+        onClose={toggleDetailsModal}
+        title={t("details")}
+      >
+        <div className="overflow-auto max-h-[80vh]">
+          <table className="w-full table-fixed border-collapse border border-gray-300">
+            <tbody>
+              {/* General Information */}
+              <tr className="bg-gray-100">
+                <th className="p-2 text-left border border-gray-300">
+                  {t("user")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {i18n.language === "ar"
+                    ? request.request.user.nameAr || t("unknown")
+                    : request.request.user.nameEn || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <th className="p-2 text-left border border-gray-300">
+                  {t("email")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {request.request.user.email}
+                </td>
+              </tr>
+              <tr className="bg-gray-100">
+                <th className="p-2 text-left border border-gray-300">
+                  {t("requestDate")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {request.request.createdOn?.split("T")[0] || t("unknownDate")}
+                </td>
+              </tr>
+              <tr>
+                <th className="p-2 text-left border border-gray-300">
+                  {t("status")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {request.request.statusName || t("unknownStatus")}
+                </td>
+              </tr>
+
+              {/* Service Details */}
+              <tr className="bg-gray-100">
+                <th className="p-2 text-left border border-gray-300">
+                  {t("serviceName")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {i18n.language === "ar"
+                    ? request.servicesNameAr || t("unknownService")
+                    : request.servicesNameEn || t("unknownService")}
+                </td>
+              </tr>
+              <tr>
+                <th className="p-2 text-left border border-gray-300">
+                  {t("description")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  <div className="overflow-auto max-h-24 break-words">
+                    {i18n.language === "ar"
+                      ? request.servicesDescriptionsAr
+                      : request.servicesDescriptionsEn}
+                  </div>
+                </td>
+              </tr>
+              <tr className="bg-gray-100">
+                <th className="p-2 text-left border border-gray-300">
+                  {t("price")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {request.servicesPrice
+                    ? `${request.servicesPrice} SAR`
+                    : t("unknownPrice")}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Image Section */}
+          {Array.isArray(request.serviceImages) &&
+            request.serviceImages.length > 0 && (
+              <section className="mt-6">
+                <h3 className="text-lg font-semibold mb-2">{t("images")}</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {request.serviceImages.map((image: string, index: number) => (
+                    <div
+                      key={index}
+                      className="flex justify-center items-center"
+                    >
+                      <img
+                        src={image}
+                        alt={`${t("serviceImage")} ${index + 1}`}
+                        className="h-32 w-full object-cover rounded-lg border"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
         </div>
       </ServiceModal>
 
