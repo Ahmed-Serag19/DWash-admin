@@ -31,7 +31,6 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
   const { t, i18n } = useTranslation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [confirmationAction, setConfirmationAction] = useState<
     "accept" | "reject" | null

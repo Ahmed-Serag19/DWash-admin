@@ -19,22 +19,22 @@ const projectsEn = [
   {
     title: <RiDiscountPercentFill />,
     description: "Add a new discount",
-    link: "https://google.com",
+    link: "/coupons",
   },
   {
     title: <MdChecklistRtl />,
     description: "Clients Orders",
-    link: "/service-requests",
+    link: "/clients-orders",
   },
   {
     title: <MdChecklist />,
     description: "Add a new Service requests",
-    link: "https://amazon.com",
+    link: "/service-requests",
   },
   {
     title: <RiUserSettingsFill />,
     description: "Edit Profiles Requests",
-    link: "https://microsoft.com",
+    link: "/edit-profile-requests",
   },
 ];
 
@@ -68,7 +68,7 @@ const projectsAr = [
   {
     title: <RiUserSettingsFill />,
     description: "طلبات تعديل الملف الشخصي",
-    link: "https://microsoft.com",
+    link: "/edit-profile-requests",
   },
 ];
 export default function HomepageLinks() {

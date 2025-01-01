@@ -7,6 +7,7 @@ import ServiceProviderForm from "@/pages/ServiceProviderForm/ServiceProviderForm
 import Coupons from "@/pages/Coupons/Coupons";
 import ClientsOrders from "@/pages/ClientsOrders/ClientsOrders";
 import ServiceRequests from "@/pages/ServiceRequests/ServiceRequests";
+import EditProfileRequests from "@/pages/EditProfileRequest/EditProfileRequests";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/service-requests",
         element: <ServiceRequests />,
+      },
+      {
+        path: "/edit-profile-requests",
+        element: <EditProfileRequests />,
       },
     ],
   },
