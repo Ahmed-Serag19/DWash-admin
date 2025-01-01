@@ -181,8 +181,6 @@ const ClientsOrders = () => {
           </div>
           <Pagination className="pt-16 pb-1" dir="ltr">
             <PaginationContent>
-              <PaginationItem>
-             
               {[...Array(totalPages)].map((_, index) => (
                 <PaginationItem key={index}>
                   <PaginationLink
