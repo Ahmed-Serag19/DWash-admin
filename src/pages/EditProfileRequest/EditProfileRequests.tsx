@@ -7,13 +7,13 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useTranslation } from "react-i18next";
 import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import WaitingEditCard from "@/components/WaitingEditCard";
 import WaitingEditModal from "@/components/WaitingEditModal";
+import i18n from "@/i18n";
 
 const EditProfileRequests: React.FC = () => {
   const { t } = useTranslation();
@@ -152,13 +152,13 @@ const EditProfileRequests: React.FC = () => {
       <div className="w-full flex justify-center">
         <Tabs
           defaultValue="opened"
-          className="w-full max-w-6xl"
+          className="w-full max-w-6xl flex flex-col items-center"
           onValueChange={(value) => {
             setActiveTab(value as "opened" | "closed");
             setCurrentPage(1);
           }}
         >
-          <TabsList className="flex mb-5 text-blue-900">
+          <TabsList className="md:min-w-[400px] flex mb-5 text-blue-900">
             <TabsTrigger value="opened" className="w-1/2">
               {t("openedRequests")}
             </TabsTrigger>
@@ -183,20 +183,13 @@ const EditProfileRequests: React.FC = () => {
                     request={request}
                     onAccept={handleAcceptRequest}
                     onReject={handleRejectRequest}
+                    status={"Opened"}
                   />
                 ))}
               </div>
             )}
             <Pagination className="py-5 text-sm">
               <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    href="#"
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(prev - 1, 1))
-                    }
-                  />
-                </PaginationItem>
                 {[...Array(totalPages)].map((_, index) => (
                   <PaginationItem key={index}>
                     <PaginationLink
@@ -210,6 +203,7 @@ const EditProfileRequests: React.FC = () => {
                 ))}
                 <PaginationItem>
                   <PaginationNext
+                    title={i18n.language === "en" ? "Next" : "التالي"}
                     href="#"
                     onClick={() =>
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -231,20 +225,18 @@ const EditProfileRequests: React.FC = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {closedRequests.map((request) => (
-                  <WaitingEditCard key={request.brandId} request={request} />
+                  <WaitingEditCard
+                    key={request.brandId}
+                    request={request}
+                    onAccept={handleAcceptRequest}
+                    onReject={handleRejectRequest}
+                    status={"Closed"}
+                  />
                 ))}
               </div>
             )}
             <Pagination className="py-5 text-sm">
               <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    href="#"
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(prev - 1, 1))
-                    }
-                  />
-                </PaginationItem>
                 {[...Array(totalPages)].map((_, index) => (
                   <PaginationItem key={index}>
                     <PaginationLink
@@ -258,6 +250,7 @@ const EditProfileRequests: React.FC = () => {
                 ))}
                 <PaginationItem>
                   <PaginationNext
+                    title={i18n.language === "en" ? "Next" : "التالي"}
                     href="#"
                     onClick={() =>
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -275,8 +268,6 @@ const EditProfileRequests: React.FC = () => {
           isOpen={!!selectedRequest}
           request={selectedRequest}
           onClose={() => setSelectedRequest(null)}
-          onAccept={handleAcceptRequest}
-          onReject={handleRejectRequest}
         />
       )}
     </main>

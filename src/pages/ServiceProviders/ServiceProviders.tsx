@@ -13,6 +13,7 @@ import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import UserCard from "@/components/UserCard";
 import { FreelancerData } from "@/interfaces/interfaces";
+import i18n from "@/i18n";
 
 const ServiceProviders: React.FC = () => {
   const { t } = useTranslation();
@@ -185,6 +186,7 @@ const ServiceProviders: React.FC = () => {
                       ))}
                       <PaginationItem>
                         <PaginationNext
+                          title={i18n.language === "en" ? "Next" : "التالي"}
                           href="#"
                           onClick={() =>
                             setCurrentPage((prev) =>
@@ -236,6 +238,7 @@ const ServiceProviders: React.FC = () => {
                     ))}
                     <PaginationItem>
                       <PaginationNext
+                        title={i18n.language === "en" ? "Next" : "التالي"}
                         href="#"
                         onClick={() =>
                           setCurrentPage((prev) =>

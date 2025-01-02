@@ -196,6 +196,7 @@ const ClientsOrders = () => {
               ))}
               <PaginationItem>
                 <PaginationNext
+                  title={i18n.language === "en" ? "Next" : "التالي"}
                   href="#"
                   onClick={() =>
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))

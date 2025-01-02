@@ -161,4 +161,9 @@ export const ar = {
   brandLogo: "شعار المتجر",
   brandBackgroundImage: "خلفية المتجر",
   requestDetails: "تفاصيل الطلب",
+  field: "الحقل",
+  value: "القيمة",
+  openedRequests: "الطلبات المفتوحة",
+  closedRequests: "الطلبات المغلقة",
+  editProfileRequests: "طلبات تعديل الملف الشخصي",
 };

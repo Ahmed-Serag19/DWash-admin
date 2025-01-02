@@ -160,4 +160,9 @@ export const en = {
   bankName: "Bank Name",
   brandLogo: "Brand Logo",
   brandBackgroundImage: "Brand Background Image",
+  field: "Field",
+  value: "Value",
+  openedRequests: "Opened Requests",
+  closedRequests: "Closed Requests",
+  editProfileRequests: "Edit Profile Requests",
 };

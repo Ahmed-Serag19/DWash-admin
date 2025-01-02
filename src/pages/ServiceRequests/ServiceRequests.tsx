@@ -15,6 +15,7 @@ import WaitingServiceCard from "@/components/WaitingServiceCard";
 import { ServiceRequest } from "@/interfaces/interfaces";
 import ClosedServiceCard from "@/components/ClosedServicesCard";
 import { ClosedService } from "@/interfaces/interfaces";
+import i18n from "@/i18n";
 
 const ServiceRequests: React.FC = () => {
   const { t } = useTranslation();
@@ -220,6 +221,7 @@ const ServiceRequests: React.FC = () => {
                 <PaginationItem>
                   <PaginationNext
                     href="#"
+                    title={i18n.language === "en" ? "Next" : "التالي"}
                     onClick={() =>
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                     }

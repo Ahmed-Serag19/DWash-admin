@@ -6,8 +6,6 @@ type WaitingEditModalProps = {
   request: any;
   isOpen: boolean;
   onClose: () => void;
-  onAccept: (id: number) => Promise<void>;
-  onReject: (id: number) => Promise<void>;
 };
 
 const WaitingEditModal: React.FC<WaitingEditModalProps> = ({
@@ -18,138 +16,196 @@ const WaitingEditModal: React.FC<WaitingEditModalProps> = ({
   const { t, i18n } = useTranslation();
 
   if (!isOpen) return null;
-  console.log(request.requestDto.requestTypeNameEn);
-  console.log(request);
+
+  const renderRequestType = () => {
+    switch (request.requestDto.requestTypeNameEn) {
+      case "EDIT_BRAND":
+        return t("editBrand");
+      case "ADD_BRAND":
+        return t("addBrand");
+      default:
+        return t("unknownType");
+    }
+  };
+
+  const renderStatus = () => {
+    switch (request.requestDto.statusName) {
+      case "WAITING":
+        return <span className="text-yellow-600">{t("waiting")}</span>;
+      case "ACCEPTED":
+        return <span className="text-green-700">{t("accepted")}</span>;
+      case "REJECTED":
+        return <span className="text-red-500">{t("rejected")}</span>;
+      default:
+        return <span className="text-gray-700">{t("unknownStatus")}</span>;
+    }
+  };
+
   return (
     <div
       dir={i18n.language === "ar" ? "rtl" : "ltr"}
-      className="fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     >
       <div className="bg-white rounded-lg shadow-lg max-w-5xl w-10/12 p-6 overflow-y-auto">
+        {/* Modal Header */}
         <header className="border-b pb-4 mb-4 flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-blue-900 ">{t("details")}</h2>
+          <h2 className="text-2xl font-bold text-blue-900">{t("details")}</h2>
           <Button variant="ghost" className="text-red-600" onClick={onClose}>
             X
           </Button>
         </header>
 
-        <div className="space-y-6">
-          {/* Header Section */}
-          <section className="py-2 border-b">
-            <h3 className="text-lg font-semibold pb-2 ">{t("brandDetails")}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <strong>{t("brandNameAr")}:</strong> {request.brandNameAr}
-              </div>
-              <div>
-                <strong>{t("brandNameEn")}:</strong> {request.brandNameEn}
-              </div>
-              <div>
-                <strong>{t("descriptionAr")}:</strong>{" "}
-                {request.brandDescriptionsAr}
-              </div>
-              <div>
-                <strong>{t("descriptionEn")}:</strong>{" "}
-                {request.brandDescriptionsEn}
-              </div>
-            </div>
-          </section>
+        {/* Modal Content */}
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead>
+              <tr
+                className={`bg-gray-100 ${
+                  i18n.language === "ar" ? "text-right" : "text-left"
+                }`}
+              >
+                <th className="border border-gray-300 p-2 ">{t("field")}</th>
+                <th className="border border-gray-300 p-2 ">{t("value")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Brand Details */}
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("brandNameAr")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.brandNameAr || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("brandNameEn")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.brandNameEn || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("descriptionAr")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.brandDescriptionsAr || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("descriptionEn")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.brandDescriptionsEn || t("unknown")}
+                </td>
+              </tr>
 
-          {/* User Section */}
-          <section className="py-2 border-b">
-            <h3 className="text-lg font-semibold  pb-3">{t("submittedBy")}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <strong>{t("email")}:</strong> {request.userDto.email}
-              </div>
-              <div>
-                <strong>{t("identificationNumber")}:</strong>{" "}
-                <span>{request.userDto.identificationNumber}</span>
-              </div>
-              <div>
-                <strong>{t("identityTypeAr")}:</strong>{" "}
-                <span>{request.userDto.identityTyNameEn}</span>
-              </div>
-              <div>
-                <strong>{t("identityTypeEn")}:</strong>{" "}
-                <span>{request.userDto.identityTyNameAr}</span>
-              </div>
-              <div>
-                <strong>{t("mobile")}:</strong> {request.userDto.mobile}
-              </div>
-            </div>
-          </section>
+              {/* User Details */}
+              <tr>
+                <td className="border border-gray-300 p-2">{t("email")}</td>
+                <td className="border border-gray-300 p-2">
+                  {request.userDto.email || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("identificationNumber")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.userDto.identificationNumber || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("identityTypeAr")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.userDto.identityTyNameAr || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("identityTypeEn")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {request.userDto.identityTyNameEn || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">{t("mobile")}</td>
+                <td className="border border-gray-300 p-2">
+                  {request.userDto.mobile || t("unknown")}
+                </td>
+              </tr>
 
-          {/* Request Details */}
-          <section className="py-2 border-b">
-            <h3 className="text-lg font-semibold pb-2">
-              {t("requestDetails")}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <strong>{t("createdOn")}:</strong>{" "}
-                <span>{request.requestDto.createdOn.split("T")[0]}</span>
-              </div>
-              {request.requestDto.requestTypeNameEn === "EDIT_BRAND" && (
-                <div>
-                  <strong>{t("requestType")}:</strong>
-                  <span>{t("editBrand")}</span>
-                </div>
+              {/* Request Details */}
+              <tr>
+                <td className="border border-gray-300 p-2">{t("createdOn")}</td>
+                <td className="border border-gray-300 p-2">
+                  {request.requestDto.createdOn.split("T")[0] || t("unknown")}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">
+                  {t("requestType")}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {renderRequestType()}
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-300 p-2">{t("status")}</td>
+                <td className="border border-gray-300 p-2">{renderStatus()}</td>
+              </tr>
+
+              {/* Wallet Details */}
+              {request.brandWalletDto && (
+                <>
+                  <tr>
+                    <td className="border border-gray-300 p-2">{t("iban")}</td>
+                    <td className="border border-gray-300 p-2">
+                      {request.brandWalletDto.iban || t("unknown")}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-2">
+                      {t("bankAccountNumber")}
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      {request.brandWalletDto.bankAccountNumber || t("unknown")}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-2">
+                      {t("bankName")}
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      {request.brandWalletDto.bankName || t("unknown")}
+                    </td>
+                  </tr>
+                </>
               )}
-              {request.requestDto.requestTypeNameEn === "ADD_BRAND" && (
-                <div>
-                  <strong>{t("requestType")}:</strong>
-                  <span>{t("addBrand")}</span>
-                </div>
-              )}
-
-              <div>
-                <strong>{t("status")}:</strong>{" "}
-                {request.requestDto.statusName === "WAITING" && (
-                  <span className="text-yellow-700">{t("waiting")}</span>
-                )}
-              </div>
-            </div>
-          </section>
-
-          {/* Wallet Details */}
-          {request.brandWalletDto && (
-            <section>
-              <h3 className="text-lg font-semibold pb-2">
-                {t("walletDetails")}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <strong>{t("iban")}:</strong>{" "}
-                  <span>{request.brandWalletDto.iban}</span>
-                </div>
-                <div>
-                  <strong>{t("bankAccountNumber")}:</strong>{" "}
-                  <span>{request.brandWalletDto.bankAccountNumber}</span>
-                </div>
-                <div>
-                  <strong>{t("bankName")}:</strong>{" "}
-                  <span>{request.brandWalletDto.bankName}</span>
-                </div>
-              </div>
-            </section>
-          )}
+            </tbody>
+          </table>
 
           {/* Brand Logo */}
           {request.brandLogo && (
-            <section>
+            <div className="mt-4">
               <h3 className="text-lg font-semibold">{t("brandLogo")}</h3>
               <img
                 src={request.brandLogo}
                 alt={t("brandLogo")}
                 className="w-full h-auto rounded-lg border"
               />
-            </section>
+            </div>
           )}
 
           {/* Brand Background Image */}
           {request.brandBackgroundImage && (
-            <section>
+            <div className="mt-4">
               <h3 className="text-lg font-semibold">
                 {t("brandBackgroundImage")}
               </h3>
@@ -158,12 +214,12 @@ const WaitingEditModal: React.FC<WaitingEditModalProps> = ({
                 alt={t("brandBackgroundImage")}
                 className="w-full h-auto rounded-lg border"
               />
-            </section>
+            </div>
           )}
         </div>
 
-        {/* Footer with Accept and Reject */}
-        <footer className="border-t pt-4 mt-4 flex justify-between">
+        {/* Modal Footer */}
+        <footer className="border-t pt-4 mt-4 flex justify-end">
           <Button variant="outline" className="text-blue-900" onClick={onClose}>
             {t("close")}
           </Button>
