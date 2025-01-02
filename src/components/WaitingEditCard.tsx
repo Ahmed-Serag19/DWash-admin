@@ -32,6 +32,16 @@ const WaitingEditCard: React.FC<WaitingEditCardProps> = ({
     action: "accept" | "reject" | null;
   }>({ isOpen: false, action: null });
 
+  const renderRequestType = () => {
+    switch (request.requestDto.requestTypeNameEn) {
+      case "EDIT_BRAND":
+        return t("editBrand");
+      case "ADD_BRAND":
+        return t("addBrand");
+      default:
+        return t("unknownType");
+    }
+  };
   const toggleDetailsModal = () => setIsModalOpen(!isModalOpen);
 
   const openConfirmationModal = (action: "accept" | "reject") => {
@@ -78,7 +88,7 @@ const WaitingEditCard: React.FC<WaitingEditCardProps> = ({
               : request.userDto.nameEn}
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 my-5">
+        <CardContent className="p-4 my-3 flex flex-col gap-3">
           <div className="mb-2">
             <strong>{t("email")}: </strong>
             <span className="ps-2">{request.userDto.email}</span>
@@ -86,6 +96,16 @@ const WaitingEditCard: React.FC<WaitingEditCardProps> = ({
           <div>
             <strong>{t("status")}: </strong>
             <span className="ps-2">{renderStatus()}</span>
+          </div>
+          <div>
+            <strong>{t("requestType")}: </strong>
+            <span className="ps-2">{renderRequestType()}</span>
+          </div>
+          <div>
+            <strong>{t("mobile")}: </strong>
+            <span className="ps-2">
+              {request.userDto.mobile || t("unknown")}
+            </span>
           </div>
         </CardContent>
         <CardFooter className="flex justify-center gap-3 py-5">

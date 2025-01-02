@@ -145,7 +145,7 @@ const EditProfileRequests: React.FC = () => {
   return (
     <main className="flex flex-col items-center justify-start min-h-[calc(100vh-210px)]">
       <div className="pt-10 mb-5">
-        <h1 className="text-3xl text-blue-900 font-bold">
+        <h1 className="text-3xl text-blue-900 font-bold py-4">
           {t("editProfileRequests")}
         </h1>
       </div>
@@ -188,7 +188,7 @@ const EditProfileRequests: React.FC = () => {
                 ))}
               </div>
             )}
-            <Pagination className="py-5 text-sm">
+            <Pagination className="py-5 text-sm py-5 my-5">
               <PaginationContent>
                 {[...Array(totalPages)].map((_, index) => (
                   <PaginationItem key={index}>
@@ -235,7 +235,7 @@ const EditProfileRequests: React.FC = () => {
                 ))}
               </div>
             )}
-            <Pagination className="py-5 text-sm">
+            <Pagination className="py-5 my-5 text-sm">
               <PaginationContent>
                 {[...Array(totalPages)].map((_, index) => (
                   <PaginationItem key={index}>
