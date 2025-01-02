@@ -91,10 +91,11 @@ const Navbar = () => {
                   {t("serviceRequests")}
                 </DropdownMenuItem>
               </Link>
-
-              <DropdownMenuItem className={dropDownClassName}>
-                {t("personalProfileRequest")}
-              </DropdownMenuItem>
+              <Link to="/edit-profile-requests">
+                <DropdownMenuItem className={dropDownClassName}>
+                  {t("personalProfileRequest")}
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -182,9 +183,11 @@ const Navbar = () => {
                   <DropdownMenuItem className={dropDownClassName}>
                     {t("serviceRequests")}
                   </DropdownMenuItem>
-                  <DropdownMenuItem className={dropDownClassName}>
-                    {t("personalProfileRequest")}
-                  </DropdownMenuItem>
+                  <Link to="/edit-profile-requests">
+                    <DropdownMenuItem className={dropDownClassName}>
+                      {t("personalProfileRequest")}
+                    </DropdownMenuItem>
+                  </Link>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
