@@ -165,4 +165,12 @@ export const en = {
   openedRequests: "Opened Requests",
   closedRequests: "Closed Requests",
   editProfileRequests: "Edit Profile Requests",
+  changePassword: "Change Password",
+  currentPassword: "Current Password",
+  newPassword: "New Password",
+  confirmNewPassword: "Confirm New Password",
+  passwordMismatch: "Passwords do not match.",
+  passwordChanged: "Password successfully changed.",
+  passwordMinLength: "Password must be at least 8 characters long.",
+  changingPassword: "Changing password...",
 };

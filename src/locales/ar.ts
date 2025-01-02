@@ -166,4 +166,12 @@ export const ar = {
   openedRequests: "الطلبات المفتوحة",
   closedRequests: "الطلبات المغلقة",
   editProfileRequests: "طلبات تعديل الملف الشخصي",
+  changePassword: "تغيير كلمة المرور",
+  currentPassword: "كلمة المرور الحالية",
+  newPassword: "كلمة المرور الجديدة",
+  confirmNewPassword: "تأكيد كلمة المرور الجديدة",
+  passwordMismatch: "كلمات المرور غير متطابقة.",
+  passwordChanged: "تم تغيير كلمة المرور بنجاح.",
+  passwordMinLength: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+  changingPassword: "جارٍ تغيير كلمة المرور...",
 };

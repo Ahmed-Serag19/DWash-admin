@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaUserCircle, FaSignOutAlt, FaLock } from "react-icons/fa";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -115,6 +115,14 @@ const Navbar = () => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-stone-100 text-black rounded-xl shadow-lg px-0.5">
+            <DropdownMenuItem className={`${dropDownClassName} rounded- mt-2`}>
+              <Link
+                to="/change-password"
+                className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors"
+              >
+                <FaLock /> <span>{t("changePassword")}</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleOpenModal}
               className={`${dropDownClassName} rounded- mt-2`}
@@ -196,6 +204,12 @@ const Navbar = () => {
             <Link to="/clients-orders">
               <DropdownMenuItem className={dropDownClassName}>
                 {t("clientOrders")}
+              </DropdownMenuItem>
+            </Link>
+            {/* Change  Password */}
+            <Link to="/change-password">
+              <DropdownMenuItem className={dropDownClassName}>
+                {t("changePassword")}
               </DropdownMenuItem>
             </Link>
 
