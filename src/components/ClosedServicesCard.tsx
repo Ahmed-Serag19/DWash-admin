@@ -15,7 +15,7 @@ import { ClosedServiceCardProps } from "@/interfaces/interfaces";
 const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  console.log(service);
   const serviceName =
     i18n.language === "ar"
       ? service.servicesNameAr || t("unknownService")
@@ -63,9 +63,9 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
           <div className="flex justify-between min-h-[50px]">
             <span className="font-medium">{t("requestType")}:</span>
             <span>
-              {i18n.language === "ar"
-                ? service.request.requestTypeNameAr
-                : service.request.requestTypeNameEn}
+              {i18n.language === "ar" && service.request.requestTypeNameAr}
+
+              {i18n.language === "en" && service.request.requestTypeNameEn}
             </span>
           </div>
         </CardContent>
@@ -84,40 +84,146 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
         onClose={toggleModal}
         title={t("details")}
       >
-        <div className="flex flex-col gap-4 py-3 px-4">
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("serviceName")}:</strong>
-            <span className="text-gray-900">{serviceName}</span>
-          </div>
+        <div className="overflow-auto max-h-[80vh] py-5">
+          <table className="w-full table-fixed border-collapse border  border-gray-300">
+            <tbody>
+              <tr className="bg-gray-100">
+                <th
+                  className={`p-2 ${
+                    i18n.language === "ar" ? "text-right" : "text-left"
+                  } border border-gray-300`}
+                >
+                  {t("serviceName")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {service.servicesNameEn || t("unknownService")}
+                </td>
+              </tr>
 
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("price")}:</strong>
-            <span className="text-gray-900">{servicePrice}</span>
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("requestType")}:</strong>
-            <span className="text-gray-900">
-              {i18n.language === "ar"
-                ? service.request.requestTypeNameAr
-                : service.request.requestTypeNameEn}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <span>{t("status")}:</span>{" "}
-            {statusName === "ACCEPTED" ? (
-              <span className="text-green-600 text-md">{t("accepted")}</span>
-            ) : (
-              <span className="text-red-500 text-md">{t("rejected")}</span>
-            )}
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("description")}:</strong>
-            <span className="text-gray-900">
-              {i18n.language === "ar"
-                ? service.servicesDescriptionsAr
-                : service.servicesDescriptionsEn}
-            </span>
-          </div>
+              <tr>
+                <th
+                  className={`p-2 ${
+                    i18n.language === "ar" ? "text-right" : "text-left"
+                  } border border-gray-300`}
+                >
+                  {t("price")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {service.servicesPrice
+                    ? `${service.servicesPrice} SAR`
+                    : t("unknownPrice")}
+                </td>
+              </tr>
+              <tr className="bg-gray-100">
+                <th
+                  className={`p-2 ${
+                    i18n.language === "ar" ? "text-right" : "text-left"
+                  } border border-gray-300`}
+                >
+                  {t("requestType")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  <span className="text-blue-600">
+                    {i18n.language === "ar" &&
+                      service.request.requestTypeNameAr}
+
+                    {i18n.language === "en" &&
+                      service.request.requestTypeNameEn}
+                  </span>{" "}
+                </td>
+              </tr>
+              <tr>
+                <th
+                  className={`p-2 ${
+                    i18n.language === "ar" ? "text-right" : "text-left"
+                  } border border-gray-300`}
+                >
+                  {t("status")}
+                </th>
+                <td className="p-2 border border-gray-300">
+                  {service.request.statusName === "ACCEPTED" ? (
+                    <span className="text-green-600">{t("accepted")}</span>
+                  ) : (
+                    <span className="text-red-500">{t("rejected")}</span>
+                  )}
+                </td>
+              </tr>
+              <tr className="bg-gray-100">
+                <th
+                  className={`p-2 ${
+                    i18n.language === "ar" ? "text-right" : "text-left"
+                  } border border-gray-300 bg-gray-100`}
+                >
+                  {t("description")}
+                </th>
+
+                <td className="p-2 border border-gray-300">
+                  <div className="overflow-auto max-h-24 break-words">
+                    {service.servicesDescriptionsEn || t("noDescription")}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th
+                  className={`p-2 ${
+                    i18n.language === "ar" ? "text-right" : "text-left"
+                  } border border-gray-300`}
+                >
+                  {t("requestDate")}
+                </th>
+                <td>
+                  {service.request.createdOn?.split("T")[0] || t("unknownDate")}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Images Section */}
+          {service.serviceImages && service.serviceImages.length > 0 && (
+            <section className="mt-6">
+              <h3 className="text-lg font-semibold mb-2">{t("images")}</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {service.serviceImages.map(
+                  (
+                    image: { url: string; description: string },
+                    index: number
+                  ) => (
+                    <div
+                      key={index}
+                      className="flex justify-center items-center"
+                    >
+                      <img
+                        src={image.url}
+                        alt={
+                          image.description ||
+                          `${t("serviceImage")} ${index + 1}`
+                        }
+                        className="h-32 w-full object-cover rounded-lg border"
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* Extra Services Section */}
+          {service.extraServices && service.extraServices.length > 0 && (
+            <section className="mt-6">
+              <h3 className="text-lg font-semibold mb-2">
+                {t("extraServices")}
+              </h3>
+              <ul className="list-disc pl-5">
+                {service.extraServices.map(
+                  (extra: { id: number; name: string; price: number }) => (
+                    <li key={extra.id} className="text-gray-900">
+                      {extra.name} - {extra.price} {t("currency")}
+                    </li>
+                  )
+                )}
+              </ul>
+            </section>
+          )}
         </div>
       </ServiceModal>
     </>

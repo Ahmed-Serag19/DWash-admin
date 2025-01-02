@@ -173,7 +173,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
         onClose={toggleDetailsModal}
         title={t("details")}
       >
-        <div className="overflow-auto max-h-[80vh]">
+        <div className="overflow-auto py-5 max-h-[80vh]">
           <table className="w-full table-fixed border-collapse border border-gray-300">
             <tbody>
               {/* General Information */}
@@ -191,7 +191,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
                 <th className="p-2 text-left border border-gray-300">
                   {t("email")}
                 </th>
-                <td className="p-2 border border-gray-300">
+                <td className="p-2 border border-gray-300 overflow-auto">
                   {request.request.user.email}
                 </td>
               </tr>
