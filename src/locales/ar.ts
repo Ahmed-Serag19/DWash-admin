@@ -139,4 +139,26 @@ export const ar = {
   confirmAcceptDescription: "هل أنت متأكد أنك تريد قبول هذه الخدمة؟",
   confirmRejectTitle: "تأكيد الرفض",
   confirmRejectDescription: "هل أنت متأكد أنك تريد رفض هذه الخدمة؟",
+  brandDetails: "تفاصيل البراند",
+  brandNameAr: "اسم البراند (بالعربية)",
+  brandNameEn: "اسم البراند (بالإنجليزية)",
+  descriptionAr: "الوصف (بالعربية)",
+  descriptionEn: "الوصف (بالإنجليزية)",
+
+  submittedBy: "مرسل بواسطة",
+
+  waiting: "قيد الانتظار",
+  approved: "تمت الموافقة",
+
+  identityTypeAr: "نوع الهوية ع)",
+  identityTypeEn: "نوع الهوية ا",
+  editBrand: "تعديل البراند",
+  addBrand: "إضافة براند",
+  walletDetails: "تفاصيل المحفظة",
+  iban: "رقم (IBAN)",
+  bankAccountNumber: "رقم الحساب البنكي",
+  bankName: "اسم البنك",
+  brandLogo: "شعار المتجر",
+  brandBackgroundImage: "خلفية المتجر",
+  requestDetails: "تفاصيل الطلب",
 };

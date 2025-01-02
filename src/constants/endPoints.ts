@@ -33,4 +33,9 @@ export const endpoints = {
     `${API_BASE_URL}/request/admin/acceptRequest?requestId=${id}`,
   rejectRequest: (id: number) =>
     `${API_BASE_URL}/request/admin/rejectRequest?requestId=${id}`,
+
+  getWaitingBrandRequest: (page: number, size: number) =>
+    `${API_BASE_URL}/request/admin/getWaitingBrandRequest?page=${page}&size=${size}`,
+  getClosedBrandRequest: (page: number, size: number) =>
+    `${API_BASE_URL}/request/admin/getClosedBrandRequest?page=${page}&size=${size}`,
 };

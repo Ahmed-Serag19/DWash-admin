@@ -137,4 +137,27 @@ export const en = {
   confirmAcceptDescription: "Are you sure you want to accept this service?",
   confirmRejectTitle: "Confirm Rejection",
   confirmRejectDescription: "Are you sure you want to reject this service?",
+  brandDetails: "Brand Details",
+  brandNameAr: "Brand Name (Arabic)",
+  brandNameEn: "Brand Name (English)",
+  descriptionAr: "Description (Arabic)",
+  descriptionEn: "Description (English)",
+
+  submittedBy: "Submitted By",
+
+  waiting: "Waiting",
+  approved: "Approved",
+
+  identityTypeAr: "Identity Type (Arabic)",
+  identityTypeEn: "Identity Type (English)",
+  requestDetails: "Request Details",
+  editBrand: "Edit Brand",
+  addBrand: "Add Brand",
+
+  walletDetails: "Wallet Details",
+  iban: "IBAN",
+  bankAccountNumber: "Bank Account Number",
+  bankName: "Bank Name",
+  brandLogo: "Brand Logo",
+  brandBackgroundImage: "Brand Background Image",
 };
