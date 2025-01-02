@@ -188,7 +188,7 @@ const EditProfileRequests: React.FC = () => {
                 ))}
               </div>
             )}
-            <Pagination className="py-5 text-sm py-5 my-5">
+            <Pagination className="py-5 text-sm  my-5">
               <PaginationContent>
                 {[...Array(totalPages)].map((_, index) => (
                   <PaginationItem key={index}>
