@@ -38,8 +38,8 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
 
   const userName =
     i18n.language === "ar"
-      ? request.request.user.nameAr || t("unknown")
-      : request.request.user.nameEn || t("unknown");
+      ? request.request.user.username || t("unknown")
+      : request.request.user.username || t("unknown");
 
   const serviceName =
     i18n.language === "ar"
@@ -81,6 +81,10 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
           <CardDescription className="text-stone-900 flex items-center justify-between gap-5 text-md font-semibold">
             <span>{t("user")}:</span> <span>{userName}</span>
           </CardDescription>
+          <CardDescription className="text-stone-900 flex items-center justify-between gap-5 text-md font-semibold">
+            <span>{t("requestNumber")}:</span>{" "}
+            <span>{request.request.requestId}</span>
+          </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 px-2 sm:px-5 mt-5 mb-2">
           <div className="flex justify-between">
@@ -90,6 +94,12 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
           <div className="flex justify-between">
             <span className="font-medium">{t("price")}:</span>
             <span>{servicePrice}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium">{t("status")}:</span>
+            {request.request.statusName === "WAITING" && (
+              <span>{t("waiting")}</span>
+            )}
           </div>
           <div className="flex justify-between min-h-[50px]">
             <span className="font-medium">{t("email")}:</span>

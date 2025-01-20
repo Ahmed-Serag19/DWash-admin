@@ -10,6 +10,7 @@ import ServiceRequests from "@/pages/ServiceRequests/ServiceRequests";
 import EditProfileRequests from "@/pages/EditProfileRequest/EditProfileRequests";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 import ChangePassword from "@/pages/ChangePassword/ChangePassword";
+import NotFoundPage from "@/pages/Error404/Error404";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
         <MainLayout />
       </ProtectedRoute>
     ),
+    errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <Homepage /> },
       { path: "/service-providers", element: <ServiceProviders /> },
@@ -30,7 +32,7 @@ const router = createBrowserRouter([
       { path: "/change-password", element: <ChangePassword /> },
     ],
   },
-  { path: "/login", element: <Login /> },
+  { path: "/login", element: <Login />, errorElement: <NotFoundPage /> },
 ]);
 
 const AppRoutes = () => <RouterProvider router={router} />;

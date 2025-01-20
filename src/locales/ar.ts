@@ -174,4 +174,10 @@ export const ar = {
   passwordChanged: "تم تغيير كلمة المرور بنجاح.",
   passwordMinLength: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
   changingPassword: "جارٍ تغيير كلمة المرور...",
+  requestNumber: "رقم الطلب",
+  pageNotFound: "الصفحة غير موجودة",
+  lostDataMessage: "لا تقلق، حتى أفضل البيانات قد تضيع أحياناً على الإنترنت.",
+  backToDashboard: "العودة إلى لوحة التحكم",
+  contactSupportMessage:
+    "إذا كنت تعتقد أن هذا خطأ، يرجى الاتصال بفريق الدعم الخاص بنا.",
 };

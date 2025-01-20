@@ -48,8 +48,11 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
               <span className="text-red-500 text-lg">{t("rejected")}</span>
             )}
           </CardDescription>
+          <CardDescription className="text-stone-900 flex items-center justify-between gap-5 text-md font-semibold">
+            <span>{t("requestNumber")}:</span> <span>{service.serviceId}</span>
+          </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4 px-2 sm:px-5 mt-5 mb-2">
+        <CardContent className="flex flex-col gap-4 px-2 sm:px-5 mt-5 ">
           <div className="flex justify-between">
             <span className="font-medium">{t("requestDate")}:</span>
             <span>

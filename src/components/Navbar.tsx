@@ -23,7 +23,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const handleLogout = () => {
-    sessionStorage.removeItem("userInfo");
+    sessionStorage.removeItem("accessToken");
     toast.success(t("logoutSuccess"), {
       position: "top-right",
       autoClose: 3000,
@@ -118,7 +118,7 @@ const Navbar = () => {
             <DropdownMenuItem className={`${dropDownClassName} rounded- mt-2`}>
               <Link
                 to="/change-password"
-                className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors"
+                className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-stone-500 transition-colors duration-300"
               >
                 <FaLock /> <span>{t("changePassword")}</span>
               </Link>
@@ -127,7 +127,7 @@ const Navbar = () => {
               onClick={handleOpenModal}
               className={`${dropDownClassName} rounded- mt-2`}
             >
-              <button className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors">
+              <button className="flex items-center space-x-2 text-blue-950 font-semibold hover:text-red-500 transition-colors duration-300">
                 <FaSignOutAlt /> <span>{t("logout")}</span>
               </button>
             </DropdownMenuItem>
@@ -188,9 +188,11 @@ const Navbar = () => {
                       {t("showServiceProviders")}
                     </DropdownMenuItem>
                   </Link>
-                  <DropdownMenuItem className={dropDownClassName}>
-                    {t("serviceRequests")}
-                  </DropdownMenuItem>
+                  <Link to="/service-requests">
+                    <DropdownMenuItem className={dropDownClassName}>
+                      {t("serviceRequests")}
+                    </DropdownMenuItem>
+                  </Link>
                   <Link to="/edit-profile-requests">
                     <DropdownMenuItem className={dropDownClassName}>
                       {t("personalProfileRequest")}

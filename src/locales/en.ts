@@ -173,4 +173,11 @@ export const en = {
   passwordChanged: "Password successfully changed.",
   passwordMinLength: "Password must be at least 8 characters long.",
   changingPassword: "Changing password...",
+  requestNumber: "Request Number",
+  pageNotFound: "Page Not Found",
+  lostDataMessage:
+    "Don't worry, even the best data sometimes get lost in the internet.",
+  backToDashboard: "Back to Dashboard",
+  contactSupportMessage:
+    "If you believe this is an error, please contact our support team.",
 };
