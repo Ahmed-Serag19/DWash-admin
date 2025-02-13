@@ -41,7 +41,7 @@ const Navbar = () => {
     <div className="bg-stone-50 text-blue-950 shadow-lg px-6 py-4 flex justify-around items-center max-md:justify-between z-40">
       <NavLink
         to="/"
-        className="hover:bg-stone-300 transition duration-300 rounded-2xl p-2"
+        className="hover:bg-stone-100 transition duration-300 rounded-2xl p-2"
       >
         <img src={NavbarLogo} alt="Dwash logo icon" className="w-32" />
       </NavLink>
@@ -108,7 +108,7 @@ const Navbar = () => {
           </NavLink>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className="text-blue-950 outline-1 outline-offset-1 outline hover:outline-slate-400 rounded-md px-1 py-0.5 bg-stone-200 hover:bg-stone-100 font-semibold hover:text-blue-600 transition-colors">
+          <DropdownMenuTrigger className="text-blue-950 outline-1 outline-offset-1 outline hover:outline-slate-400 rounded-md px-1 py-0.5 bg-stone-100 hover:bg-stone-100 font-semibold hover:text-blue-800 transition">
             <div className="flex items-center gap-1">
               <FaUserCircle className="w-9 h-9 rounded-full p-0.5" />
               <span className="font-semibold">{t("admin")}</span>

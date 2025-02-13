@@ -170,34 +170,36 @@ const ServiceProviders: React.FC = () => {
                     />
                   ))}
                 </div>
-                <div className="overflow-x-auto">
-                  <Pagination className="py-5 ">
-                    <PaginationContent>
-                      {[...Array(totalPages)].map((_, index) => (
-                        <PaginationItem key={index}>
-                          <PaginationLink
+                {activeUsers.length > 0 && (
+                  <div className="overflow-x-auto">
+                    <Pagination className="py-5 ">
+                      <PaginationContent>
+                        {[...Array(totalPages)].map((_, index) => (
+                          <PaginationItem key={index}>
+                            <PaginationLink
+                              href="#"
+                              isActive={currentPage === index + 1}
+                              onClick={() => setCurrentPage(index + 1)}
+                            >
+                              {index + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                        <PaginationItem>
+                          <PaginationNext
+                            title={i18n.language === "en" ? "Next" : "التالي"}
                             href="#"
-                            isActive={currentPage === index + 1}
-                            onClick={() => setCurrentPage(index + 1)}
-                          >
-                            {index + 1}
-                          </PaginationLink>
+                            onClick={() =>
+                              setCurrentPage((prev) =>
+                                Math.min(prev + 1, totalPages)
+                              )
+                            }
+                          />
                         </PaginationItem>
-                      ))}
-                      <PaginationItem>
-                        <PaginationNext
-                          title={i18n.language === "en" ? "Next" : "التالي"}
-                          href="#"
-                          onClick={() =>
-                            setCurrentPage((prev) =>
-                              Math.min(prev + 1, totalPages)
-                            )
-                          }
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                </div>
+                      </PaginationContent>
+                    </Pagination>
+                  </div>
+                )}
               </>
             )}
           </TabsContent>
@@ -223,32 +225,34 @@ const ServiceProviders: React.FC = () => {
                     />
                   ))}
                 </div>
-                <Pagination className="py-5">
-                  <PaginationContent>
-                    {[...Array(totalPages)].map((_, index) => (
-                      <PaginationItem key={index}>
-                        <PaginationLink
+                {inactiveUsers.length > 0 && (
+                  <Pagination className="py-5">
+                    <PaginationContent>
+                      {[...Array(totalPages)].map((_, index) => (
+                        <PaginationItem key={index}>
+                          <PaginationLink
+                            href="#"
+                            isActive={currentPage === index + 1}
+                            onClick={() => setCurrentPage(index + 1)}
+                          >
+                            {index + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      <PaginationItem>
+                        <PaginationNext
+                          title={i18n.language === "en" ? "Next" : "التالي"}
                           href="#"
-                          isActive={currentPage === index + 1}
-                          onClick={() => setCurrentPage(index + 1)}
-                        >
-                          {index + 1}
-                        </PaginationLink>
+                          onClick={() =>
+                            setCurrentPage((prev) =>
+                              Math.min(prev + 1, totalPages)
+                            )
+                          }
+                        />
                       </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                      <PaginationNext
-                        title={i18n.language === "en" ? "Next" : "التالي"}
-                        href="#"
-                        onClick={() =>
-                          setCurrentPage((prev) =>
-                            Math.min(prev + 1, totalPages)
-                          )
-                        }
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
+                    </PaginationContent>
+                  </Pagination>
+                )}
               </>
             )}
           </TabsContent>

@@ -28,25 +28,27 @@ const ServiceProviderForm: React.FC = () => {
     formState: { errors },
     reset,
     setValue,
+    watch,
   } = useForm<FormData>({
     defaultValues: {
       nameAr: "",
       nameEn: "",
-      identificationTypeId: "1",
-      identificationNumber: "",
+      identificationTypeId: "",
+      identificationNumber: "0000000000",
       mobileNumber: "",
       email: "",
       deductionPrs: 0,
       identityId: 0,
     },
   });
-
+  const selectedIdentityId = watch("identityId");
+  console.log(selectedIdentityId);
   useEffect(() => {
     if (initialData) {
       reset({
         nameAr: initialData.userDto?.nameAr || "",
         nameEn: initialData.userDto?.nameEn || "",
-        identificationTypeId: initialData.userDto?.identificationTypeId || "1",
+        identificationTypeId: initialData.userDto?.identificationTypeId || "",
         identificationNumber: initialData.userDto?.identificationNumber || "",
         mobileNumber: initialData.userDto?.mobile || "",
         email: initialData.userDto?.email || "",
@@ -237,12 +239,16 @@ const ServiceProviderForm: React.FC = () => {
             <input
               id="identificationNumber"
               {...register("identificationNumber", {
-                required: t("errorRequired") as string,
+                required:
+                  selectedIdentityId !== 4
+                    ? (t("errorRequired") as string)
+                    : false, // Conditionally set required
                 pattern: {
                   value: /[0-9]{10}/,
                   message: t("errorNumbersOnly"),
                 },
               })}
+              disabled={selectedIdentityId === 4}
               className={`border rounded-md p-2 w-full ${
                 errors.identificationNumber
                   ? "border-red-500"

@@ -188,30 +188,32 @@ const EditProfileRequests: React.FC = () => {
                 ))}
               </div>
             )}
-            <Pagination className="py-5 text-sm  my-5">
-              <PaginationContent>
-                {[...Array(totalPages)].map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
+            {openedRequests.length > 0 && (
+              <Pagination className="py-5 text-sm  my-5">
+                <PaginationContent>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === index + 1}
+                        onClick={() => setCurrentPage(index + 1)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext
+                      title={i18n.language === "en" ? "Next" : "التالي"}
                       href="#"
-                      isActive={currentPage === index + 1}
-                      onClick={() => setCurrentPage(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationLink>
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                    />
                   </PaginationItem>
-                ))}
-                <PaginationItem>
-                  <PaginationNext
-                    title={i18n.language === "en" ? "Next" : "التالي"}
-                    href="#"
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+                </PaginationContent>
+              </Pagination>
+            )}
           </TabsContent>
 
           <TabsContent
@@ -235,30 +237,32 @@ const EditProfileRequests: React.FC = () => {
                 ))}
               </div>
             )}
-            <Pagination className="py-5 my-5 text-sm">
-              <PaginationContent>
-                {[...Array(totalPages)].map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
+            {closedRequests.length > 0 && (
+              <Pagination className="py-5 my-5 text-sm">
+                <PaginationContent>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === index + 1}
+                        onClick={() => setCurrentPage(index + 1)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext
+                      title={i18n.language === "en" ? "Next" : "التالي"}
                       href="#"
-                      isActive={currentPage === index + 1}
-                      onClick={() => setCurrentPage(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationLink>
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                    />
                   </PaginationItem>
-                ))}
-                <PaginationItem>
-                  <PaginationNext
-                    title={i18n.language === "en" ? "Next" : "التالي"}
-                    href="#"
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+                </PaginationContent>
+              </Pagination>
+            )}
           </TabsContent>
         </Tabs>
       </div>

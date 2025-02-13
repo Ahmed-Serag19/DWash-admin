@@ -81,6 +81,7 @@ const Coupons: React.FC = () => {
         fetchDiscounts();
         reset();
         setisAddModalOpen(false);
+        setDiscountType("AMOUNT");
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

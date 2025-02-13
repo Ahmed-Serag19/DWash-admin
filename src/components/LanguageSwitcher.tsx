@@ -4,7 +4,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "../components/ui/dropdown-menu";
 import { FaGlobe } from "react-icons/fa"; // Importing the globe icon
 
 const LanguageSwitcher = () => {
@@ -22,7 +22,7 @@ const LanguageSwitcher = () => {
           aria-label="Language Switcher"
           aria-labelledby="language-switcher"
           tabIndex={0}
-          className="p-0.5 text-white hover:text-blue-950 hover:bg-stone-100 transition duration-300 bg-blue-950 rounded-full"
+          className="p-[1px] focus:border-0 text-white hover:text-blue-950 hover:bg-stone-100 transition duration-300 bg-blue-950 rounded-full"
         >
           <FaGlobe size={20} /> {/* Globe icon */}
         </button>
