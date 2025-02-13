@@ -34,7 +34,7 @@ const ServiceProviderForm: React.FC = () => {
       nameAr: "",
       nameEn: "",
       identificationTypeId: "",
-      identificationNumber: "0000000000",
+      identificationNumber: "",
       mobileNumber: "",
       email: "",
       deductionPrs: 0,
@@ -42,7 +42,7 @@ const ServiceProviderForm: React.FC = () => {
     },
   });
   const selectedIdentityId = watch("identityId");
-  console.log(selectedIdentityId);
+
   useEffect(() => {
     if (initialData) {
       reset({
@@ -57,6 +57,13 @@ const ServiceProviderForm: React.FC = () => {
       });
     }
   }, [initialData, reset]);
+
+  useEffect(() => {
+    // Automatically set identificationNumber to "0000000000" when identityId is 4
+    if (selectedIdentityId === 4) {
+      setValue("identificationNumber", "0000000000");
+    }
+  }, [selectedIdentityId, setValue]);
 
   useEffect(() => {
     const fetchIdentificationTypes = async () => {
@@ -247,6 +254,7 @@ const ServiceProviderForm: React.FC = () => {
                   value: /[0-9]{10}/,
                   message: t("errorNumbersOnly"),
                 },
+                value: selectedIdentityId === 4 ? "0000000000" : "",
               })}
               disabled={selectedIdentityId === 4}
               className={`border rounded-md p-2 w-full ${

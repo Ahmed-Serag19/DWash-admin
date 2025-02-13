@@ -169,7 +169,9 @@ const EditProfileRequests: React.FC = () => {
 
           <TabsContent
             value="opened"
-            className="transition-all duration-300 p-5 min-h-[400px]"
+            className={`transition-all duration-300 p-5 ${
+              openedRequests.length === 0 ? "min-h-[500px]" : "min-h-[400px]"
+            }`}
           >
             {isLoading ? (
               <div className="flex justify-center items-center">
@@ -218,7 +220,9 @@ const EditProfileRequests: React.FC = () => {
 
           <TabsContent
             value="closed"
-            className="transition-all duration-300 p-5 min-h-[400px]"
+            className={`transition-all duration-300 p-5 ${
+              closedRequests.length === 0 ? "min-h-[500px]" : "min-h-[400px]"
+            }`}
           >
             {isLoading ? (
               <div className="flex justify-center items-center">

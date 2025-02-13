@@ -180,4 +180,11 @@ export const en = {
   backToDashboard: "Back to Dashboard",
   contactSupportMessage:
     "If you believe this is an error, please contact our support team.",
+  activationSuccess: "Activation Success",
+  activationFailed: "Activation Failed",
+  deactivationSuccess: "Deactivation Success",
+  deactivationFailed: "Failed Deactivating Account",
+  searchByName: "Search By english name",
+  active: "Active",
+  inactive: "Inactive",
 };

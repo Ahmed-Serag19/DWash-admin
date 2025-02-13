@@ -180,4 +180,11 @@ export const ar = {
   backToDashboard: "العودة إلى لوحة التحكم",
   contactSupportMessage:
     "إذا كنت تعتقد أن هذا خطأ، يرجى الاتصال بفريق الدعم الخاص بنا.",
+  activationSuccess: "تم التفعيل بنجاح",
+  activationFailed: "لم يتم التفعيل بنجاح",
+  deactivationSuccess: "تم تعطيل الحساب بنجاح",
+  deactivationFailed: "لم يتم تعطيل الحساب",
+  searchByName: "ابحث عن الأسم بالانجليزي",
+  active: "مفعل",
+  inactive: "غير مفعل",
 };

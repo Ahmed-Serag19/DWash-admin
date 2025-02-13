@@ -29,23 +29,25 @@ const ServiceRequests: React.FC = () => {
 
   const pageSize = 6;
 
-  const fetchOpenedRequests = async () => {
+  const fetchOpenedRequests = async (page: number, size: number = pageSize) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(endpoints.getWaitingServices, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
+      const response = await axios.get(
+        endpoints.getWaitingServices(page - 1, size),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.status === 200) {
-        const requests = response.data || [];
+        const requests = Array.isArray(response.data) ? response.data : [];
         setOpenedRequests(requests);
       } else {
         toast.error(response.data?.messageEn || t("errorFetchingData"));
       }
-    } catch (error: unknown) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         toast.error(t("errorFetchingData"));
       }
@@ -96,7 +98,7 @@ const ServiceRequests: React.FC = () => {
       });
       if (response.data.success) {
         toast.success(t("acceptSuccess"));
-        fetchOpenedRequests();
+        fetchOpenedRequests(currentPage, pageSize);
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
@@ -117,7 +119,7 @@ const ServiceRequests: React.FC = () => {
       });
       if (response.data.success) {
         toast.success(t("rejectSuccess"));
-        fetchOpenedRequests();
+        fetchOpenedRequests(currentPage, pageSize);
       } else {
         toast.error(response.data.messageEn || t("unknownError"));
       }
@@ -134,7 +136,7 @@ const ServiceRequests: React.FC = () => {
 
   useEffect(() => {
     if (activeTab === "opened") {
-      fetchOpenedRequests();
+      fetchOpenedRequests(currentPage, pageSize);
     } else {
       fetchClosedRequests(currentPage, pageSize);
     }
@@ -157,10 +159,10 @@ const ServiceRequests: React.FC = () => {
         >
           <TabsList className="md:min-w-[400px] flex mb-5 text-blue-900">
             <TabsTrigger value="opened" className="w-1/2">
-              Opened Requests
+              {t("openedRequests")}
             </TabsTrigger>
             <TabsTrigger value="closed" className="w-1/2">
-              Closed Requests
+              {t("closedRequests")}
             </TabsTrigger>
           </TabsList>
 
@@ -174,7 +176,7 @@ const ServiceRequests: React.FC = () => {
               </div>
             ) : (
               <div className="grid min-w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {openedRequests.map((request) => (
+                {openedRequests?.map((request) => (
                   <WaitingServiceCard
                     key={request.id}
                     request={request}
@@ -184,6 +186,32 @@ const ServiceRequests: React.FC = () => {
                   />
                 ))}
               </div>
+            )}
+            {openedRequests.length > 0 && (
+              <Pagination className="py-5">
+                <PaginationContent>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === index + 1}
+                        onClick={() => setCurrentPage(index + 1)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      title={i18n.language === "en" ? "Next" : "التالي"}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             )}
           </TabsContent>
 
@@ -205,30 +233,32 @@ const ServiceRequests: React.FC = () => {
                 ))}
               </div>
             )}
-            <Pagination className="py-5">
-              <PaginationContent>
-                {[...Array(totalPages)].map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
+            {closedRequests.length > 0 && (
+              <Pagination className="py-5">
+                <PaginationContent>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === index + 1}
+                        onClick={() => setCurrentPage(index + 1)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext
                       href="#"
-                      isActive={currentPage === index + 1}
-                      onClick={() => setCurrentPage(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationLink>
+                      title={i18n.language === "en" ? "Next" : "التالي"}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                    />
                   </PaginationItem>
-                ))}
-                <PaginationItem>
-                  <PaginationNext
-                    href="#"
-                    title={i18n.language === "en" ? "Next" : "التالي"}
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+                </PaginationContent>
+              </Pagination>
+            )}
           </TabsContent>
         </Tabs>
       </div>

@@ -46,7 +46,7 @@ const WaitingEditModal: React.FC<WaitingEditModalProps> = ({
       dir={i18n.language === "ar" ? "rtl" : "ltr"}
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     >
-      <div className="bg-white rounded-lg shadow-lg max-w-5xl w-10/12 p-6 overflow-y-scroll">
+      <div className="bg-white rounded-lg shadow-lg max-w-5xl w-10/12 p-6 overflow-y-auto">
         {/* Modal Header */}
         <header className="border-b pb-4 mb-4 flex justify-between items-center">
           <h2 className="text-2xl font-bold text-blue-900">{t("details")}</h2>
