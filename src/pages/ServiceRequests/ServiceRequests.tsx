@@ -42,7 +42,9 @@ const ServiceRequests: React.FC = () => {
         }
       );
       if (response.status === 200) {
-        const requests = Array.isArray(response.data) ? response.data : [];
+        // Accessing the 'data' property properly from the response
+        const requests = response.data?.content?.data || []; // Fallback to empty array if no data
+        console.log(response);
         setOpenedRequests(requests);
       } else {
         toast.error(response.data?.messageEn || t("errorFetchingData"));
@@ -142,7 +144,7 @@ const ServiceRequests: React.FC = () => {
     }
   }, [activeTab, currentPage]);
   return (
-    <main className="flex flex-col items-center justify-start min-h-[calc(100vh-210px)]">
+    <main className="flex flex-col items-center justify-start min-h-[calc(100vh-210px)] ">
       <div className="pt-10 mb-5">
         <h1 className="text-3xl text-blue-900 font-bold">
           {t("serviceRequests")}
@@ -151,7 +153,7 @@ const ServiceRequests: React.FC = () => {
       <div className="w-full flex justify-center">
         <Tabs
           defaultValue="opened"
-          className="w-full max-w-6xl flex flex-col items-center"
+          className="w-full max-w-6xl flex flex-col items-center "
           onValueChange={(value) => {
             setActiveTab(value as "opened" | "closed");
             setCurrentPage(1);
@@ -168,17 +170,17 @@ const ServiceRequests: React.FC = () => {
 
           <TabsContent
             value="opened"
-            className="transition-all duration-300 p-5 min-h-[400px]"
+            className="transition-all duration-300 p-5 min-h-[400px] !w-full"
           >
             {isLoading ? (
               <div className="flex justify-center items-center">
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="grid min-w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid min-w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
                 {openedRequests?.map((request) => (
                   <WaitingServiceCard
-                    key={request.id}
+                    key={request.serviceId}
                     request={request}
                     onAccept={handleAcceptRequest}
                     onReject={handleRejectRequest}
@@ -217,7 +219,7 @@ const ServiceRequests: React.FC = () => {
 
           <TabsContent
             value="closed"
-            className="transition-all duration-300 p-5 min-h-[400px]"
+            className="transition-all duration-300 p-5 min-h-[400px] !w-full"
           >
             {isLoading ? (
               <div className="flex justify-center items-center">

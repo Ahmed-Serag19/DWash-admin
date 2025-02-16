@@ -187,4 +187,5 @@ export const ar = {
   searchByName: "ابحث عن الأسم بالانجليزي",
   active: "مفعل",
   inactive: "غير مفعل",
+  brand: "الأسم",
 };

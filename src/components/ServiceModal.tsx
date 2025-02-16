@@ -15,7 +15,7 @@ const ServiceModal: React.FC<ModalProps> = ({
   title,
   children,
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   if (!isOpen) return null;
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
@@ -39,7 +39,7 @@ const ServiceModal: React.FC<ModalProps> = ({
             className="px-4 py-2 bg-gray-500 text-white rounded transition duration-300 hover:bg-gray-700"
             onClick={onClose}
           >
-            Close
+            {t("close")}
           </button>
         </div>
       </div>

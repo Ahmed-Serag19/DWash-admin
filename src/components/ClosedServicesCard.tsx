@@ -34,7 +34,7 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
         key={service.request.id}
-        className="shadow-md  md:min-w-[330px]"
+        className="shadow-md w-full sm:min-w-[270px] md:min-w-[330px]"
       >
         <CardHeader className="bg-blue-100 rounded-md ">
           <CardTitle className="text-blue-900 text-xl font-bold text-center py-2 min-h-[90px]">
@@ -185,7 +185,7 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
           {service.serviceImages && service.serviceImages.length > 0 && (
             <section className="mt-6">
               <h3 className="text-lg font-semibold mb-2">{t("images")}</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {service.serviceImages.map(
                   (
                     image: { url: string; description: string },

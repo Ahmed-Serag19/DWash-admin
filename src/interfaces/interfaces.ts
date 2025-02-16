@@ -131,6 +131,7 @@ export interface User {
 }
 
 export interface Request {
+  status: number;
   createdOn: any;
   id: number;
   user: User;
@@ -139,6 +140,9 @@ export interface Request {
 }
 
 export interface ServiceRequest {
+  brandNameEn: string;
+  brandNameAr: string;
+  serviceId: number;
   serviceImages: boolean;
   createdOn: string;
   user: string;

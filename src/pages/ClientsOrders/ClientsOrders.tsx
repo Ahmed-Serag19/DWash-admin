@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import {
@@ -30,7 +30,7 @@ import {
 
 const ClientsOrders = () => {
   const { t, i18n } = useTranslation();
-  const [orders, setOrders] = useState<Order[]>(clientsOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -61,12 +61,12 @@ const ClientsOrders = () => {
       setIsLoading(false);
     }
   };
-  // useEffect(() => {
-  //   fetchOrders();
-  // }, []);
-  // useEffect(() => {
-  //   fetchOrders(currentPage, pageSize);
-  // }, [currentPage]);
+  useEffect(() => {
+    fetchOrders(currentPage, pageSize);
+  }, []);
+  useEffect(() => {
+    fetchOrders(currentPage, pageSize);
+  }, [currentPage]);
 
   const handleCancelOrder = async (invoiceId: number) => {
     // Logic for canceling the order
@@ -96,7 +96,7 @@ const ClientsOrders = () => {
   // };
 
   return (
-    <div className="p-2 sm:p-6 flex flex-col items-center">
+    <div className="p-2 sm:p-6 flex flex-col items-center min-h-[calc(100vh-250px)]">
       <h1 className="text-3xl font-bold text-blue-900 mb-6 py-3">
         {t("clientOrders")}
       </h1>
@@ -181,30 +181,32 @@ const ClientsOrders = () => {
               </Card>
             ))}
           </div>
-          <Pagination className="pt-16 pb-1" dir="ltr">
-            <PaginationContent>
-              {[...Array(totalPages)].map((_, index) => (
-                <PaginationItem key={index}>
-                  <PaginationLink
+          {orders.length > 0 && (
+            <Pagination className="pt-16 pb-1" dir="ltr">
+              <PaginationContent>
+                {[...Array(totalPages)].map((_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink
+                      href="#"
+                      isActive={currentPage === index + 1}
+                      onClick={() => setCurrentPage(index + 1)}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext
+                    title={i18n.language === "en" ? "Next" : "التالي"}
                     href="#"
-                    isActive={currentPage === index + 1}
-                    onClick={() => setCurrentPage(index + 1)}
-                  >
-                    {index + 1}
-                  </PaginationLink>
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                  />
                 </PaginationItem>
-              ))}
-              <PaginationItem>
-                <PaginationNext
-                  title={i18n.language === "en" ? "Next" : "التالي"}
-                  href="#"
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+              </PaginationContent>
+            </Pagination>
+          )}
         </>
       )}
     </div>

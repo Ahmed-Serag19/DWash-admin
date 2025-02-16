@@ -187,4 +187,5 @@ export const en = {
   searchByName: "Search By english name",
   active: "Active",
   inactive: "Inactive",
+  brand: "Name",
 };

@@ -15,11 +15,8 @@ import { ServiceRequest } from "@/interfaces/interfaces";
 
 interface WaitingServiceCardProps {
   request: ServiceRequest;
-
   onAccept: (id: number) => Promise<void>;
-
   onReject: (id: number) => Promise<void>;
-
   onViewDetails: (request: ServiceRequest) => void;
 }
 
@@ -36,10 +33,10 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
     "accept" | "reject" | null
   >(null);
 
-  const userName =
+  const brandName =
     i18n.language === "ar"
-      ? request.request.user.username || t("unknown")
-      : request.request.user.username || t("unknown");
+      ? request.brandNameAr || t("unknown")
+      : request.brandNameEn || t("unknown");
 
   const serviceName =
     i18n.language === "ar"
@@ -54,9 +51,9 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
 
   const handleConfirm = async () => {
     if (confirmationAction === "accept") {
-      await onAccept(request.request.requestId);
+      await onAccept(request.request.id);
     } else if (confirmationAction === "reject") {
-      await onReject(request.request.requestId);
+      await onReject(request.request.id);
     }
     setIsConfirmationOpen(false);
     setConfirmationAction(null);
@@ -71,25 +68,25 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
     <>
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        key={request.request.requestId}
-        className="shadow-md md:min-w-[330px] "
+        className="shadow-md min-w-[330px] sm:min-w-[270px] md:min-w-[330px]"
       >
         <CardHeader className="bg-blue-100 rounded-md">
           <CardTitle className="text-blue-900 text-xl font-bold text-center py-2">
             {serviceName}
           </CardTitle>
           <CardDescription className="text-stone-900 flex items-center justify-between gap-5 text-md font-semibold">
-            <span>{t("user")}:</span> <span>{userName}</span>
+            <span>{t("brand")}:</span> <span>{brandName}</span>
           </CardDescription>
           <CardDescription className="text-stone-900 flex items-center justify-between gap-5 text-md font-semibold">
-            <span>{t("requestNumber")}:</span>{" "}
-            <span>{request.request.requestId}</span>
+            <span>{t("requestNumber")}:</span> <span>{request.request.id}</span>
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 px-2 sm:px-5 mt-5 mb-2">
           <div className="flex justify-between">
             <span className="font-medium">{t("requestDate")}:</span>
-            <span>{request.createdOn?.split("T")[0] || t("unknownDate")}</span>
+            <span>
+              {request.request.createdOn?.split("T")[0] || t("unknownDate")}
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">{t("price")}:</span>
@@ -97,13 +94,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
           </div>
           <div className="flex justify-between">
             <span className="font-medium">{t("status")}:</span>
-            {request.request.statusName === "WAITING" && (
-              <span>{t("waiting")}</span>
-            )}
-          </div>
-          <div className="flex justify-between min-h-[50px]">
-            <span className="font-medium">{t("email")}:</span>
-            <span>{request.request.user.email}</span>
+            {request.request.status === 100 && <span>{t("waiting")}</span>}
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-center gap-2">
@@ -128,56 +119,6 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
         </CardFooter>
       </Card>
 
-      {/* <ServiceModal
-        isOpen={isModalOpen}
-        onClose={toggleDetailsModal}
-        title={t("details")}
-      >
-        <div className="flex flex-col gap-4 py-3 px-4">
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("user")}:</strong>
-            <span className="text-gray-900">
-              {i18n.language === "ar"
-                ? request.request.user.nameAr || t("unknown")
-                : request.request.user.nameEn || t("unknown")}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("email")}:</strong>
-            <span className="text-gray-900">{request.request.user.email}</span>
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("serviceName")}:</strong>
-            <span className="text-gray-900">
-              {i18n.language === "ar"
-                ? request.servicesNameAr || t("unknownService")
-                : request.servicesNameEn || t("unknownService")}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("description")}:</strong>
-            <span className="text-gray-900">
-              {i18n.language === "ar"
-                ? request.servicesDescriptionsAr
-                : request.servicesDescriptionsEn}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("price")}:</strong>
-            <span className="text-gray-900">
-              {request.servicesPrice
-                ? `${request.servicesPrice} SAR`
-                : t("unknownPrice")}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <strong className="text-gray-700">{t("status")}:</strong>
-            <span className="text-gray-900">
-              {request.request.statusName || t("unknownStatus")}
-            </span>
-          </div>
-        </div>
-      </ServiceModal> */}
       <ServiceModal
         isOpen={isModalOpen}
         onClose={toggleDetailsModal}
@@ -189,23 +130,15 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
               {/* General Information */}
               <tr className="bg-gray-100">
                 <th className="p-2 text-left border border-gray-300">
-                  {t("user")}
+                  {t("brand")}
                 </th>
                 <td className="p-2 border border-gray-300">
                   {i18n.language === "ar"
-                    ? request.request.user.nameAr || t("unknown")
-                    : request.request.user.nameEn || t("unknown")}
+                    ? request.brandNameAr || t("unknown")
+                    : request.brandNameEn || t("unknown")}
                 </td>
               </tr>
               <tr>
-                <th className="p-2 text-left border border-gray-300">
-                  {t("email")}
-                </th>
-                <td className="p-2 border border-gray-300 overflow-auto">
-                  {request.request.user.email}
-                </td>
-              </tr>
-              <tr className="bg-gray-100">
                 <th className="p-2 text-left border border-gray-300">
                   {t("requestDate")}
                 </th>
@@ -213,7 +146,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
                   {request.request.createdOn?.split("T")[0] || t("unknownDate")}
                 </td>
               </tr>
-              <tr>
+              <tr className="bg-gray-100">
                 <th className="p-2 text-left border border-gray-300">
                   {t("status")}
                 </th>
@@ -223,7 +156,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
               </tr>
 
               {/* Service Details */}
-              <tr className="bg-gray-100">
+              <tr>
                 <th className="p-2 text-left border border-gray-300">
                   {t("serviceName")}
                 </th>
@@ -233,7 +166,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
                     : request.servicesNameEn || t("unknownService")}
                 </td>
               </tr>
-              <tr>
+              <tr className="bg-gray-100">
                 <th className="p-2 text-left border border-gray-300">
                   {t("description")}
                 </th>
@@ -245,7 +178,7 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
                   </div>
                 </td>
               </tr>
-              <tr className="bg-gray-100">
+              <tr>
                 <th className="p-2 text-left border border-gray-300">
                   {t("price")}
                 </th>
@@ -264,13 +197,13 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
               <section className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">{t("images")}</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {request.serviceImages.map((image: string, index: number) => (
+                  {request.serviceImages.map((image: any, index: number) => (
                     <div
-                      key={index}
+                      key={image.id}
                       className="flex justify-center items-center"
                     >
                       <img
-                        src={image}
+                        src={image.imagePath}
                         alt={`${t("serviceImage")} ${index + 1}`}
                         className="h-32 w-full object-cover rounded-lg border"
                       />
