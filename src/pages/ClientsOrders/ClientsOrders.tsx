@@ -70,7 +70,7 @@ const ClientsOrders = () => {
   const handleCancelOrder = async (invoiceId: number) => {
     setIsLoading(true);
     try {
-      const response = await axios.put(endpoints.cancelOrder(invoiceId), {
+      const response = await axios.put(endpoints.cancelOrder(invoiceId), null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -91,11 +91,15 @@ const ClientsOrders = () => {
   const handleCompleteOrder = async (invoiceId: number) => {
     setIsLoading(true);
     try {
-      const response = await axios.put(endpoints.completeOrder(invoiceId), {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.put(
+        endpoints.completeOrder(invoiceId),
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       if (response.data.success) {
         toast.success(t("orderCompletedSuccess"));
         fetchOrders(currentPage, pageSize);
@@ -188,13 +192,13 @@ const ClientsOrders = () => {
                 <CardFooter className="flex justify-center gap-3 my-2 sm:my-5">
                   <Button
                     className="bg-green-600 text-white hover:bg-green-700 transition duration-300"
-                    onClick={() => handleCompleteOrder(order.invoiceId)}
+                    onClick={() => handleCompleteOrder(order.request.id)}
                   >
                     {t("completeOrder")}
                   </Button>
                   <Button
                     className="bg-red-600 text-white hover:bg-red-700 transition duration-300"
-                    onClick={() => handleCancelOrder(order.invoiceId)}
+                    onClick={() => handleCancelOrder(order.request.id)}
                   >
                     {t("cancelOrder")}
                   </Button>
