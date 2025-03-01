@@ -19,7 +19,6 @@ import {
 import { endpoints } from "@/constants/endPoints";
 import { toast } from "react-toastify";
 import { Order } from "@/interfaces/interfaces";
-import { clientsOrders } from "@/utils/dummyData";
 import {
   Pagination,
   PaginationContent,
@@ -69,7 +68,6 @@ const ClientsOrders = () => {
   }, [currentPage]);
 
   const handleCancelOrder = async (invoiceId: number) => {
-    // Logic for canceling the order
     setIsLoading(true);
     try {
       const response = await axios.put(endpoints.cancelOrder(invoiceId), {
@@ -90,13 +88,30 @@ const ClientsOrders = () => {
       }
     }
   };
+  const handleCompleteOrder = async (invoiceId: number) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.put(endpoints.completeOrder(invoiceId), {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response.data.success) {
+        toast.success(t("orderCompletedSuccess"));
+        fetchOrders(currentPage, pageSize);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage =
+          t("errorCompletingOrder") || error.response.data?.messageEn;
 
-  // const handleShowDetails = (invoiceId: number) => {
-  //   // Logic for showing order details
-  // };
+        toast.error(errorMessage);
+      }
+    }
+  };
 
   return (
-    <div className="p-2 sm:p-6 flex flex-col items-center min-h-[calc(100vh-250px)]">
+    <div className="p-2 sm:p-4 flex flex-col items-center min-h-[calc(100vh-250px)]">
       <h1 className="text-3xl font-bold text-blue-900 mb-6 py-3">
         {t("clientOrders")}
       </h1>
@@ -104,11 +119,11 @@ const ClientsOrders = () => {
         <div className="loader"></div>
       ) : (
         <>
-          <div className="grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl">
+          <div className="grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             {orders.map((order) => (
               <Card
                 key={order.invoiceId}
-                className="shadow-md md:min-w-[310px]"
+                className="shadow-md md:min-w-[330px]"
               >
                 <CardHeader>
                   <CardTitle className="text-blue-900 text-lg font-bold flex gap-3  items-center border-b pb-3 border-stone-800">
@@ -119,10 +134,10 @@ const ClientsOrders = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 p-2 sm:p-4">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-0.5">
                     <FaUser className="text-blue-800 mr-2" />
                     <span className="font-medium">{t("serviceProvider")}:</span>
-                    <span className="mx-2 place-items-end">
+                    <span className="mx-0.5 place-items-end">
                       {i18n.language === "ar"
                         ? order.brandNameAr
                         : order.brandNameEn}
@@ -171,6 +186,12 @@ const ClientsOrders = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-center gap-3 my-2 sm:my-5">
+                  <Button
+                    className="bg-green-600 text-white hover:bg-green-700 transition duration-300"
+                    onClick={() => handleCompleteOrder(order.invoiceId)}
+                  >
+                    {t("completeOrder")}
+                  </Button>
                   <Button
                     className="bg-red-600 text-white hover:bg-red-700 transition duration-300"
                     onClick={() => handleCancelOrder(order.invoiceId)}

@@ -188,4 +188,6 @@ export const ar = {
   active: "مفعل",
   inactive: "غير مفعل",
   brand: "الأسم",
+  loginErrorRole: "مسموح فقط لمقدمي الخدمات بالدخول",
+  completeOrder: "اكمال الطلب",
 };

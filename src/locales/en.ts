@@ -188,4 +188,6 @@ export const en = {
   active: "Active",
   inactive: "Inactive",
   brand: "Name",
+  loginErrorRole: "Only Service Providers allowed on this page.",
+  completeOrder: "Complete Order",
 };

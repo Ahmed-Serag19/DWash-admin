@@ -26,6 +26,8 @@ export const endpoints = {
     `${API_BASE_URL}/request/admin/getPendingOrders?page=${page}&size=${size}`,
   cancelOrder: (id: number) =>
     `${API_BASE_URL}/request/admin/cancelOrder?orderId=${id}`,
+  completeOrder: (id: number) =>
+    `${API_BASE_URL}/request/admin/cancelOrder?orderId=${id}`,
   getWaitingServices: (page: number, size: number) =>
     `${API_BASE_URL}/request/admin/getWaitingServiceRequest?page=${page}&size=${size}`,
   getClosedServices: (page: number, size: number) =>
