@@ -42,8 +42,7 @@ const ServiceRequests: React.FC = () => {
         }
       );
       if (response.status === 200) {
-        // Accessing the 'data' property properly from the response
-        const requests = response.data?.content?.data || []; // Fallback to empty array if no data
+        const requests = response.data?.content?.data || [];
         console.log(response);
         setOpenedRequests(requests);
       } else {

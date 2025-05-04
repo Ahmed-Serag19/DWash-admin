@@ -190,4 +190,6 @@ export const ar = {
   brand: "الأسم",
   loginErrorRole: "مسموح فقط لمقدمي الخدمات بالدخول",
   completeOrder: "اكمال الطلب",
+  extraServices: "الخدمات الاضافية",
+  total: "الحساب الكلي",
 };

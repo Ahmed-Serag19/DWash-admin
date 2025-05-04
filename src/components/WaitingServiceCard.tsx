@@ -212,6 +212,53 @@ const WaitingServiceCard: React.FC<WaitingServiceCardProps> = ({
                 </div>
               </section>
             )}
+
+          {request.extraServices && request.extraServices.length > 0 && (
+            <section className="mt-6">
+              <h3 className="text-lg font-semibold mb-3">
+                {t("extraServices")}
+              </h3>
+              <div className="space-y-3">
+                {request.extraServices.map((extra) => (
+                  <div
+                    key={extra.id}
+                    className="p-3 border rounded-lg flex justify-between items-center bg-gray-50"
+                  >
+                    <div>
+                      <h4 className="font-medium">
+                        {i18n.language === "ar"
+                          ? extra.extraNameAr
+                          : extra.extraNameEn}
+                      </h4>
+                      {extra.extraDescriptionsAr ||
+                      extra.extraDescriptionsEn ? (
+                        <p className="text-sm text-gray-600 mt-1">
+                          {i18n.language === "ar"
+                            ? extra.extraDescriptionsAr
+                            : extra.extraDescriptionsEn}
+                        </p>
+                      ) : null}
+                    </div>
+                    <span className="font-bold text-blue-600 whitespace-nowrap ml-4">
+                      +{extra.extraPrice} SAR
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">{t("total")}:</span>
+                  <span className="font-bold text-lg">
+                    {request.extraServices.reduce(
+                      (sum, extra) => sum + extra.extraPrice,
+                      request.servicesPrice || 0
+                    )}{" "}
+                    SAR
+                  </span>
+                </div>
+              </div>
+            </section>
+          )}
         </div>
       </ServiceModal>
 

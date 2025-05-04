@@ -190,4 +190,6 @@ export const en = {
   brand: "Name",
   loginErrorRole: "Only Service Providers allowed on this page.",
   completeOrder: "Complete Order",
+  extraServices: "Extra Services",
+  total: "Total",
 };

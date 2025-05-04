@@ -213,18 +213,47 @@ const ClosedServiceCard: React.FC<ClosedServiceCardProps> = ({ service }) => {
           {/* Extra Services Section */}
           {service.extraServices && service.extraServices.length > 0 && (
             <section className="mt-6">
-              <h3 className="text-lg font-semibold mb-2">
+              <h3 className="text-lg font-semibold mb-3">
                 {t("extraServices")}
               </h3>
-              <ul className="list-disc pl-5">
-                {service.extraServices.map(
-                  (extra: { id: number; name: string; price: number }) => (
-                    <li key={extra.id} className="text-gray-900">
-                      {extra.name} - {extra.price} {t("currency")}
-                    </li>
-                  )
-                )}
-              </ul>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {service.extraServices.map((extra) => (
+                  <div
+                    key={extra.id}
+                    className="border rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="font-medium text-gray-900">
+                          {i18n.language === "ar"
+                            ? extra.extraNameAr
+                            : extra.extraNameEn}
+                        </h4>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {i18n.language === "ar"
+                            ? extra.extraDescriptionsAr
+                            : extra.extraDescriptionsEn}
+                        </p>
+                      </div>
+                      <span className="font-bold text-blue-600 whitespace-nowrap ml-2">
+                        +{extra.extraPrice} SAR
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">{t("total")}:</span>
+                  <span className="font-bold text-lg">
+                    {service.extraServices.reduce(
+                      (sum, extra) => sum + extra.extraPrice,
+                      service.servicesPrice || 0
+                    )}{" "}
+                    SAR
+                  </span>
+                </div>
+              </div>
             </section>
           )}
         </div>

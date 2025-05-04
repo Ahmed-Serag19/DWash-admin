@@ -140,22 +140,32 @@ export interface Request {
 }
 
 export interface ServiceRequest {
+  extraServices: ExtraService[] | null;
   brandNameEn: string;
   brandNameAr: string;
   serviceId: number;
-  serviceImages: boolean;
+  serviceImages: { imagePath: string; id: number }[] | null;
   createdOn: string;
   user: string;
   servicesDescriptionsAr: string;
   servicesDescriptionsEn: string;
-  id: Key | null | undefined;
+  id: number | null;
   serviceTempId: number;
   servicesNameAr: string;
   servicesNameEn: string;
   servicesPrice: number;
   request: Request;
 }
-
+export interface ExtraService {
+  id: number;
+  extraNameAr: string;
+  extraNameEn: string;
+  extraDescriptionsAr: string;
+  extraDescriptionsEn: string;
+  extraPrice: number;
+  name?: string;
+  price?: number;
+}
 interface RequestDetails {
   id: number;
   requestCodeId: number;
@@ -187,9 +197,8 @@ export interface ClosedService {
   lastUpdatedOn: string | null;
   request: RequestDetails;
   serviceImages: { url: string; description: string }[] | null;
-  extraServices: { id: number; name: string; price: number }[] | null;
+  extraServices: ExtraService[] | null;
 }
-
 export interface ClosedServiceCardProps {
   service: ClosedService;
 }
