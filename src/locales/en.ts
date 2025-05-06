@@ -192,4 +192,5 @@ export const en = {
   completeOrder: "Complete Order",
   extraServices: "Extra Services",
   total: "Total",
+  extraService: "Extra Service",
 };
