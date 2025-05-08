@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import CardModal from "./CardModal";
+import WalletInfoModal from "./WalletInfoModal";
 import {
   Card,
   CardHeader,
@@ -10,18 +12,21 @@ import {
 } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { FaUserCircle } from "react-icons/fa";
-import { Button } from "./ui/button";
-import { UserCardProps } from "@/interfaces/interfaces";
+import { Button } from "@/components/ui/button";
+import type { UserCardProps } from "@/interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
+import { Wallet } from "lucide-react";
 
 const UserCard: React.FC<UserCardProps> = ({
   user,
   isInactive,
   onActivate,
   onDeactivate,
+  showWalletInfo = true,
 }) => {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState<"activate" | "deactivate">(
     "activate"
   );
@@ -45,6 +50,14 @@ const UserCard: React.FC<UserCardProps> = ({
     setIsModalOpen(false);
   };
 
+  const handleWalletModalOpen = () => {
+    setIsWalletModalOpen(true);
+  };
+
+  const handleWalletModalClose = () => {
+    setIsWalletModalOpen(false);
+  };
+
   return (
     <>
       <CardModal
@@ -62,14 +75,23 @@ const UserCard: React.FC<UserCardProps> = ({
         onConfirm={handleModalConfirm}
         onCancel={handleModalCancel}
       />
+
+      {showWalletInfo && (
+        <WalletInfoModal
+          isOpen={isWalletModalOpen}
+          onClose={handleWalletModalClose}
+          walletInfo={user.brandWalletDto}
+        />
+      )}
+
       <Card
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
-        className="w-full  mx-auto border border-gray-200 shadow-md rounded-lg sm:min-w-[280px] min-w-[200px]"
+        className="w-full mx-auto border border-gray-200 shadow-md rounded-lg sm:min-w-[280px] min-w-[200px]"
       >
         <CardHeader className="flex items-center gap-4 border-b border-solid border-stone-300">
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center bg-white  font-bold ${
-              isInactive ? " text-red-600" : "text-blue-950"
+            className={`w-10 h-10 rounded-full flex items-center justify-center bg-white font-bold ${
+              isInactive ? "text-red-600" : "text-blue-950"
             }`}
           >
             <FaUserCircle className="w-full h-full text-5xl" />
@@ -109,6 +131,12 @@ const UserCard: React.FC<UserCardProps> = ({
               <dd>{user.userDto.identificationNumber}</dd>
             </div>
             <div>
+              <dt className="font-semibold text-blue-900">{t("city")}:</dt>
+              <dd>
+                {i18n.language === "ar" ? user.cityNameAr : user.cityNameEn}
+              </dd>
+            </div>
+            <div>
               <dt className="font-semibold text-blue-900">{t("createdOn")}:</dt>
               <dd>{user.userDto.createdOn}</dd>
             </div>
@@ -120,7 +148,7 @@ const UserCard: React.FC<UserCardProps> = ({
             </div>
           </dl>
         </CardContent>
-        <CardFooter className="flex justify-center gap-3">
+        <CardFooter className="flex justify-center gap-3 flex-wrap">
           {isInactive ? (
             <Button
               variant="outline"
@@ -149,6 +177,17 @@ const UserCard: React.FC<UserCardProps> = ({
           >
             {t("edit")}
           </Button>
+
+          {showWalletInfo && (
+            <Button
+              variant="outline"
+              className="text-blue-800 border-blue-800 hover:bg-blue-100"
+              onClick={handleWalletModalOpen}
+            >
+              <Wallet className="mr-2 h-4 w-4" />
+              {t("walletInfo")}
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </>

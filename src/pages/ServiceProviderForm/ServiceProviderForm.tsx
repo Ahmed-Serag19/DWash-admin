@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+"use client";
+
+import type React from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { endpoints } from "@/constants/endPoints";
-import {
-  IdentificationType,
-  FormData,
-  FreelancerData,
-} from "@/interfaces/interfaces";
 import { toast } from "react-toastify";
+import type { FormData, FreelancerData } from "@/interfaces/interfaces";
+import PersonalInfoSection from "./PersonalInfoSection";
+import ContactInfoSection from "./ContactInfoSection";
+import LocationSection from "./LocationSection";
 
 const ServiceProviderForm: React.FC = () => {
-  const { t, i18n } = useTranslation();
-  const [identificationTypes, setIdentificationTypes] = useState<
-    IdentificationType[]
-  >([]);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const initialData: FreelancerData | undefined = location.state?.data;
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     control,
@@ -39,8 +39,10 @@ const ServiceProviderForm: React.FC = () => {
       email: "",
       deductionPrs: 0,
       identityId: 0,
+      cityId: 0,
     },
   });
+
   const selectedIdentityId = watch("identityId");
 
   useEffect(() => {
@@ -53,7 +55,8 @@ const ServiceProviderForm: React.FC = () => {
         mobileNumber: initialData.userDto?.mobile || "",
         email: initialData.userDto?.email || "",
         deductionPrs: initialData.brandWalletDto?.deductionPrs || 0,
-        identityId: 0, // Default value, adjusted later
+        identityId: 0,
+        cityId: initialData.userDto?.cityId || 0,
       });
     }
   }, [initialData, reset]);
@@ -65,45 +68,28 @@ const ServiceProviderForm: React.FC = () => {
     }
   }, [selectedIdentityId, setValue]);
 
-  useEffect(() => {
-    const fetchIdentificationTypes = async () => {
-      const token = sessionStorage.getItem("accessToken");
-      try {
-        const response = await axios.get(endpoints.getIdentificationTypes, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setIdentificationTypes(response.data.content);
-
-        if (initialData && initialData.userDto?.identityTyNameEn) {
-          const matchedType = response.data.content.find(
-            (type: IdentificationType) =>
-              type.identityTyNameEn === initialData.userDto.identityTyNameEn
-          );
-          if (matchedType) {
-            setValue("identityId", matchedType.id);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch identification types", error);
-      }
-    };
-
-    fetchIdentificationTypes();
-  }, [initialData, setValue]);
-
   const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
     try {
       const formattedData = {
-        ...data,
+        nameAr: data.nameAr,
+        nameEn: data.nameEn,
         identityId: Number(data.identityId),
+        identificationTypeId: data.identificationTypeId,
+        identificationNumber: data.identificationNumber,
+        mobileNumber: data.mobileNumber,
+        email: data.email,
+        deductionPrs: Number(data.deductionPrs),
+        cityId: Number(data.cityId),
       };
 
       const url = initialData?.userDto?.id
         ? endpoints.editServiceProvider(initialData.userDto.id)
         : endpoints.addServiceProvider;
+
+      console.log("Submitting to URL:", url);
+      console.log("Submitting data:", formattedData);
+
       let response;
 
       if (initialData) {
@@ -133,6 +119,8 @@ const ServiceProviderForm: React.FC = () => {
     } catch (error) {
       console.error("Error submitting the form", error);
       toast(t("formErrorMessage"), { type: "error" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -144,187 +132,21 @@ const ServiceProviderForm: React.FC = () => {
       <h2 className="text-xl font-semibold text-blue-900 text-center">
         {initialData ? t("editServiceProvider") : t("addServiceProvider")}
       </h2>
+
       <div className="flex justify-around gap-10 w-full flex-col md:flex-row">
         <div className="md:w-1/2 w-full flex flex-col gap-5">
-          {/* Name Arabic */}
-          <div>
-            <label
-              htmlFor="nameAr"
-              className="block font-medium pb-2 pt-1 text-blue-900"
-            >
-              {t("nameAr")}
-            </label>
-            <input
-              id="nameAr"
-              {...register("nameAr", {
-                required: t("errorRequired") as string,
-              })}
-              className={`border rounded-md p-2 w-full ${
-                errors.nameAr ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-            {errors.nameAr && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.nameAr.message}
-              </p>
-            )}
-          </div>
-
-          {/* Name English */}
-          <div>
-            <label
-              htmlFor="nameEn"
-              className="block font-medium pb-2 pt-1 text-blue-900"
-            >
-              {t("nameEn")}
-            </label>
-            <input
-              id="nameEn"
-              {...register("nameEn", {
-                required: t("errorRequired") as string,
-              })}
-              className={`border rounded-md p-2 w-full ${
-                errors.nameEn ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-            {errors.nameEn && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.nameEn.message}
-              </p>
-            )}
-          </div>
-
-          {/* Identification Type */}
-          <div>
-            <label
-              htmlFor="identityId"
-              className="block font-medium pb-2 pt-1 text-blue-900"
-            >
-              {t("identificationType")}
-            </label>
-            <Controller
-              name="identityId"
-              control={control}
-              defaultValue={initialData?.identityId || undefined}
-              rules={{ required: t("errorRequired") as string }}
-              render={({ field }) => (
-                <select
-                  {...field}
-                  onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
-                  id="identityId"
-                  className={`border rounded-md p-2 w-full ${
-                    errors.identityId ? "border-red-500" : "border-gray-300"
-                  }`}
-                >
-                  <option value="0">{t("selectOption")}</option>
-                  {identificationTypes.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {i18n.language === "ar"
-                        ? type.identityTyNameAr
-                        : type.identityTyNameEn}
-                    </option>
-                  ))}
-                </select>
-              )}
-            />
-            {errors.identityId && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.identityId.message}
-              </p>
-            )}
-          </div>
+          <PersonalInfoSection
+            control={control}
+            register={register}
+            errors={errors}
+            selectedIdentityId={selectedIdentityId}
+          />
         </div>
+
         <div className="md:w-1/2 w-full flex flex-col gap-5">
-          {/* Identification Number */}
-          <div>
-            <label
-              htmlFor="identificationNumber"
-              className="block font-medium pb-2 pt-1 text-blue-900"
-            >
-              {t("identificationNumber")}
-            </label>
-            <input
-              id="identificationNumber"
-              {...register("identificationNumber", {
-                required:
-                  selectedIdentityId !== 4
-                    ? (t("errorRequired") as string)
-                    : false, // Conditionally set required
-                pattern: {
-                  value: /[0-9]{10}/,
-                  message: t("errorNumbersOnly"),
-                },
-                value: selectedIdentityId === 4 ? "0000000000" : "",
-              })}
-              disabled={selectedIdentityId === 4}
-              className={`border rounded-md p-2 w-full ${
-                errors.identificationNumber
-                  ? "border-red-500"
-                  : "border-gray-300"
-              }`}
-            />
-            {errors.identificationNumber && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.identificationNumber.message}
-              </p>
-            )}
-          </div>
+          <ContactInfoSection register={register} errors={errors} />
 
-          {/* Mobile Number */}
-          <div>
-            <label
-              htmlFor="mobileNumber"
-              className="block font-medium pb-2 pt-1 text-blue-900"
-            >
-              {t("mobileNumber")}
-            </label>
-            <input
-              id="mobileNumber"
-              {...register("mobileNumber", {
-                required: t("errorRequired") as string,
-                pattern: {
-                  value: /^\d{10}$/,
-                  message: t("errorPhoneNumber"),
-                },
-              })}
-              className={`border rounded-md p-2 w-full ${
-                errors.mobileNumber ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-            {errors.mobileNumber && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.mobileNumber.message}
-              </p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block font-medium pb-2 pt-1 text-blue-900"
-            >
-              {t("email")}
-            </label>
-            <input
-              id="email"
-              {...register("email", {
-                required: t("errorRequired") as string,
-                pattern: {
-                  value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-                  message: t("errorEmail"),
-                },
-              })}
-              className={`border rounded-md p-2 w-full ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          <LocationSection control={control} errors={errors} />
 
           {/* Deduction Percentage */}
           <div>
@@ -359,9 +181,10 @@ const ServiceProviderForm: React.FC = () => {
       <div className="flex justify-end">
         <Button
           type="submit"
+          disabled={isLoading}
           className="bg-blue-600 text-white px-6 py-2 transition duration-500 font-semibold text-md"
         >
-          {t("submit")}
+          {isLoading ? t("submitting") : t("submit")}
         </Button>
       </div>
     </form>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { endpoints } from "@/constants/endPoints";
-endpoints
+
 // Define form data type
 interface ChangePasswordFormData {
   currentPassword: string;

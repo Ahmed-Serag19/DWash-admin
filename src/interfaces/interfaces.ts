@@ -1,5 +1,3 @@
-import { Key } from "react";
-
 interface UserDto {
   id: number;
   nameEn: string;
@@ -14,27 +12,43 @@ interface UserDto {
   identityTyNameEn: string;
   identificationTypeId: string;
   identityId: number;
+  cityId?: number;
+  districtId?: number;
 }
 
-interface BrandWalletDto {
-  deductionPrs: number | null;
+export interface BrandWalletDto {
+  walletId?: number;
+  iban?: string | null;
+  bankAccountNumber?: string | null;
+  bankCertificate?: string | null;
+  bankId?: number | null;
+  bankName?: string | null;
+  deductionPrs: number;
+  rejectTotalFine?: number | null;
+  totalAmount?: number | null;
+  transferDate?: string | null;
+  updateOn?: string | null;
+  userId?: number | null;
 }
 export interface FreelancerData {
   brandId: number;
   userDto: UserDto;
   brandWalletDto: BrandWalletDto;
   identityId: number;
+  cityNameAr: string;
+  cityNameEn: string;
 }
 export interface UserCardProps {
   user: FreelancerData;
   isInactive: boolean;
-  onActivate: (userId: number) => void;
-  onDeactivate: (userId: number) => void;
+  onActivate: (id: number) => void;
+  onDeactivate: (id: number) => void;
+  showWalletInfo?: boolean;
 }
 export interface ModalProps {
   isOpen: boolean;
-  titleKey: string; // Key for the title
-  descriptionKey: string; // Key for the description
+  titleKey: string;
+  descriptionKey: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -45,7 +59,6 @@ export interface IdentificationType {
 }
 
 export interface FormData {
-  id?: number;
   nameAr: string;
   nameEn: string;
   identificationTypeId: string;
@@ -54,6 +67,7 @@ export interface FormData {
   email: string;
   deductionPrs: number;
   identityId: number;
+  cityId: number;
 }
 
 export interface Discount {
@@ -201,4 +215,25 @@ export interface ClosedService {
 }
 export interface ClosedServiceCardProps {
   service: ClosedService;
+}
+
+export interface City {
+  cityId: number;
+  cityNameAr: string;
+  cityNameEn: string;
+  cityStatus: number;
+}
+
+export interface District {
+  districtId: number;
+  districtNameAr: string;
+  districtNameEn: string;
+  districtStatus: number;
+  cityId: number;
+}
+
+export interface WalletInfoModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  walletInfo: BrandWalletDto;
 }

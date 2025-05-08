@@ -41,4 +41,7 @@ export const endpoints = {
     `${API_BASE_URL}/request/admin/getWaitingBrandRequest?page=${page}&size=${size}`,
   getClosedBrandRequest: (page: number, size: number) =>
     `${API_BASE_URL}/request/admin/getClosedBrandRequest?page=${page}&size=${size}`,
+  getCities: `${API_BASE_URL}/public/cities`,
+  getDistrict: (selectedCityId: number) =>
+    `${API_BASE_URL}/public/districts?cityId=${selectedCityId}`,
 };
