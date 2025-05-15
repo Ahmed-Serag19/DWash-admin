@@ -87,9 +87,6 @@ const ServiceProviderForm: React.FC = () => {
         ? endpoints.editServiceProvider(initialData.userDto.id)
         : endpoints.addServiceProvider;
 
-      console.log("Submitting to URL:", url);
-      console.log("Submitting data:", formattedData);
-
       let response;
 
       if (initialData) {
@@ -117,8 +114,11 @@ const ServiceProviderForm: React.FC = () => {
         toast(t("formErrorMessage"), { type: "error" });
       }
     } catch (error) {
-      console.error("Error submitting the form", error);
-      toast(t("formErrorMessage"), { type: "error" });
+      if (axios.isAxiosError(error) && error.response?.data?.messageAr) {
+        toast.error(error.response.data.messageAr);
+      } else {
+        toast.error(t("formErrorMessage"));
+      }
     } finally {
       setIsLoading(false);
     }
